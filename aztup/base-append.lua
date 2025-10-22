@@ -210,4 +210,4 @@ local sharedRequires = {};
 --     end;
 -- end;
 
-setStatus('All done',true);
+setStatus('All done');

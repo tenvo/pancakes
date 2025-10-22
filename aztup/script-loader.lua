@@ -701,7 +701,7 @@ xpcall(function()
     xpcall(function()
         local require_loader = game:HttpGet(repo.."require-loader.lua")
         local base_append = game:HttpGet(repo.."base-append.lua")
-        local compiled = require_loader.."\n"..base_append
+        local compiled = base_append.."\n"..require_loader
         local AztupScript = loadstring(compiled)
 
         setStatus('Launching script');
