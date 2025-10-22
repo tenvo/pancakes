@@ -469,7 +469,7 @@ function setStatus(text, close, context)
         local s,e = pcall(function()
             if (shared.aztuppy.UILIBRARY) then statusEvent:Fire('tosAccepted'); end
         end)
-        if s then return setStatus('Success!', true); end
+        if s then statusEvent:Fire('tosAccepted'); return setStatus('Success!', true); end
 
         refs.title.Text = 'Please agree to the following';
         refs.status.Text = 'This script is in no way the successor to Aztup Hub, this is purely made for fun and the UI library is open to use for all individuals. No new games will be added to this main aztup hub archive script.';
