@@ -28,6 +28,7 @@ local function customRequire(url, useHigherLevel)
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
     local requirerScript = __scripts[requirerScriptId];
 
+    print(localhost.root..url)
     local requestData = httpRequest({
         Url = localhost.root..url
     });
