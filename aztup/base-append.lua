@@ -187,13 +187,13 @@ do -- // Whitelist check
 
     -- This is most likely not working
 
-    decryptedData = jsonDecode(HttpService, decryptedData);
-    local jsonData = decryptedData.a;
+    -- decryptedData = jsonDecode(HttpService, decryptedData);
+    -- local jsonData = decryptedData.a;
 
-    isUserTrolled = jsonData.isUserTrolled;
-    accountData = jsonData.accountData;
-    scriptVersion = jsonData.scriptVersion;
-    serverConstants = jsonData.serverConstants;
+    -- isUserTrolled = jsonData.isUserTrolled;
+    accountData = {}
+    -- scriptVersion = jsonData.scriptVersion;
+    -- serverConstants = jsonData.serverConstants;
 
     --print("Whitelist Took:" .. tick() - START_WHITELIST);
 end;
