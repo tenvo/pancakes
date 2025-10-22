@@ -17,7 +17,7 @@ __scripts[info] = 'require-loader';
 local cachedRequires = {};
 _G.cachedRequires = cachedRequires;
 
---local originalRequire = require;                                                                                                                                                                                                                                                                                                                   'a35d863f-865e-4669-8c3a-724c9f0749d3';
+local originalRequire = require
 
 local function customRequire(url, useHigherLevel)
     if (typeof(url) ~= 'string' or not checkcaller()) then

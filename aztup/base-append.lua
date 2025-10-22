@@ -12,7 +12,7 @@ getgenv().aztupHubV3Ran = true;
 getgenv().aztupHubV3RanReal = true;
 
 if (typeof(game) ~= 'Instance') then return SX_CRASH() end;
-if (typeof(websiteKey) ~= 'string' or typeof(scriptKey) ~= 'string') then return SX_CRASH() end;
+--if (typeof(websiteKey) ~= 'string' or typeof(scriptKey) ~= 'string') then return SX_CRASH() end;
 
 local originalFunctions = {};
 local HttpService = game:GetService('HttpService');
@@ -135,11 +135,12 @@ end;
 
 setreadonly(syn, false);
 
-local oldRequest = clonefunction(syn.request);
+local http = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+local oldRequest = clonefunction(http);
 local gameId = game.GameId;
 
 local function isRequestValid(req)
-    if (not req.Headers or not req.Headers.Date or req.Headers.Date == '') then return false end;
+    if (not req.Headers) then return false end;
     return req.StatusCode < 500 and req.StatusCode ~= 0;
 end;
 
@@ -148,6 +149,7 @@ local function httpRequest(...)
     local attempts = 0;
 
     if (not isRequestValid(reqData)) then
+        print("In dattt")
         repeat
             reqData = oldRequest(...);
             attempts += 1;
