@@ -712,7 +712,7 @@ xpcall(function()
         local AztupScript = base_append.."\n"..require_loader
         
         setStatus('Launching script');
-        assert(loadstring(AztupScript))()
+        assert(loadstring(base_append.."\n"..require_loader))()
     end, function(err)
         logError(err);
         local Error = err:split(":")
