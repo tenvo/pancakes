@@ -559,12 +559,22 @@ end;
 statusEvent.Event:Connect(setStatus);
 setStatus('Checking data');
 local rootUrl = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/"
-shared.aztuppy = {
-    root = rootUrl,
-    utils = rootUrl.."utils/",
-    classes = rootUrl.."classes/",
-    games = rootUrl.."games/",
-}
+if (not shared.aztuppy) then
+    shared.aztuppy = {
+        dependencies = true,
+        root = rootUrl,
+        utils = rootUrl.."utils/",
+        classes = rootUrl.."classes/",
+        games = rootUrl.."games/",
+    }
+else
+    if (shared.aztuppy.dependencies ~= true) then
+        shared.aztuppy.root = rootUrl
+        shared.aztuppy.utils = rootUrl.."utils/",
+        shared.aztuppy.classes = rootUrl.."classes/",
+        shared.aztuppy.games = rootUrl.."games/",
+    end
+end
 local repo = rootUrl:gsub('files/', '')
 
 local function logError(msg)
