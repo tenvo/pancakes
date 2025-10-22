@@ -7,6 +7,8 @@ local function setStatus(...)
     statusEvent:Fire(...);
 end;
 
+getgenv().aztupHubV3Ran = false;
+getgenv().aztupHubV3RanReal = false;
 if (getgenv().aztupHubV3Ran or getgenv().aztupHubV3RanReal) then return setStatus('Script already ran', true) end;
 getgenv().aztupHubV3Ran = true;
 getgenv().aztupHubV3RanReal = true;
