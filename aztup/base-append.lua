@@ -214,4 +214,4 @@ if (not accountData.tosAccepted) then
     end;
 end;
 
-setStatus('All done', true);
+setStatus('All done');
