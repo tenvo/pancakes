@@ -1,3 +1,4 @@
+print("Require running!")
 getgenv().isSynapseV3 = not not gethui;
 
 getgenv().disableenvprotection = function() end;
