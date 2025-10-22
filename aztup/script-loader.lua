@@ -573,6 +573,7 @@ else
         shared.aztuppy.utils = rootUrl.."utils/"
         shared.aztuppy.classes = rootUrl.."classes/"
         shared.aztuppy.games = rootUrl.."games/"
+        shared.aztuppy.dependencies = true
     end
 end
 local repo = rootUrl:gsub('files/', '')
@@ -636,7 +637,7 @@ xpcall(function()
 
     task.spawn(function()
         metadataRequest = httpRequest({
-            Url = repo..'gameList.json'
+            Url = rootUrl..'gameList.json'
         });
     end);
 
@@ -704,7 +705,7 @@ xpcall(function()
         local require_loader = game:HttpGet(repo.."require-loader.lua")
         local base_append = game:HttpGet(repo.."base-append.lua")
         local AztupScript = require_loader.."\n"..base_append
-
+        
         setStatus('Launching script');
         loadstring(AztupScript)()
     end, function(err)
