@@ -17,27 +17,19 @@ __scripts[info] = 'require-loader';
 local cachedRequires = {};
 _G.cachedRequires = cachedRequires;
 
-local originalRequire = require;
-local apiKey =                                                                                                                                                                                                                                                                                                                     'a35d863f-865e-4669-8c3a-724c9f0749d3';
+local originalRequire = require;                                                                                                                                                                                                                                                                                                                   'a35d863f-865e-4669-8c3a-724c9f0749d3';
 
 local function customRequire(url, useHigherLevel)
     if (typeof(url) ~= 'string' or not checkcaller()) then
         return originalRequire(url);
     end;
 
+    local localhost = shared.aztuppy
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
     local requirerScript = __scripts[requirerScriptId];
 
-    local requestData = syn.request({
-        Url = string.format('%s/%s', 'http://localhost:4566', 'getFile'),
-        Method = 'POST',
-        Headers = {
-            ['Content-Type'] = 'application/json',
-            Authorization = apiKey
-        },
-        Body = HttpService:JSONEncode({
-            paths = {url, requirerScript}
-        })
+    local requestData = httpRequest({
+        Url = localhost.root..url
     });
 
     if (not requestData.Success) then
@@ -77,14 +69,14 @@ local function customRequireShared(url)
     return cachedRequires[fileName];
 end;
 
-local gameList = HttpService:JSONDecode(customRequireShared('../gameList.json'));
+local gameList = HttpService:JSONDecode(customRequireShared('gameList.json'));
 
 getgenv().require = customRequire;
 getgenv().sharedRequire = customRequireShared;
 
 getgenv().aztupHubV3Ran = false;
 getgenv().aztupHubV3RanReal = false;
-getgenv().scriptKey,getgenv().websiteKey='29be76a3-ad9f-4c27-aa3a-e78590f61971','8b21dab5-1432-4620-bf61-735fcfd240df';
+-- getgenv().scriptKey,getgenv().websiteKey='29be76a3-ad9f-4c27-aa3a-e78590f61971','8b21dab5-1432-4620-bf61-735fcfd240df';
 
 local function GAMES_SETUP()
     local gameName = gameList[tostring(game.GameId)];

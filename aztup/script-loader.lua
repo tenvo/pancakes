@@ -1,3 +1,4 @@
+getgenv().ah_loaderRan = false
 if (ah_loaderRan) then return end;
 getgenv().ah_loaderRan = true;
 
@@ -14,7 +15,7 @@ local http = (syn and syn.request) or (http and http.request) or http_request or
 local oldRequest = clonefunction(http);
 
 local function isRequestValid(req)
-    if (not req.Headers or not req.Headers.Date or req.Headers.Date == '') then return false end;
+    if (not req.Headers) then return false end;
     return req.StatusCode < 500 and req.StatusCode ~= 0;
 end;
 
@@ -23,6 +24,7 @@ local function httpRequest(...)
     local attempts = 0;
 
     if (not isRequestValid(reqData)) then
+        print("In dattt")
         repeat
             reqData = oldRequest(...);
             attempts += 1;
@@ -403,6 +405,7 @@ getgenv().ah_statusEvent = statusEvent;
 
 function setStatus(text, close, context)
     refs.status.Text = text;
+    if (close) then shared.aztuppy = nil end
     if (not close) then return end;
 
     if (typeof(close) ~= 'boolean') then
@@ -487,24 +490,27 @@ function setStatus(text, close, context)
         end);
 
         refs.thirdButton.MouseButton1Click:Connect(function()
-            setclipboard('https://aztupscripts.xyz/terms-of-services');
-            refs.thirdButton.Text = 'Copied!';
+            --setclipboard('https://aztupscripts.xyz/terms-of-services');
+            refs.thirdButton.Text = 'There is no terms of service idot';
             task.wait(1);
             refs.thirdButton.Text = 'Copy terms of services link to clipboard.';
         end);
 
         refs.button.MouseButton1Click:Connect(function()
-            local req = httpRequest({
-                Method = 'PATCH',
-                Url = 'https://aztupscripts.xyz/api/v1/user',
-                Body = HttpService:JSONEncode({tosAccepted = true}),
-                Headers = {Authorization = websiteKey, ['Content-Type'] = 'application/json'}
-            });
+            -- local req = httpRequest({
+            --     Method = 'PATCH',
+            --     Url = 'https://aztupscripts.xyz/api/v1/user',
+            --     Body = HttpService:JSONEncode({tosAccepted = true}),
+            --     Headers = {Authorization = websiteKey, ['Content-Type'] = 'application/json'}
+            -- });
 
             refs.reason.Visible = false;
             refs.secondButton.Visible = false;
             refs.thirdButton.Visible = false;
             refs.button.Visible = false;
+
+            req.Success = true
+            req.Body = "Lol"
 
             if (req.Success) then
                 statusEvent:Fire('tosAccepted');
@@ -552,11 +558,19 @@ end;
 
 statusEvent.Event:Connect(setStatus);
 setStatus('Checking data');
+shared.aztuppy = {
+    root = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/",
+    utils = root.."utils/"
+    classes = root.."classes/"
+    games = root.."games/"
+}
+local repo = shared.aztuppy.root
 
 local function logError(msg)
     msg = msg or '';
 
     setStatus('There was an error.\n\n' .. tostring(msg) .. '\n\n');
+    shared.aztuppy = nil
     task.delay(8, destroyUI);
 end;
 
@@ -611,7 +625,7 @@ xpcall(function()
 
     task.spawn(function()
         metadataRequest = httpRequest({
-            Url = 'https://raw.githubusercontent.com/61ritsM/Aztup-Hub-v3/main/gameList.json'
+            Url = repo..'gameList.json'
         });
     end);
 
@@ -624,13 +638,13 @@ xpcall(function()
         return setStatus(string.format('%s - %s', tostring(metadataRequest.StatusCode), tostring(metadataRequest.Body)), true);
     end;
 
-    if (not string.find(metadataRequest.Headers['Content-Type'], 'application/json')) then
-        return setStatus('Failed to communicate with the github, please try again later.', true);
-    end;
+    -- if (not string.find(metadataRequest.Headers['Content-Type'], 'application/json')) then
+    --     return setStatus('Failed to communicate with the github, please try again later.', true);
+    -- end;
 
     metadataRequest = HttpService:JSONDecode(metadataRequest.Body);
     getgenv().ah_metadata = metadataRequest;
-    local fileName = metadataRequest.games[tostring(universeId)];
+    local fileName = metadataRequest[tostring(universeId)];
 
     if (not fileName) then
         -- If no file name then we load the smallest file possible which in this case is KAT
@@ -675,15 +689,15 @@ xpcall(function()
     ]]--
 
     xpcall(function()
-        local require_loader = game:HttpGet("https://raw.githubusercontent.com/61ritsM/AztupHubV3/main/aztup/require-loader.lua")
-        local base_append = game:HttpGet("https://raw.githubusercontent.com/61ritsM/AztupHubV3/main/aztup/base-append.lua")
+        local require_loader = game:HttpGet(repo.."aztup/require-loader.lua")
+        local base_append = game:HttpGet(repo.."aztup/base-append.lua")
         local AztupScript = require_loader.."\n"..base_append
 
         setStatus('Launching script');
         loadstring(AztupScript)()
     end, function(err)
         logError(err);
-        setStatus('Failed to get the script, please try to get the script again.' .. err, true);
+        setStatus("Err: "..err, true);
     end);
 end, function(err)
     logError(err);
