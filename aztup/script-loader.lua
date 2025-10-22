@@ -467,8 +467,8 @@ function setStatus(text, close, context)
             end;
         end);
     elseif (close == 'tos') then
-        refs.title.Text = 'Please agree to the terms of services.';
-        refs.status.Text = 'You must be aware that by using the script you are also agreeing to our terms of services and must follow them, this is just a reminder to go check them if you did not do yet and also making sure that you agree to them. Do you agree to our terms of services? If you haven\'t read them yet you can do so at https://aztupscripts.xyz/terms-of-services';
+        refs.title.Text = 'Please agree to the following';
+        refs.status.Text = 'This script is in no way the successor to Aztup Hub, this is purely made for fun and the UI library is open to use for all individuals. No new games will be added to this main aztup hub archive script.';
         refs.reason.Visible = false;
 
         refs.secondButton.Visible = true;
@@ -479,7 +479,7 @@ function setStatus(text, close, context)
 
         refs.button.Visible = true;
         refs.button.BackgroundColor3 = Color3.fromHex('#16a085');
-        refs.button.Text = 'I agree to the terms of services.';
+        refs.button.Text = 'I understand';
 
         refs.secondButton.MouseButton1Click:Connect(function()
             refs.button.Visible = false;
@@ -509,17 +509,17 @@ function setStatus(text, close, context)
             refs.thirdButton.Visible = false;
             refs.button.Visible = false;
 
-            req.Success = true
-            req.Body = "Lol"
+            -- req.Success = true
+            -- req.Body = "Lol"
 
-            if (req.Success) then
+            --if (req.Success) then
                 statusEvent:Fire('tosAccepted');
                 return setStatus('Success!', true);
-            else
-                local errorMessage = 'Internal Server Error';
-                pcall(function() errorMessage = HttpService:JSONDecode(req.Body).message; end);
-                return setStatus(errorMessage, true);
-            end;
+            --else
+                --local errorMessage = 'Internal Server Error';
+                --pcall(function() errorMessage = HttpService:JSONDecode(req.Body).message; end);
+                --return setStatus(errorMessage, true);
+            --end;
         end);
     elseif (close == 'error') then
         refs.reason.Visible = false;
