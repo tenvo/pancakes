@@ -191,7 +191,7 @@ do -- // Whitelist check
     -- local jsonData = decryptedData.a;
 
     -- isUserTrolled = jsonData.isUserTrolled;
-    if isfile("Aztup Hub V3/tosaccepted") then
+    if isfile("aztuptosaccepted.txt") then
         accountData = {tosaccepted = true}
     else
         accountData = {}

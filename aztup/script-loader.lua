@@ -405,7 +405,6 @@ getgenv().ah_statusEvent = statusEvent;
 
 function setStatus(text, close, context)
     refs.status.Text = text;
-    if (close) then shared.aztuppy = nil end
     if (not close) then return end;
 
     if (typeof(close) ~= 'boolean') then
@@ -519,8 +518,8 @@ function setStatus(text, close, context)
 
             --if (req.Success) then
                 statusEvent:Fire('tosAccepted');
-                if (not isfile("Aztup Hub V3/tosaccepted")) then
-                    writefile("Aztup Hub V3/tosaccepted.txt","tosaccepted")
+                if (not isfile("aztuptosaccepted")) then
+                    writefile("aztuptosaccepted.txt","aztuptosaccepted")
                 end
                 return setStatus('Success!', true);
             --else
@@ -590,7 +589,6 @@ local function logError(msg)
     msg = msg or '';
 
     setStatus('There was an error.\n\n' .. tostring(msg) .. '\n\n');
-    shared.aztuppy = nil
     task.delay(8, destroyUI);
 end;
 
