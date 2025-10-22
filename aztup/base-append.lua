@@ -133,8 +133,6 @@ if (not game:IsLoaded()) then
     game.Loaded:Wait();
 end;
 
-setreadonly(syn, false);
-
 local http = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 local oldRequest = clonefunction(http);
 local gameId = game.GameId;
