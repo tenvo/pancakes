@@ -1,4 +1,4 @@
-print("hi")
+getgenv().ah_loaderRan = false;
 if (ah_loaderRan) then return end;
 getgenv().ah_loaderRan = true;
 
@@ -558,13 +558,14 @@ end;
 
 statusEvent.Event:Connect(setStatus);
 setStatus('Checking data');
+local rootUrl = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/"
 shared.aztuppy = {
-    root = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/",
-    utils = root.."utils/"
-    classes = root.."classes/"
-    games = root.."games/"
+    root = rootUrl,
+    utils = rootUrl.."utils/",
+    classes = rootUrl.."classes/",
+    games = rootUrl.."games/",
 }
-local repo = shared.aztuppy.root
+local repo = rootUrl
 
 local function logError(msg)
     msg = msg or '';
