@@ -191,7 +191,11 @@ do -- // Whitelist check
     -- local jsonData = decryptedData.a;
 
     -- isUserTrolled = jsonData.isUserTrolled;
-    accountData = {}
+    if isfile("Aztup Hub V3/tosaccepted") then
+        accountData = {tosaccepted = true}
+    else
+        accountData = {}
+    end
     -- scriptVersion = jsonData.scriptVersion;
     -- serverConstants = jsonData.serverConstants;
 

@@ -467,6 +467,8 @@ function setStatus(text, close, context)
             end;
         end);
     elseif (close == 'tos') then
+        if (shared.aztuppy.UILIBRARY) then statusEvent:Fire('tosAccepted'); return setStatus('Success!', true); end
+
         refs.title.Text = 'Please agree to the following';
         refs.status.Text = 'This script is in no way the successor to Aztup Hub, this is purely made for fun and the UI library is open to use for all individuals. No new games will be added to this main aztup hub archive script.';
         refs.reason.Visible = false;
@@ -514,6 +516,9 @@ function setStatus(text, close, context)
 
             --if (req.Success) then
                 statusEvent:Fire('tosAccepted');
+                if (not isfile("Aztup Hub V3/tosaccepted")) then
+                    writefile("Aztup Hub V3/tosaccepted")
+                end
                 return setStatus('Success!', true);
             --else
                 --local errorMessage = 'Internal Server Error';
