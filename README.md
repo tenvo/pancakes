@@ -1,12 +1,13 @@
-# Aztup Hub V3
-Aztup Hub Revival Project
+# pancakes
+lua scripts
 
-## Loader:
+
+## Aztup Hub V3 Loader:
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()
 ```
 
-## Script Status: 🔴
+## Aztup Script Status: 🔴
 ### Loader: 🔴<br>
 
 **Games:**<br>
