@@ -565,7 +565,7 @@ shared.aztuppy = {
     classes = rootUrl.."classes/",
     games = rootUrl.."games/",
 }
-local repo = rootUrl
+local repo = rootUrl:gsub('files/', '')
 
 local function logError(msg)
     msg = msg or '';
@@ -690,8 +690,9 @@ xpcall(function()
     ]]--
 
     xpcall(function()
-        local require_loader = game:HttpGet(repo.."aztup/require-loader.lua")
-        local base_append = game:HttpGet(repo.."aztup/base-append.lua")
+        print(repo.."require-loader.lua")
+        local require_loader = game:HttpGet(repo.."require-loader.lua")
+        local base_append = game:HttpGet(repo.."base-append.lua")
         local AztupScript = require_loader.."\n"..base_append
 
         setStatus('Launching script');

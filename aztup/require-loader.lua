@@ -18,7 +18,7 @@ local cachedRequires = {};
 _G.cachedRequires = cachedRequires;
 
 local originalRequire = require;                                                                                                                                                                                                                                                                                                                   'a35d863f-865e-4669-8c3a-724c9f0749d3';
-
+print("require-loader here")
 local function customRequire(url, useHigherLevel)
     if (typeof(url) ~= 'string' or not checkcaller()) then
         return originalRequire(url);
