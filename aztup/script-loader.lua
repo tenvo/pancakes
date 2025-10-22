@@ -111,9 +111,7 @@ local refs = {};
 local oldGethui = gethui;
 
 local function gethui(ui)
-    if (syn.protect_gui) then
-        syn.protect_gui(ui);
-    else
+    if (oldGethui ~= nil) then
         return oldGethui();
     end;
 
