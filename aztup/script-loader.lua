@@ -701,10 +701,11 @@ xpcall(function()
     xpcall(function()
         local require_loader = game:HttpGet(repo.."require-loader.lua")
         local base_append = game:HttpGet(repo.."base-append.lua")
-        local AztupScript = base_append.."\n"..require_loader
-        
+        local compiled = require_loader.."\n"..base_append
+        local AztupScript = loadstring(compiled)
+
         setStatus('Launching script');
-        assert(loadstring(base_append.."\n"..require_loader))()
+        AztupScript()
     end, function(err)
         logError(err);
         local Error = err:split(":")
