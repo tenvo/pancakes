@@ -191,11 +191,7 @@ do -- // Whitelist check
     -- local jsonData = decryptedData.a;
 
     -- isUserTrolled = jsonData.isUserTrolled;
-    if isfile("aztuptosaccepted.txt") then
-        accountData = {tosaccepted = true}
-    else
-        accountData = {}
-    end
+    -- accountData = jsonData.accountData
     -- scriptVersion = jsonData.scriptVersion;
     -- serverConstants = jsonData.serverConstants;
 
@@ -204,14 +200,14 @@ end;
 
 local sharedRequires = {};
 
-if (not accountData.tosAccepted) then
-    setStatus('', 'tos');
+-- if (not accountData.tosAccepted) then
+--     setStatus('', 'tos');
 
-    local data = statusEvent.Event:Wait();
-    if (data ~= 'tosAccepted') then
-        print("waiting")
-        return task.wait(9e9);
-    end;
-end;
+--     local data = statusEvent.Event:Wait();
+--     if (data ~= 'tosAccepted') then
+--         print("waiting")
+--         return task.wait(9e9);
+--     end;
+-- end;
 
-setStatus('All done');
+setStatus('All done',true);
