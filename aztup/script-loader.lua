@@ -520,7 +520,7 @@ function setStatus(text, close, context)
             --if (req.Success) then
                 statusEvent:Fire('tosAccepted');
                 if (not isfile("Aztup Hub V3/tosaccepted")) then
-                    writefile("Aztup Hub V3/tosaccepted","tosaccepted")
+                    writefile("Aztup Hub V3/tosaccepted.txt","tosaccepted")
                 end
                 return setStatus('Success!', true);
             --else
