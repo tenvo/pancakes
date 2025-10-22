@@ -1,4 +1,4 @@
-getgenv().ah_loaderRan = false
+print("hi")
 if (ah_loaderRan) then return end;
 getgenv().ah_loaderRan = true;
 
