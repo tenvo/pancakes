@@ -17,20 +17,22 @@ __scripts[info] = 'require-loader';
 local cachedRequires = {};
 _G.cachedRequires = cachedRequires;
 
-local originalRequire = require;                                                                                                                                                                                                                                                                                                                   'a35d863f-865e-4669-8c3a-724c9f0749d3';
-print("require-loader here")
+--local originalRequire = require;                                                                                                                                                                                                                                                                                                                   'a35d863f-865e-4669-8c3a-724c9f0749d3';
+
 local function customRequire(url, useHigherLevel)
     if (typeof(url) ~= 'string' or not checkcaller()) then
         return originalRequire(url);
     end;
 
-    local localhost = shared.aztuppy
+    local lhost = shared.aztuppy
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
     local requirerScript = __scripts[requirerScriptId];
+    print(requirerScriptId)
+    print(requirerScript)
 
-    print(localhost.root..url)
+    print(lhost.root..url)
     local requestData = httpRequest({
-        Url = localhost.root..url
+        Url = lhost.root..url
     });
 
     if (not requestData.Success) then
