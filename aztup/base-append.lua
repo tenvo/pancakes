@@ -209,6 +209,7 @@ if (not accountData.tosAccepted) then
 
     local data = statusEvent.Event:Wait();
     if (data ~= 'tosAccepted') then
+        print("waiting")
         return task.wait(9e9);
     end;
 end;
