@@ -1,5 +1,3 @@
----@diagnostic disable: invalid-class-name
-
 local statusEvent = getgenv().ah_statusEvent;
 
 local function setStatus(...)
