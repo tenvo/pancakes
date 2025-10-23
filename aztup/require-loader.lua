@@ -20,6 +20,30 @@ _G.cachedRequires = cachedRequires;
 
 local originalRequire = require
 
+local http = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+local oldRequest = clonefunction(http);
+
+local function isRequestValid(req)
+    if (not req.Headers) then return false end;
+    return req.StatusCode < 500 and req.StatusCode ~= 0;
+end;
+
+local function httpRequest(...)
+    local reqData = oldRequest(...);
+    local attempts = 0;
+
+    if (not isRequestValid(reqData)) then
+        print("In dattt")
+        repeat
+            reqData = oldRequest(...);
+            attempts += 1;
+            task.wait(1);
+        until isRequestValid(reqData) or attempts > 30;
+    end;
+
+    return reqData;
+end;
+
 local function customRequire(url, useHigherLevel)
     if (typeof(url) ~= 'string' or not checkcaller()) then
         return originalRequire(url);
