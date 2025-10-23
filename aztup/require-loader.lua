@@ -1,4 +1,3 @@
-print("Require running!")
 getgenv().isSynapseV3 = not not gethui;
 
 getgenv().disableenvprotection = function() end;
@@ -33,7 +32,6 @@ local function httpRequest(...)
     local attempts = 0;
 
     if (not isRequestValid(reqData)) then
-        print("In dattt")
         repeat
             reqData = oldRequest(...);
             attempts += 1;
@@ -52,10 +50,7 @@ local function customRequire(url, useHigherLevel)
     local lhost = shared.aztuppy
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
     local requirerScript = __scripts[requirerScriptId];
-    print(requirerScriptId)
-    print(requirerScript)
-
-    print(lhost.root..url)
+    
     local requestData = httpRequest({
         Url = lhost.root..url
     });
@@ -74,6 +69,7 @@ local function customRequire(url, useHigherLevel)
 
     local scriptName = requestData.Headers['File-Path'] or url;
     local scriptFunction, syntaxError = loadstring(scriptContent, scriptName);
+    print(scriptContent,scriptFunction)
 
     if (not scriptFunction) then
         warn(string.format('[ERROR] Detected syntax error for %s', url));
