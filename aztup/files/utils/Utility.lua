@@ -1,8 +1,8 @@
 SX_VM_CNONE();
 
-local Services = sharedRequire('./Services.lua');
+local Services = sharedRequire('utils/Services.lua');
 local library = sharedRequire('../UILibrary.lua');
-local Signal = sharedRequire('./Signal.lua');
+local Signal = sharedRequire('utils/Signal.lua');
 
 local Players, UserInputService, HttpService, CollectionService = Services:Get('Players', 'UserInputService', 'HttpService', 'CollectionService');
 local LocalPlayer = Players.LocalPlayer;
