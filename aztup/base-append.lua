@@ -17,9 +17,6 @@ if (typeof(game) ~= 'Instance') then return SX_CRASH() end;
 local originalFunctions = {};
 local HttpService = game:GetService('HttpService');
 
-setStatus("Initializing")
-task.wait(1)
-
 xpcall(function()
     local functionsToCheck = {
         fireServer = Instance.new('RemoteEvent').FireServer,
