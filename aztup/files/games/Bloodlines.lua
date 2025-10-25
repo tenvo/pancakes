@@ -1,13 +1,13 @@
 local HttpService = game:GetService("HttpService")
-local library = sharedRequire('../UILibrary.lua');
-local Services = sharedRequire('../utils/Services.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
-local Utility = sharedRequire('../utils/Utility.lua');
-local createBaseESP = sharedRequire('../utils/createBaseESP.lua');
+local library = sharedRequire('UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local createBaseESP = sharedRequire('utils/createBaseESP.lua');
 
-local TextLogger = sharedRequire('../classes/TextLogger.lua');
-local ToastNotif = sharedRequire('../classes/ToastNotif.lua');
-local ControlModule = sharedRequire('../classes/ControlModule.lua');
+local TextLogger = sharedRequire('classes/TextLogger.lua');
+local ToastNotif = sharedRequire('classes/ToastNotif.lua');
+local ControlModule = sharedRequire('classes/ControlModule.lua');
 
 -- Services
 local Players, ReplicatedStorage, RunService, Lighting, MemStorageService, TeleportService = Services:Get('Players', 'ReplicatedStorage', 'RunService', 'Lighting', 'MemStorageService', 'TeleportService');

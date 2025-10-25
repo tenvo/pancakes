@@ -1,7 +1,7 @@
-local Services = sharedRequire('../utils/Services.lua');
-local library = sharedRequire('../UILibrary.lua');
-local Utility = sharedRequire('../utils/Utility.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
+local Services = sharedRequire('utils/Services.lua');
+local library = sharedRequire('UILibrary.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Maid = sharedRequire('utils/Maid.lua');
 
 local Players, RunService, UserInputService, ReplicatedFirst = Services:Get('Players', 'RunService', 'UserInputService', 'ReplicatedFirst');
 local LocalPlayer = Players.LocalPlayer;

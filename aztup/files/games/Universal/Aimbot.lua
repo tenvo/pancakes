@@ -1,7 +1,7 @@
-local Maid = sharedRequire('../../utils/Maid.lua');
-local Services = sharedRequire('../../utils/Services.lua');
-local library = sharedRequire('../../UILibrary.lua');
-local Utility = sharedRequire('../../utils/Utility.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local Services = sharedRequire('utils/Services.lua');
+local library = sharedRequire('UILibrary.lua');
+local Utility = sharedRequire('utils/Utility.lua');
 
 local RunService, UserInputService = Services:Get('RunService', 'UserInputService');
 local UserService = game:GetService('UserService');

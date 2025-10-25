@@ -1,7 +1,7 @@
 local UserInputService = game:GetService("UserInputService")
-local library = sharedRequire('../../UILibrary.lua');
-local Utility = sharedRequire('../../utils/Utility.lua');
-local Services = sharedRequire('../../utils/Services.lua');
+local library = sharedRequire('UILibrary.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Services = sharedRequire('utils/Services.lua');
 
 local RunService, ReplicatedStorage, Players = Services:Get('RunService', 'ReplicatedStorage', 'Players');
 local LocalPlayer = Players.LocalPlayer;

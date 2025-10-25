@@ -1,10 +1,10 @@
-local library = sharedRequire('../UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
-local Utility = sharedRequire('../utils/Utility.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
-local Services = sharedRequire('../utils/Services.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local Services = sharedRequire('utils/Services.lua');
 
-local ToastNotif = sharedRequire('../classes/ToastNotif.lua');
+local ToastNotif = sharedRequire('classes/ToastNotif.lua');
 local makeESP = sharedRequire('@utils/makeESP.lua');
 
 local ReplicatedStorage, Players, RunService = Services:Get(

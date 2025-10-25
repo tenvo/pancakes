@@ -1,8 +1,8 @@
-local library = sharedRequire('../UILibrary.lua');
-local Services = sharedRequire('../utils/Services.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
-local Utility = sharedRequire('../utils/Utility.lua');
-local ToastNotif = sharedRequire('../classes/ToastNotif.lua');
+local library = sharedRequire('UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local ToastNotif = sharedRequire('classes/ToastNotif.lua');
 
 local ReplicatedStorage, RunService, Players, VirtualInputManager, CollectionService, MarketplaceService, Stats = Services:Get('ReplicatedStorage', 'RunService', 'Players', 'VirtualInputManager', 'CollectionService', 'MarketplaceService', 'Stats');
 local column1, column2 = unpack(library.columns);

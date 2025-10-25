@@ -1,7 +1,7 @@
-local Services = sharedRequire('../utils/Services.lua');
-local library = sharedRequire('../UILibrary.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
-local prettyPrint = sharedRequire('../utils/prettyPrint.lua');
+local Services = sharedRequire('utils/Services.lua');
+local library = sharedRequire('UILibrary.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local prettyPrint = sharedRequire('utils/prettyPrint.lua');
 
 local column1, column2 = unpack(library.columns);
 

@@ -1,7 +1,7 @@
-local library = sharedRequire('../UILibrary.lua');
-local Services = sharedRequire('../utils/Services.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
-local ToastNotif = sharedRequire('../classes/ToastNotif.lua');
+local library = sharedRequire('UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local ToastNotif = sharedRequire('classes/ToastNotif.lua');
 
 local ReplicatedStorage, Players, MemStorageService, TeleportService, HttpService = Services:Get('ReplicatedStorage', 'Players', 'MemStorageService', 'TeleportService', 'HttpService');
 

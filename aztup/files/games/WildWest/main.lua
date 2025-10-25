@@ -1,8 +1,8 @@
-local Services = sharedRequire('../../utils/Services.lua');
-local Utility = sharedRequire('../../utils/Utility.lua');
-local library = sharedRequire('../../UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local library = sharedRequire('UILibrary.lua');
 
-local prettyPrint = sharedRequire('../../utils/prettyPrint.lua');
+local prettyPrint = sharedRequire('utils/prettyPrint.lua');
 
 local IsA = game.IsA;
 local ReplicatedStorage, Players = Services:Get('ReplicatedStorage', 'Players');

@@ -3,7 +3,7 @@ local Maid = sharedRequire('utils/Maid.lua');
 local Services = sharedRequire('utils/Services.lua');
 
 local toCamelCase = sharedRequire('utils/toCamelCase.lua');
-local library = sharedRequire('../UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local Players, CorePackages, HttpService = Services:Get('Players', 'CorePackages', 'HttpService');
 local LocalPlayer = Players.LocalPlayer;

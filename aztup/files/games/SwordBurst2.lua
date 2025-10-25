@@ -1,5 +1,5 @@
-local Services = sharedRequire('../utils/Services.lua');
-local library = sharedRequire('../UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local column1, column2 = unpack(library.columns);
 

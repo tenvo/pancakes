@@ -1,8 +1,8 @@
 SX_VM_CNONE();
 
-local library = sharedRequire('../UILibrary.lua');
-local Utility = sharedRequire('../utils/Utility.lua');
-local Services = sharedRequire('../utils/Services.lua');
+local library = sharedRequire('UILibrary.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Services = sharedRequire('utils/Services.lua');
 
 local RunService, UserInputService, HttpService = Services:Get('RunService', 'UserInputService', 'HttpService');
 

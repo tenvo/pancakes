@@ -1,6 +1,6 @@
-local library = sharedRequire('../UILibrary.lua');
-local Services = sharedRequire('../utils/Services.lua');
-local Utility = sharedRequire('../utils/Utility.lua');
+local library = sharedRequire('UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local Utility = sharedRequire('utils/Utility.lua');
 
 local Players = Services:Get('Players');
 local column1 = unpack(library.columns);

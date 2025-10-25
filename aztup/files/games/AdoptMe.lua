@@ -1,8 +1,8 @@
 --// Defining Variables / Grabbing Data
 
-local library = sharedRequire('../UILibrary.lua');
-local Services = sharedRequire('../utils/Services.lua');
-local ToastNotif = sharedRequire('../classes/ToastNotif.lua');
+local library = sharedRequire('UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local ToastNotif = sharedRequire('classes/ToastNotif.lua');
 local Webhook = sharedRequire('@utils/Webhook.lua');
 
 local ReplicatedStorage, Players, RunService, UserInputService, MemStorageService, TeleportService, NetworkClient, GuiService = Services:Get('ReplicatedStorage', 'Players', 'RunService', 'UserInputService', 'MemStorageService', 'TeleportService', 'NetworkClient', 'GuiService');

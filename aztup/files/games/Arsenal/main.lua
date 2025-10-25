@@ -1,9 +1,9 @@
-local library = sharedRequire('../../UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
-local Utility = sharedRequire('../../utils/Utility.lua');
-local Maid = sharedRequire('../../utils/Maid.lua');
-local Services = sharedRequire('../../utils/Services.lua');
-local ControlModule = sharedRequire('../../classes/ControlModule.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local Services = sharedRequire('utils/Services.lua');
+local ControlModule = sharedRequire('classes/ControlModule.lua');
 
 local FindFirstChild, FindFirstChildWhichIsA = game.FindFirstChild, game.FindFirstChildWhichIsA;
 local IsA = game.IsA;

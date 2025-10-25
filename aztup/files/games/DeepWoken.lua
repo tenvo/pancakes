@@ -1,25 +1,25 @@
-local library = sharedRequire('../UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local AudioPlayer = sharedRequire('@utils/AudioPlayer.lua');
 local makeESP = sharedRequire('@utils/makeESP.lua');
 
-local Utility = sharedRequire('../utils/Utility.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
-local AnalyticsAPI = sharedRequire('../classes/AnalyticsAPI.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local AnalyticsAPI = sharedRequire('classes/AnalyticsAPI.lua');
 
-local Services = sharedRequire('../utils/Services.lua');
-local createBaseESP = sharedRequire('../utils/createBaseESP.lua');
+local Services = sharedRequire('utils/Services.lua');
+local createBaseESP = sharedRequire('utils/createBaseESP.lua');
 
-local EntityESP = sharedRequire('../classes/EntityESP.lua');
-local ControlModule = sharedRequire('../classes/ControlModule.lua');
-local ToastNotif = sharedRequire('../classes/ToastNotif.lua');
+local EntityESP = sharedRequire('classes/EntityESP.lua');
+local ControlModule = sharedRequire('classes/ControlModule.lua');
+local ToastNotif = sharedRequire('classes/ToastNotif.lua');
 
-local BlockUtils = sharedRequire('../utils/BlockUtils.lua');
-local TextLogger = sharedRequire('../classes/TextLogger.lua');
-local fromHex = sharedRequire('../utils/fromHex.lua');
-local toCamelCase = sharedRequire('../utils/toCamelCase.lua');
-local Webhook = sharedRequire('../utils/Webhook.lua');
-local Signal = sharedRequire('../utils/Signal.lua');
+local BlockUtils = sharedRequire('utils/BlockUtils.lua');
+local TextLogger = sharedRequire('classes/TextLogger.lua');
+local fromHex = sharedRequire('utils/fromHex.lua');
+local toCamelCase = sharedRequire('utils/toCamelCase.lua');
+local Webhook = sharedRequire('utils/Webhook.lua');
+local Signal = sharedRequire('utils/Signal.lua');
 
 local column1, column2 = unpack(library.columns);
 

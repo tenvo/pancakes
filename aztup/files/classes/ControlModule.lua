@@ -1,4 +1,4 @@
-local Services = sharedRequire('../utils/Services.lua');
+local Services = sharedRequire('utils/Services.lua');
 local ContextActionService, HttpService = Services:Get('ContextActionService', 'HttpService');
 
 local ControlModule = {};

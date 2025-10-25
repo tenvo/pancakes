@@ -1,12 +1,12 @@
-local library = sharedRequire('../UILibrary.lua');
-local Services = sharedRequire('../utils/Services.lua');
-local Utility = sharedRequire('../utils/Utility.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
+local library = sharedRequire('UILibrary.lua');
+local Services = sharedRequire('utils/Services.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Maid = sharedRequire('utils/Maid.lua');
 
-local ControlModule = sharedRequire('../classes/ControlModule.lua');
+local ControlModule = sharedRequire('classes/ControlModule.lua');
 
-local createBaseESP = sharedRequire('../utils/createBaseESP.lua');
-local prettyPrint = sharedRequire('../utils/prettyPrint.lua');
+local createBaseESP = sharedRequire('utils/createBaseESP.lua');
+local prettyPrint = sharedRequire('utils/prettyPrint.lua');
 
 local ReplicatedFirst, Players, RunService, Lighting, ReplicatedStorage, UserInputService = Services:Get(
     'ReplicatedFirst',

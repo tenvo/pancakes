@@ -1,10 +1,10 @@
-local library = sharedRequire('../UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
-local Utility = sharedRequire('../utils/Utility.lua');
-local Maid = sharedRequire('../utils/Maid.lua');
-local Services = sharedRequire('../utils/Services.lua');
+local Utility = sharedRequire('utils/Utility.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local Services = sharedRequire('utils/Services.lua');
 
-local ControlModule = sharedRequire('../classes/ControlModule.lua');
+local ControlModule = sharedRequire('classes/ControlModule.lua');
 local createBaseESP = sharedRequire('@utils/createBaseESP.lua');
 local EntityESP = sharedRequire('@classes/EntityESP.lua');
 local ToastNotif = sharedRequire('@classes/ToastNotif.lua');
