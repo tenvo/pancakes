@@ -699,8 +699,8 @@ xpcall(function()
     ]]--
 
     xpcall(function()
-        require_loader = game:GetService("HttpService"):GetAsync(repo.."require-loader.lua")
-        base_append = game:GetService("HttpService"):GetAsync(repo.."base-append.lua")
+        require_loader = game:HttpGet(repo.."require-loader.lua")
+        base_append = game:HttpGet(repo.."base-append.lua")
         setStatus('Fetching script');
         repeat task.wait(); until base_append and require_loader;
         local compiled = writefile("Aztup Hub V3/compiled.lua",tostring(base_append).." "..tostring(require_loader))

@@ -17,6 +17,9 @@ if (typeof(game) ~= 'Instance') then return SX_CRASH() end;
 local originalFunctions = {};
 local HttpService = game:GetService('HttpService');
 
+setStatus("Initializing")
+task.wait(1)
+
 xpcall(function()
     local functionsToCheck = {
         fireServer = Instance.new('RemoteEvent').FireServer,
@@ -178,7 +181,7 @@ do -- //Hook print debug
     end;
 end;
 
-setStatus('Checking whitelist');
+-- setStatus('Checking whitelist');
 
 do -- // Whitelist check
     -- A lot of this was redacted for obvious reasons
@@ -209,3 +212,4 @@ local sharedRequires = {};
 -- end;
 
 setStatus('All done');
+task.wait(1)
