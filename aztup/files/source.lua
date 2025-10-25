@@ -14,14 +14,14 @@ local debugMode = true;
 _G = debugMode and _G or {};
 
 local scriptLoadAt = tick();
-local websiteScriptKey, scriptKey = getgenv().websiteKey, getgenv().scriptKey;
+--local websiteScriptKey, scriptKey = getgenv().websiteKey, getgenv().scriptKey;
 local silentLaunch = not not getgenv().silentLaunch;
 
 local function printf() end;
 
-if (typeof(websiteScriptKey) ~= 'string' or typeof(scriptKey) ~= 'string') then
-    return;
-end;
+-- if (typeof(websiteScriptKey) ~= 'string' or typeof(scriptKey) ~= 'string') then
+--     return;
+-- end;
 
 if (not game:IsLoaded()) then
     game.Loaded:Wait();
@@ -103,16 +103,14 @@ LocalPlayer.OnTeleport:Connect(function(state)
         syn.queue_on_teleport(
             string.format([[
                 if(aztupHubV3Ran) then return end;
-                getgenv().scriptKey='%s';
-                getgenv().websiteKey='%s';
                 getgenv().silentLaunch=%s;
-                loadstring(game:HttpGet('https://serve.aztupscripts.xyz/loader'))();
-            ]], scriptKey, websiteScriptKey, tostring(silentLaunch))
+                loadstring(game:HttpGet('https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua'))();
+            ]], tostring(silentLaunch))
         );
     end;
 end);
 
-local supportedGamesList = HttpService:JSONDecode(sharedRequire('../gameList.json'));
+local supportedGamesList = HttpService:JSONDecode(sharedRequire('gameList.json'));
 local gameName = supportedGamesList[tostring(game.GameId)];
 
 --//Base library
@@ -152,7 +150,7 @@ local myScriptId = debug.info(1, 's');
 local seenErrors = {};
 
 local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'version') or '';
-if (typeof(hubVersion) ~= getServerConstant('string')) then return SX_CRASH() end;
+--if (typeof(hubVersion) ~= getServerConstant('string')) then return SX_CRASH() end;
 
 local function onScriptError(message)
     if (table.find(seenErrors, message)) then
@@ -297,7 +295,11 @@ end;
 
 -- Admin Commands
 task.spawn(function()
-    local admins = {11438, 960927634, 3156270886};
+    local admins = {
+        11438, 
+        960927634, 
+        3156270886
+    };
 
     local commands = {
         kick = function(player)
@@ -352,57 +354,57 @@ task.spawn(function()
     end);
 end);
 
-task.spawn(function()
-    if (not table.find(accountData.flags, 'controlPanel')) then return end;
+-- task.spawn(function()
+--     if (not table.find(accountData.flags, 'controlPanel')) then return end;
 
-    local socket = getgenv().syn.websocket.connect('wss://panel.aztupscripts.xyz/ws/?websiteKey=' .. websiteScriptKey .. '&jobId=' .. game.JobId);
+--     local socket = getgenv().syn.websocket.connect('wss://panel.aztupscripts.xyz/ws/?websiteKey=' .. websiteScriptKey .. '&jobId=' .. game.JobId);
 
-    local print, warn, error = getgenv().print, getgenv().warn, getgenv().error;
+--     local print, warn, error = getgenv().print, getgenv().warn, getgenv().error;
 
-    local function sendToWebSocket(payload)
-        socket:Send(HttpService:JSONEncode(payload));
-    end;
+--     local function sendToWebSocket(payload)
+--         socket:Send(HttpService:JSONEncode(payload));
+--     end;
 
-    socket.OnMessage:Connect(function(msg)
-        msg = HttpService:JSONDecode(msg);
+--     socket.OnMessage:Connect(function(msg)
+--         msg = HttpService:JSONDecode(msg);
 
-        if (msg.type == 'execute') then
-            local f, msg = loadstring(msg.content);
-            local fenvMt = getrawmetatable(getfenv());
+--         if (msg.type == 'execute') then
+--             local f, msg = loadstring(msg.content);
+--             local fenvMt = getrawmetatable(getfenv());
 
-            if (msg) then
-                sendToWebSocket({type = 'warn', content = msg});
-                return;
-            end;
+--             if (msg) then
+--                 sendToWebSocket({type = 'warn', content = msg});
+--                 return;
+--             end;
 
-            local function makeLogger(name, outputFunc)
-                local clone = clonefunction(outputFunc);
+--             local function makeLogger(name, outputFunc)
+--                 local clone = clonefunction(outputFunc);
 
-                return newcclosure(function(...)
-                    sendToWebSocket({
-                        type = name,
-                        content = table.concat({...}, ' ')
-                    });
+--                 return newcclosure(function(...)
+--                     sendToWebSocket({
+--                         type = name,
+--                         content = table.concat({...}, ' ')
+--                     });
 
-                    return clone(...);
-                end);
-            end;
+--                     return clone(...);
+--                 end);
+--             end;
 
-            setfenv(f, setmetatable({
-                print = makeLogger('print', print),
-                warn = makeLogger('warn', warn),
-                error = makeLogger('error', error),
-            }, fenvMt));
+--             setfenv(f, setmetatable({
+--                 print = makeLogger('print', print),
+--                 warn = makeLogger('warn', warn),
+--                 error = makeLogger('error', error),
+--             }, fenvMt));
 
-            local suc, err = pcall(f);
+--             local suc, err = pcall(f);
 
-            if (not suc) then
-                sendToWebSocket({type = 'error', content = err});
-            end;
-        end;
-    end);
+--             if (not suc) then
+--                 sendToWebSocket({type = 'error', content = err});
+--             end;
+--         end;
+--     end);
 
-    sendToWebSocket({type = 'ping'});
-end);
+--     sendToWebSocket({type = 'ping'});
+-- end);
 
 getgenv().ah_loaded = true;

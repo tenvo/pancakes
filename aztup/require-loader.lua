@@ -24,12 +24,21 @@ local function customRequire(url, useHigherLevel)
         return originalRequire(url);
     end;
 
-    local lhost = shared.aztuppy
+    print("requiring .. "..url)
+    local lhost = shared.aztuppy.root
+
+    for i,_ in pairs(shared.aztuppy) do
+        if url:find(tostring(i).."/") then
+            lhost = shared.aztuppy[tostring(i)]
+            url = url:split(tostring(i).."/")[2]
+        end
+    end
+
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
     local requirerScript = __scripts[requirerScriptId];
     
     local requestData = httpRequest({
-        Url = lhost.root..url
+        Url = lhost..url
     });
 
     if (not requestData.Success) then
