@@ -208,5 +208,5 @@ local sharedRequires = {};
 --     end;
 -- end;
 
-setStatus('All done');
+setStatus('All done',true);
 task.wait(1)
