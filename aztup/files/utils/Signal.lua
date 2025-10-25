@@ -49,6 +49,7 @@ function Signal:Connect(handler)
 		error(("connect(%s)"):format(typeof(handler)), 2)
 	end
 
+	print("not erroring")
 	return self._bindableEvent.Event:Connect(function()
 		handler(unpack(self._argData, 1, self._argCount))
 	end)
