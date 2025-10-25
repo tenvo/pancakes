@@ -11,7 +11,8 @@ getgenv().__scripts = __scripts;
 local debugInfo = debug.info;
 
 local HttpService = game:GetService('HttpService');
-local GameScripts = game:HttpGet(HttpService:JSONDecode("https://api.github.com/repos/tenvo/pancakes/contents/aztup/files/games"))
+local GameScripts = game:HttpGet("https://api.github.com/repos/tenvo/pancakes/contents/aztup/files/games")
+GameScripts = HttpService:JSONDecode(GameScripts)
 local info = debugInfo(1, 's');
 __scripts[info] = 'require-loader';
 
