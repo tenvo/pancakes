@@ -344,14 +344,10 @@ do -- // Load
         local configFiles = {};
 
         for i, v in next, listfiles(self.foldername) do
-            print(v)
-            local fileName = v:match('\\(.+)');
+            local fileName = v:match("([^/]+)%.json$");
             local fileSubExtension = v:match('%.(.+)%.json');
 
-            print(fileName,fileSubExtension)
-
             if (fileSubExtension == 'config') then
-                print(fileName)
                 table.insert(configFiles, fileName:match('(.-)%.config'));
             end;
         end;
@@ -3526,7 +3522,7 @@ do -- // Load
                     local configName = v2:match('(%w+).config.json');
                     if (not configName) then continue; end;
 
-                    local folderName = v:match('configs\\(%w+)');
+                    local folderName = v:match('configs/([^/]+)$');
                     local fullConfigName = string.format('%s - %s', folderName, configName);
 
                     table.insert(files, fullConfigName);
