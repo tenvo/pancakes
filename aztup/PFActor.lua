@@ -10,7 +10,7 @@ local Debris = game:GetService('Debris');
 local Players = game:GetService('Players');
 
 local LocalPlayer = Players.LocalPlayer;
-local commEvent = getgenv().syn.get_comm_channel(...);
+local commEvent = getgenv().get_comm_channel(...);
 
 local requireCache = rawget(getupvalue(getrenv().shared.require, 1), '_cache');
 assert(requireCache);
