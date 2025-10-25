@@ -11,6 +11,7 @@ getgenv().__scripts = __scripts;
 local debugInfo = debug.info;
 
 local HttpService = game:GetService('HttpService');
+local GameScripts = game:HttpGet(HttpService:JSONDecode("https://api.github.com/repos/tenvo/pancakes/contents/aztup/files/games"))
 local info = debugInfo(1, 's');
 __scripts[info] = 'require-loader';
 
@@ -18,6 +19,28 @@ local cachedRequires = {};
 _G.cachedRequires = cachedRequires;
 
 local originalRequire = require
+
+local function QueryGame(query)
+    if typeof(GameScripts) ~= "table" then return print("[ERROR] couldn't load games directory") end
+    
+    for i,v in pairs(GameScripts) do
+        local name = v["name"]
+        local search = {query..".lua",query}
+        
+        if (table.find(search,name)) then
+            local extension = filename:match("^.+(%..+)$")
+
+            if extension ~= nil then
+                return v["download_url"]
+            else
+                local download_url = string.format("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/games/%s/main.lua",query)
+                return download_url
+            end
+        end
+    end
+
+    return print("[ERROR] didn't find a script for the game: "..query)
+end
 
 local function customRequire(url, useHigherLevel)
     if (typeof(url) ~= 'string' or not checkcaller()) then
@@ -41,7 +64,11 @@ local function customRequire(url, useHigherLevel)
         Url = lhost..url
     });
 
-    if (not requestData.Success) then
+    if (not requestData.Success and url:find("games/")) then
+        requestData = httpRequest({
+            Url = QueryGame(url:split("games/")[2])
+        });
+    elseif (not requestData.Success) then
         warn(string.format('[ERROR] Script bundler couldn\'t find %s', url));
         return task.wait(9e9);
     end;
