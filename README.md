@@ -9,6 +9,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/a
 
 ## Aztup Script Status: 🔴
 ### Loader: 🔴<br>
+### Universal: 🔴<br>
 
 **Games:**<br>
 Ace Of Spadez 🔴<br>
