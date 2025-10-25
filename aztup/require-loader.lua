@@ -51,11 +51,15 @@ local function customRequire(url, useHigherLevel)
     print("requiring .. "..url)
     local lhost = shared.aztuppy.root
 
-    for i,_ in pairs(shared.aztuppy) do
-        if url:find(tostring(i).."/") then
-            lhost = shared.aztuppy[tostring(i)]
-            url = url:split(tostring(i).."/")[2]
+    if not url:find("UILibrary.lua") then
+        for i,_ in pairs(shared.aztuppy) do
+            if url:find(tostring(i).."/") then
+                lhost = shared.aztuppy[tostring(i)]
+                url = url:split(tostring(i).."/")[2]
+            end
         end
+    else
+        url = "UILibrary.lua"
     end
 
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
@@ -66,6 +70,7 @@ local function customRequire(url, useHigherLevel)
     });
 
     if (not requestData.Success and url:find("games/")) then
+        print("IS A GAME!@!")
         requestData = httpRequest({
             Url = QueryGame(url:split("games/")[2])
         });

@@ -136,7 +136,8 @@ if(debugMode) then
         text = 'Hub running in debug mode'
     });
 end;
-
+print(library)
+print(gameName)
 if (gameName) then
     window = library:AddTab(gameName);
     column1 = window:AddColumn();
@@ -277,6 +278,7 @@ do -- // KeyBinds
             end;
         end
     });
+    print("hello?!")
 end;
 
 printf('[Script] [Keybinds] Took %.02f to load', tick() - keybindLoadAt);
