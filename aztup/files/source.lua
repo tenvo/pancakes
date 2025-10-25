@@ -136,8 +136,7 @@ if(debugMode) then
         text = 'Hub running in debug mode'
     });
 end;
-print(library)
-print(gameName)
+
 if (gameName) then
     window = library:AddTab(gameName);
     column1 = window:AddColumn();
@@ -278,7 +277,6 @@ do -- // KeyBinds
             end;
         end
     });
-    print("hello?!")
 end;
 
 printf('[Script] [Keybinds] Took %.02f to load', tick() - keybindLoadAt);
@@ -286,7 +284,6 @@ printf('[Script] [Full] Took %.02f to load', tick() - scriptLoadAt);
 
 local libraryStartAt = tick();
 
-print(silentLaunch,"SILENT LAUNCH")
 library:Init(silentLaunch);
 printf('[Script] [Library] Took %.02f to init', tick() - libraryStartAt);
 
