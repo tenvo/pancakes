@@ -1,4 +1,4 @@
-local Services = sharedRequire('./Services.lua');
+local Services = sharedRequire('utils/Services.lua');
 local Players = Services:Get('Players');
 
 return function (playerName)
