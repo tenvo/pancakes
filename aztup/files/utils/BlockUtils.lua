@@ -1,4 +1,4 @@
-local Services = sharedRequire('./Services.lua');
+local Services = sharedRequire('utils/Services.lua');
 local library = sharedRequire('../UILibrary.lua');
 local AltManagerAPI = sharedRequire('../classes/AltManagerAPI.lua');
 local Players, GuiService, HttpService, StarterGui, VirtualInputManager, CoreGui = Services:Get('Players', 'GuiService', 'HttpService', 'StarterGui', 'VirtualInputManager', 'CoreGui');
