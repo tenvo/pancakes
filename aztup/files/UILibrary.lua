@@ -2871,6 +2871,8 @@ do -- // Load
     function library:Init(silent)
         if self.hasInit then return end
 
+        print("stupid init..")
+
         self.hasInit = true
         self.base = library:Create('ScreenGui', {IgnoreGuiInset = true, AutoLocalize = false, Enabled = not silent})
         self.dummyBox = library:Create('TextBox', {Visible = false, Parent = self.base});
@@ -2880,13 +2882,25 @@ do -- // Load
 
         if RunService:IsStudio() then
             self.base.Parent = script.Parent.Parent
-        elseif syn then
-            if(gethui) then
-                self.base.Parent = gethui();
-            else
-                pcall(syn.protect_gui, self.base);
-                self.base.Parent = CoreGui;
+        else
+            local oldGethui = gethui;
+
+            local function gethui(ui)
+                if (oldGethui ~= nil) then
+                    return oldGethui();
+                end;
+
+                return CoreGui;
             end;
+
+            self.base.Parent = gethui(self.base.Parent)
+
+            -- if(gethui) then
+            --     self.base.Parent = gethui();
+            -- else
+            --     -- pcall(syn.protect_gui, self.base);
+            --     self.base.Parent = CoreGui;
+            -- end;
         end
 
         self.main = self:Create('ImageButton', {
@@ -3239,6 +3253,7 @@ do -- // Load
             self.open = false;
         end;
 
+        print("UI INIT FIRE")
         library.OnLoad:Fire();
         library.OnLoad:Destroy();
         library.OnLoad = nil;
