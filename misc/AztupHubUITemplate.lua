@@ -1,4 +1,4 @@
-shared.aztuppy = {
+shared.aztuppy = { -- this my config table pls dont use it
   payload = {
     Init = false, 
   }
@@ -24,6 +24,7 @@ local mt = {
             inject()
         end
     end
-}
+} -- the metatable responds to when we call payload(), payload(true) is to terminate and calling it empty activates it which is needed when GAMES_SETUP is called
 
-setmetatable(shared.aztuppy.payload,mt)
+setmetatable(shared.aztuppy.payload,mt) -- apply what we did above
+loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))() -- run aztup hub as normal
