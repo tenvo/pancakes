@@ -147,7 +147,7 @@ local function httpRequest(...)
     local attempts = 0;
 
     if (not isRequestValid(reqData)) then
-        print("In dattt")
+
         repeat
             reqData = oldRequest(...);
             attempts += 1;

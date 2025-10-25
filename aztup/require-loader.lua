@@ -48,7 +48,6 @@ local function customRequire(url, useHigherLevel)
         return originalRequire(url);
     end;
 
-    print("requiring .. "..url)
     local lhost = shared.aztuppy.root
 
     if not url:find("UILibrary.lua") then
@@ -88,7 +87,7 @@ local function customRequire(url, useHigherLevel)
 
     local scriptName = url;
     local scriptFunction, syntaxError = loadstring(scriptContent);
-    print(scriptFunction)
+    print(url, scriptFunction, "requiring")
 
     if (not scriptFunction) then
         warn(string.format('[ERROR] Detected syntax error for %s', url));
@@ -123,7 +122,6 @@ getgenv().aztupHubV3RanReal = false;
 
 local function GAMES_SETUP()
     local gameName = gameList[tostring(game.GameId)];
-    print("GAME SETUP",gameName)
     if (not gameName) then return warn('no custom game for this game'); end;
     require(string.format('games/%s.lua', gameName:gsub('%s', '')));
 end;
