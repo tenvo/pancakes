@@ -38,7 +38,7 @@ local library = {
 	tabs = {},
 	draggable = true,
 	flags = {},
-	title = string.format('Aztup Hub | v%s', scriptVersion or 'DEBUG'),
+	title = string.format('Aztup Hub (tenvo Overhaul) | v%s', scriptVersion or 'DEBUG'),
 	open = false,
 	popup = nil,
 	instances = {},
@@ -3690,12 +3690,12 @@ do -- // Load
         end));
 
         discordSection:AddButton({
-            text = 'Join Discord',
-            callback = function() return joinDiscord('gWCk7pTXNs') end
+            text = "Copy Tenvo's Server (SUPPORT)",
+            callback = function() return setclipboard('No Discord Yet') end
         });
 
         discordSection:AddButton({
-            text = 'Copy Discord Invite',
+            text = "Copy Aztup's Server (NO SUPPORT)",
             callback = function() return setclipboard('discord.gg/gWCk7pTXNs') end
         });
     end;
