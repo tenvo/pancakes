@@ -7,9 +7,9 @@ lua scripts
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()
 ```
 
-## Aztup Script Status: 🔴
-### Loader: 🔴<br>
-### Universal: 🔴<br>
+## Aztup Script Status: 🟢
+### Loader: 🟢<br>
+### Universal: 🟢<br>
 
 **Games:**<br>
 Ace Of Spadez 🔴<br>
