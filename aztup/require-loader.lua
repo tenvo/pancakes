@@ -49,31 +49,16 @@ local function customRequire(url, useHigherLevel)
     end;
 
     local lhost = shared.aztuppy.root
-    local RequestUrl 
 
     if not url:find("UILibrary.lua") then
-        local isAGame = true
         for i,_ in pairs(shared.aztuppy) do
             if url:find(tostring(i).."/") then
-                isAGame = false
                 lhost = shared.aztuppy[tostring(i)]
                 url = url:split(tostring(i).."/")[2]
-                RequestUrl = lhost..url
-                break
-            end
-        end
-
-        if isAGame then
-            RequestUrl = QueryGame(url)
-            
-            if typeof(RequestUrl) ~= 'string' then
-                warn(string.format('[ERROR] Script bundler couldn\'t identify %s', url));
-                return task.wait(9e9);
             end
         end
     else
         url = "UILibrary.lua"
-        RequestUrl = lhost..url
     end
 
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
@@ -82,6 +67,12 @@ local function customRequire(url, useHigherLevel)
     local requestData = httpRequest({
         Url = lhost..url
     });
+
+    if (not requestData.Success) then
+        requestData = httpRequest({
+            Url = QueryGame(url)
+        });
+    end
  
     if (not requestData.Success) then
         warn(string.format('[ERROR] Script bundler couldn\'t find %s', url));
