@@ -5,6 +5,7 @@ Aztup V3 UI Lib open to public use once i have it running, i'll have a section f
 
 ## Aztup Hub V3 Loader:
 ```lua
+getgenv().silentLaunch = false
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()
 ```
 
