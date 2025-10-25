@@ -4,7 +4,7 @@ SX_VM_CNONE();
 -- @classmod Maid
 -- @see Signal
 
-local Signal = sharedRequire('./Signal.lua');
+local Signal = sharedRequire('utils/Signal.lua');
 local tableStr = getServerConstant('table');
 local classNameStr = getServerConstant('Maid');
 local funcStr = getServerConstant('function');
