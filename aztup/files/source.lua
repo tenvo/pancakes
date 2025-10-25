@@ -39,11 +39,7 @@ local Utility = sharedRequire('@utils/Utility.lua');
 
 local _ = sharedRequire('@utils/prettyPrint.lua');
 
-print("reached end")
-
 local Players, TeleportService, ScriptContext, MemStorageService, HttpService, ReplicatedStorage = Services:Get(getServerConstant('Players'), 'TeleportService', 'ScriptContext', 'MemStorageService', 'HttpService', 'ReplicatedStorage');
-
-print("YUH")
 
 local BLOODLINES_MAIN_PLACE = 10266164381;
 local BLOODLINES = 1946714362;
@@ -80,7 +76,6 @@ do -- //Hook print debug
     end;
 end;
 
-print("WOOH")
 local LocalPlayer = Players.LocalPlayer
 local executed = false;
 
@@ -95,8 +90,8 @@ if (debugMode) then
         jsonEncode = HttpService.JSONEncode,
         jsonDecode = HttpService.JSONDecode,
         findFirstChild = game.FindFirstChild,
-        runOnActor = syn.run_on_actor,
-        getCommChannel = syn.get_comm_channel
+        runOnActor = run_on_actor,
+        getCommChannel = get_comm_channel
     }
 end;
 
