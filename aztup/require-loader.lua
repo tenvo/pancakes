@@ -26,7 +26,7 @@ local function QueryGame(query)
     
     for i,v in pairs(GameScripts) do
         local name = v["name"]
-        local search = {query..".lua",query}
+        local search = {query:match('%w+%.lua'),query}
         
         if (table.find(search,name)) then
             local extension = filename:match("^.+(%..+)$")
