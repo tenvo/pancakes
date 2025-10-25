@@ -95,8 +95,8 @@ if (debugMode) then
         jsonEncode = HttpService.JSONEncode,
         jsonDecode = HttpService.JSONDecode,
         findFirstChild = game.FindFirstChild,
-        runOnActor = syn.run_on_actor,
-        getCommChannel = syn.get_comm_channel
+        runOnActor = run_on_actor,
+        getCommChannel = get_comm_channel
     }
 end;
 
