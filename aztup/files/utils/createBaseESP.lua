@@ -1,8 +1,8 @@
 SX_VM_CNONE();
-local Maid = sharedRequire('Maid.lua');
-local Services = sharedRequire('Services.lua');
+local Maid = sharedRequire('utils/Maid.lua');
+local Services = sharedRequire('utils/Services.lua');
 
-local toCamelCase = sharedRequire('toCamelCase.lua');
+local toCamelCase = sharedRequire('utils/toCamelCase.lua');
 local library = sharedRequire('../UILibrary.lua');
 
 local Players, CorePackages, HttpService = Services:Get('Players', 'CorePackages', 'HttpService');
@@ -54,7 +54,7 @@ local actors = {};
 local readyCount = 0;
 local broadcastEvent = Instance.new('BindableEvent');
 
-local supportedGamesList = HttpService:JSONDecode(sharedRequire('../../gameList.json'));
+local supportedGamesList = HttpService:JSONDecode(sharedRequire('gameList.json'));
 local gameName = supportedGamesList[tostring(game.GameId)];
 
 if (not playerScriptsLoader and gameName == 'Apocalypse Rising 2') then
