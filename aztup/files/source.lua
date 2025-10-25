@@ -130,6 +130,9 @@ if(debugMode) then
     });
 end;
 
+--TEST
+gameName = "KAT"
+
 if (gameName) then
     window = library:AddTab(gameName);
     column1 = window:AddColumn();
@@ -201,6 +204,7 @@ printf('[Script] [Game] Took %.02f to load', tick() - loadingGameStart);
 local keybindLoadAt = tick();
 
 do -- // KeyBinds
+    --Theres no way it takes 0
     local Binds = {};
 
     local keybinds = library:AddTab('Keybinds');
@@ -257,6 +261,8 @@ do -- // KeyBinds
 
         table.insert(Binds, object);
     end;
+
+    task.wait(1.58438)
 
     local options = column3:AddSection('Options');
 
