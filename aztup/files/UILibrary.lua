@@ -348,6 +348,7 @@ do -- // Load
             local fileSubExtension = v:match('%.(.+)%.json');
 
             if (fileSubExtension == 'config') then
+                print(fileName)
                 table.insert(configFiles, fileName:match('(.-)%.config'));
             end;
         end;
