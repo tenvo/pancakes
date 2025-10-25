@@ -1,3 +1,5 @@
+print("HELLO WORLD")
+
 if (not accountData) then
     accountData = {
         uuid = 'test',
