@@ -1,6 +1,7 @@
 # pancakes
 lua scripts i made but use aztup hub UI lib, I also plan on having the original aztup hub v3 games working
 
+Aztup V3 UI Lib open to public use once i have it running, i'll have a section for how to use it
 
 ## Aztup Hub V3 Loader:
 ```lua
