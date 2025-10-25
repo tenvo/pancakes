@@ -22,25 +22,25 @@ _G.cachedRequires = cachedRequires;
 local originalRequire = require
 
 local function QueryGame(query)
-    if typeof(GameScripts) ~= "table" then return print("[ERROR] couldn't load games directory") end
+    if typeof(GameScripts) ~= "table" then return warn('[ERROR] couldn\'t load games directory') end
+    local search = {query:split(".lua")[1],query}
     
     for i,v in pairs(GameScripts) do
         local name = v["name"]
-        local search = {query:match('%w+%.lua'),query}
         
         if (table.find(search,name)) then
-            local extension = filename:match("^.+(%..+)$")
+            local extension = v["name"]:match("^.+(%..+)$")
 
             if extension ~= nil then
                 return v["download_url"]
             else
-                local download_url = string.format("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/games/%s/main.lua",query)
+                local download_url = string.format("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/games/%s/main.lua",query:split(".lua")[1])
                 return download_url
             end
         end
     end
 
-    return print("[ERROR] didn't find a script for the game: "..query)
+    return warn(string.format('[ERROR] didn\'t find a script for the game: ', query))
 end
 
 local function customRequire(url, useHigherLevel)
