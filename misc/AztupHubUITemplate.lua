@@ -4,7 +4,7 @@ shared.aztuppy = { -- this my config table pls dont use it
     root = nil, --[[ (OPTIONAL) change this var to your github/website file hoster, you can call on files using
         local SomeData = sharedRequire("AztupHubUITemplate.lua"), 
     
-        this should be done for tables of data you want to keep seperate in your scripts
+        this should be done for tables of data you want to keep seperate in your scripts or OOP programming
     ]]--
   }
 }
