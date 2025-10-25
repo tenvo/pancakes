@@ -284,6 +284,7 @@ printf('[Script] [Full] Took %.02f to load', tick() - scriptLoadAt);
 
 local libraryStartAt = tick();
 
+print(silentLaunch,"SILENT LAUNCH")
 library:Init(silentLaunch);
 printf('[Script] [Library] Took %.02f to init', tick() - libraryStartAt);
 
