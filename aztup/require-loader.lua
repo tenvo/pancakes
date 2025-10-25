@@ -45,7 +45,7 @@ local function customRequire(url, useHigherLevel)
     end;
 
     local scriptName = url;
-    local scriptFunction, syntaxError = loadstring(scriptContent, scriptName);
+    local scriptFunction, syntaxError = loadstring(scriptContent);
     print(scriptFunction)
 
     if (not scriptFunction) then
