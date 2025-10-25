@@ -130,9 +130,6 @@ if(debugMode) then
     });
 end;
 
---TEST
-gameName = "KAT"
-
 if (gameName) then
     window = library:AddTab(gameName);
     column1 = window:AddColumn();
@@ -261,8 +258,6 @@ do -- // KeyBinds
 
         table.insert(Binds, object);
     end;
-
-    task.wait(1.58438)
 
     local options = column3:AddSection('Options');
 
