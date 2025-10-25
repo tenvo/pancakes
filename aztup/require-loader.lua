@@ -90,6 +90,7 @@ getgenv().aztupHubV3RanReal = false;
 
 local function GAMES_SETUP()
     local gameName = gameList[tostring(game.GameId)];
+    print("GAME SETUP",gameName)
     if (not gameName) then return warn('no custom game for this game'); end;
     require(string.format('games/%s.lua', gameName:gsub('%s', '')));
 end;

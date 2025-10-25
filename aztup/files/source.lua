@@ -39,7 +39,11 @@ local Utility = sharedRequire('@utils/Utility.lua');
 
 local _ = sharedRequire('@utils/prettyPrint.lua');
 
+print("reached end")
+
 local Players, TeleportService, ScriptContext, MemStorageService, HttpService, ReplicatedStorage = Services:Get(getServerConstant('Players'), 'TeleportService', 'ScriptContext', 'MemStorageService', 'HttpService', 'ReplicatedStorage');
+
+print("YUH")
 
 local BLOODLINES_MAIN_PLACE = 10266164381;
 local BLOODLINES = 1946714362;
@@ -76,6 +80,7 @@ do -- //Hook print debug
     end;
 end;
 
+print("WOOH")
 local LocalPlayer = Players.LocalPlayer
 local executed = false;
 
