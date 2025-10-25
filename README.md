@@ -11,7 +11,10 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/a
 ### Loader: 🟢<br>
 ### Universal: 🟢<br>
 
-**Games:**<br>
+**My Games (NOT OFFICIAL, AT YOUR OWN RISK):**<br>
+Coming soon! <br>
+
+**Aztup's Old Games:**<br>
 Ace Of Spadez 🔴<br>
 Adopt Me 🔴<br>
 Adventure Tales 🔴<br>
