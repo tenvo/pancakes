@@ -699,16 +699,14 @@ xpcall(function()
     ]]--
 
     xpcall(function()
-        require_loader = httpRequest({
-            Url = repo.."require-loader.lua"
-        });
-        base_append = httpRequest({
-            Url = repo.."base-append.lua"
-        });
+        require_loader = game:GetService("HttpService"):GetAsync(repo.."require-loader.lua")
+        base_append = game:GetService("HttpService"):GetAsync(repo.."base-append.lua")
         setStatus('Fetching script');
         repeat task.wait(); until base_append and require_loader;
-        local compiled = tostring(base_append.Body).." "..tostring(require_loader.Body)
-        local AztupScript = assert(loadstring(require_loader.Body))
+        local compiled = writefile("Aztup Hub V3/compiled.lua",tostring(base_append).." "..tostring(require_loader))
+        setStatus('Compiling script')
+        repeat task.wait() until isfile("Aztup Hub V3/compiled.lua")
+        local AztupScript = assert(loadstring(readfile("Aztup Hub V3/compiled.lua")))
 
         setStatus('Launching script');
         AztupScript()

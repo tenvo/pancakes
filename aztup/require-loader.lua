@@ -67,9 +67,9 @@ local function customRequire(url, useHigherLevel)
         return scriptContent;
     end;
 
-    local scriptName = requestData.Headers['File-Path'] or url;
+    local scriptName = url;
     local scriptFunction, syntaxError = loadstring(scriptContent, scriptName);
-    print(scriptContent,scriptFunction)
+    print(scriptFunction)
 
     if (not scriptFunction) then
         warn(string.format('[ERROR] Detected syntax error for %s', url));
