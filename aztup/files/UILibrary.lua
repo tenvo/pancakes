@@ -344,8 +344,11 @@ do -- // Load
         local configFiles = {};
 
         for i, v in next, listfiles(self.foldername) do
+            print(v)
             local fileName = v:match('\\(.+)');
             local fileSubExtension = v:match('%.(.+)%.json');
+
+            print(fileName,fileSubExtension)
 
             if (fileSubExtension == 'config') then
                 print(fileName)
