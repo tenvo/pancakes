@@ -3693,7 +3693,12 @@ do -- // Load
 
         discordSection:AddButton({
             text = "Copy Aztup's Server (NO SUPPORT)",
-            callback = function() return setclipboard('discord.gg/gWCk7pTXNs') end
+            callback = function() 
+                ToastNotif.new({
+                    text = 'Reminder: Aztup does NOT offer support for this script.'
+                });
+                return setclipboard('discord.gg/gWCk7pTXNs') 
+            end
         });
     end;
 end;
