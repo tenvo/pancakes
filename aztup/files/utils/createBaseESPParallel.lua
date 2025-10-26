@@ -10,7 +10,7 @@ return [[
 
     if (typeof(originalCommEvent) == 'table') then
         commEvent = {
-            _event = originalCommEvent._event,
+            _event = originalCommEvent,
 
             Connect = function(self, f)
                 return self._event.Event:Connect(f)
@@ -21,7 +21,7 @@ return [[
             end
         };
     else
-        commEvent = getgenv().syn.get_comm_channel(originalCommEvent);
+        commEvent = get_comm_channel(originalCommEvent);
     end;
 
     local flags = {};
