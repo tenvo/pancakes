@@ -9,7 +9,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/p
 if not shared.aztuppy then shared.aztuppy = {} end
 if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
 
-
 shared.aztuppy.payload = {
     Init = false, -- <= (required) status of payload, does nothing atm. dont remove it
     title = "PoopGame", -- <= (optional) changes title of main tab, if nil it uses the game name
@@ -169,7 +168,6 @@ Main:AddList({
 })
 
 end
-
 
 --// dont change below, its just a metatable that can be called with payload(), and payload(true) to remove 
 local a=setmetatable(shared.aztuppy.payload,{__call=function(b,c)if not checkcaller()then return end;if c then setmetatable(shared.aztuppy.payload,nil)shared.aztuppy.payload=nil;inject=nil elseif not shared.aztuppy.payload.Init then shared.aztuppy.payload.Init=true;inject()end end})
