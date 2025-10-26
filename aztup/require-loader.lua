@@ -60,10 +60,8 @@ local function GetHost(url)
             end
         end
         
-        print("heya")
         if (shared.aztuppy["payload"]) then
             if (shared.aztuppy["payload"].root ~= nil) then
-                print("BOOM")
                 lhost = shared.aztuppy["payload"].root
                 newUrl = url
                 return lhost,newUrl

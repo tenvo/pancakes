@@ -8,7 +8,7 @@ if (not accountData) then
     }
 end;
 
-local debugMode = true;
+local debugMode = false;
 _G = debugMode and _G or {};
 
 local scriptLoadAt = tick();

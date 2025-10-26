@@ -27,14 +27,14 @@ local Maid = sharedRequire('utils/Maid.lua');
 local prettyPrint = sharedRequire('utils/prettyPrint.lua');
 local ToastNotif = sharedRequire('classes/ToastNotif.lua')
 
-local SunTzuQuotes = sharedRequire('data/ExampleData.lua') --// We call the directory thats in the root variable above
-local theNumber = math.random(1,#SunTzuQuotes)
-local randomQuote = SunTzuQuotes[theNumber] -- random value
-print(randomQuote) -- print it
-
-ToastNotif.new({
-    text = 'the number was '..tostring(theNumber) -- send ToastNotif of the numebr
-});
+local SunTzuQuotes = sharedRequire('data/ExampleData.lua') --// references the file in the root directory that we set in payload
+print(SunTzuQuotes)
+for i,v in pairs(SunTzuQuotes) do
+    ToastNotif.new({
+        text = v, -- we just gonna show sun tzu for this example cause too long
+    });
+    break
+end
 
 local column1, column2 = unpack(library.columns);
 
@@ -90,7 +90,7 @@ local BB = Main:AddToggle({
 --// library.flags.lilBroTemper (this is a sub option certain types of element support certain things)
 BB:AddSlider({
     text = 'Lil Bro\'s temper',
-    flag = 'Lil Bro Temper',
+    flag = 'Lil Bro Temper', -- we set the flag manually since the apostrophe was there, but i think aztup made it so it wouldn't matter
     tip = 'dont mess with my big bro!',
     min = 0,
     max = 100,

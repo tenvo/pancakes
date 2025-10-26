@@ -18,14 +18,14 @@ local Maid = sharedRequire('utils/Maid.lua');
 local prettyPrint = sharedRequire('utils/prettyPrint.lua');
 local ToastNotif = sharedRequire('classes/ToastNotif.lua')
 
--- local SunTzuQuotes = sharedRequire('data/ExampleData.lua')
--- local theNumber = math.random(1,#SunTzuQuotes)
--- local randomQuote = SunTzuQuotes[theNumber]
--- print(randomQuote) -- print it
-
--- ToastNotif.new({
---     text = 'the number was '..tostring(theNumber),
--- });
+local SunTzuQuotes = sharedRequire('data/ExampleData.lua')
+print(SunTzuQuotes)
+for i,v in pairs(SunTzuQuotes) do
+    ToastNotif.new({
+        text = v,
+    });
+    break
+end
 
 local column1, column2 = unpack(library.columns);
 
