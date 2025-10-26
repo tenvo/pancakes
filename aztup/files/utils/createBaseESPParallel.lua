@@ -9,6 +9,10 @@ return [[
     local commEvent;
 
     if (typeof(originalCommEvent) == 'table') then
+        for i,v in pairs(originalCommEvent) do
+            print(i,v)
+        end
+
         commEvent = {
             _event = originalCommEvent._event,
 
@@ -329,8 +333,7 @@ return [[
         end);
     end;
 
-    print(commEvent)
-    commEvent.Event:Connect(function(data)
+    commEvent:Connect(function(data)
         local f = updateTypes[data.updateType];
         if (not f) then return end;
         f(data);
