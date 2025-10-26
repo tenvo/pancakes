@@ -65,21 +65,21 @@ if (playerScriptsLoader) then
 	for _ = 1, NUM_ACTORS do
 		local commId, commEvent;
 
-		if (isSynapseV3) then
-			commEvent = {
-				_event = Instance.new('BindableEvent'),
+		-- if (isSynapseV3) then
+		-- 	commEvent = {
+		-- 		_event = Instance.new('BindableEvent'),
 
-				Connect = function(self, f)
-					return self._event.Event:Connect(f)
-				end,
+		-- 		Connect = function(self, f)
+		-- 			return self._event.Event:Connect(f)
+		-- 		end,
 
-				Fire = function(self, ...)
-					self._event:Fire(...);
-				end
-			};
-		else
+		-- 		Fire = function(self, ...)
+		-- 			self._event:Fire(...);
+		-- 		end
+		-- 	};
+		-- else
 			commId, commEvent = create_comm_channel();
-		end;
+		--end;
 
 		local clone = playerScriptsLoader:Clone();
 		local actor = Instance.new('Actor');
@@ -97,7 +97,19 @@ if (playerScriptsLoader) then
 
 		local connection;
 
-		connection = commEvent:Connect(function(data)
+		-- connection = commEvent:Connect(function(data)
+		-- 	if (data.updateType == 'ready') then
+		-- 		commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
+		-- 		actor:Destroy();
+
+		-- 		readyCount += 1;
+
+		-- 		connection:Disconnect();
+		-- 		connection = nil;
+		-- 	end;
+		-- end);
+
+		connection = commEvent.Event:Connect(function(data)
 			if (data.updateType == 'ready') then
 				commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
 				actor:Destroy();
@@ -108,6 +120,7 @@ if (playerScriptsLoader) then
 				connection = nil;
 			end;
 		end);
+		
 
 		originalFunctions.runOnActor(actor, sharedRequire('@utils/createBaseESPParallel.lua'), commId or commEvent);
 		table.insert(actors, {

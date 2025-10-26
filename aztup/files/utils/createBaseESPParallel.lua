@@ -24,6 +24,7 @@ return [[
         print(commEvent._event)
         print(commEvent.Connect)
     else
+        print(originalCommEvent,"post Change")
         commEvent = get_comm_channel(originalCommEvent);
     end;
 
