@@ -634,7 +634,7 @@ xpcall(function()
 
     task.spawn(function()
         metadataRequest = httpRequest({
-            Url = rootUrl..'gameList.json'
+            Url = rootUrl..'metadata.json'
         });
     end);
 

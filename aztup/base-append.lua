@@ -190,7 +190,7 @@ do -- // Whitelist check
 
     -- isUserTrolled = jsonData.isUserTrolled;
     -- accountData = jsonData.accountData
-    -- scriptVersion = jsonData.scriptVersion;
+    getgenv().scriptVersion = ah_metadata["version"];
     -- serverConstants = jsonData.serverConstants;
 
     --print("Whitelist Took:" .. tick() - START_WHITELIST);

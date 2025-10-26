@@ -108,7 +108,7 @@ LocalPlayer.OnTeleport:Connect(function(state)
     end;
 end);
 
-local supportedGamesList = HttpService:JSONDecode(sharedRequire('gameList.json'));
+local supportedGamesList = ah_metadata --HttpService:JSONDecode(sharedRequire('metadata.json'));
 local gameName = supportedGamesList[tostring(game.GameId)];
 
 --//Base library
@@ -220,7 +220,6 @@ printf('[Script] [Game] Took %.02f to load', tick() - loadingGameStart);
 local keybindLoadAt = tick();
 
 do -- // KeyBinds
-    --Theres no way it takes 0
     local Binds = {};
 
     local keybinds = library:AddTab('Keybinds');
@@ -313,7 +312,7 @@ end;
 
 -- Admin Commands
 task.spawn(function()
-    local admins = {
+    local admins = { -- I left these in for the old admins to go crazy if they see this
         11438, 
         960927634, 
         3156270886

@@ -86,7 +86,7 @@ local function customRequire(url, useHigherLevel)
         requestData = httpRequest({
             Url = lhost..url
         });
-    elseif (not table.find({"source.lua","UILibrary.lua","gameList.json"},url) and not shared.aztuppy["payload"]) then
+    elseif (not table.find({"source.lua","UILibrary.lua","metadata.json"},url) and not shared.aztuppy["payload"]) then
         requestData = httpRequest({
             Url = QueryGame(url)
         });
@@ -140,7 +140,7 @@ local function customRequireShared(url)
     return cachedRequires[fileName];
 end;
 
-local gameList = HttpService:JSONDecode(customRequireShared('gameList.json'));
+local gameList = ah_metadata--HttpService:JSONDecode(sharedRequire('metadata.json'));
 
 getgenv().require = customRequire;
 getgenv().sharedRequire = customRequireShared;

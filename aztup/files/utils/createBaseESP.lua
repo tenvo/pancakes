@@ -54,7 +54,7 @@ local actors = {};
 local readyCount = 0;
 local broadcastEvent = Instance.new('BindableEvent');
 
-local supportedGamesList = HttpService:JSONDecode(sharedRequire('gameList.json'));
+local supportedGamesList = ah_metadata --HttpService:JSONDecode(sharedRequire('metadata.json'));
 local gameName = supportedGamesList[tostring(game.GameId)];
 
 if (not playerScriptsLoader and gameName == 'Apocalypse Rising 2') then
