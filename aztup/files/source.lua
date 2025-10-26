@@ -148,7 +148,7 @@ if(shared.aztuppy["payload"]) then
 
     ToastNotif.new({
         text = "running "..gameName.." payload",
-        duration = 2
+        duration = 5
     });
 end;
 
