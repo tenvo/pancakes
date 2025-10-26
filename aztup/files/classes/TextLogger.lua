@@ -1,4 +1,4 @@
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local Services = sharedRequire('@utils/Services.lua');
 local Signal = sharedRequire('@utils/Signal.lua');

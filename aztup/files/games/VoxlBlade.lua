@@ -6,7 +6,7 @@ local basicsHelpers = sharedRequire('@utils/helpers/basics.lua');
 local Webhook = sharedRequire('@utils/Webhook.lua');
 local makeESP = sharedRequire('@utils/makeESP.lua');
 
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 local column1, column2 = unpack(library.columns);
 
 local mobfarmUtility = sharedRequire('@utils/helpers/mobfarm.lua');

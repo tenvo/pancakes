@@ -37,7 +37,7 @@ local Utility = sharedRequire('@utils/Utility.lua');
 
 local _ = sharedRequire('@utils/prettyPrint.lua');
 
-local Players, TeleportService, ScriptContext, MemStorageService, HttpService, ReplicatedStorage = Services:Get(getServerConstant('Players'), 'TeleportService', 'ScriptContext', 'MemStorageService', 'HttpService', 'ReplicatedStorage');
+local Players, TeleportService, ScriptContext, MemStorageService, HttpService, ReplicatedStorage,MarketplaceService = Services:Get(getServerConstant('Players'), 'TeleportService', 'ScriptContext', 'MemStorageService', 'HttpService', 'ReplicatedStorage','MarketplaceService');
 
 local BLOODLINES_MAIN_PLACE = 10266164381;
 local BLOODLINES = 1946714362;
@@ -128,6 +128,21 @@ if(debugMode) then
     ToastNotif.new({
         text = 'Hub running in debug mode'
     });
+elseif(shared.aztuppy["payload"]) then
+    ToastNotif.new({
+        text = 'Hub is running a payload'
+    });
+
+    -- W game name parser
+    local function getGameName(str)
+        local after = string.match(str, "^%b[]%s*(.*)$")
+        if after then return after end
+        local before = string.match(str, "^(.-)%s*%b[]$")
+        if before then return before end
+        return str
+    end
+    
+    gameName = getGameName(MarketplaceService:GetProductInfo(game.PlaceId).Name)
 end;
 
 if (gameName) then
@@ -150,29 +165,29 @@ local seenErrors = {};
 local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'version') or '';
 --if (typeof(hubVersion) ~= getServerConstant('string')) then return SX_CRASH() end;
 
-local function onScriptError(message)
-    if (table.find(seenErrors, message)) then
-        return;
-    end;
+-- local function onScriptError(message)
+--     if (table.find(seenErrors, message)) then
+--         return;
+--     end;
 
-    if (message:find(myScriptId)) then
-        table.insert(seenErrors, message);
-        local reportMessage = 'aztuphub_v_' .. hubVersion .. message;
-        errorAnalytics:Report(gameName, reportMessage, 1);
-    end;
-end
+--     if (message:find(myScriptId)) then
+--         table.insert(seenErrors, message);
+--         local reportMessage = 'aztuphub_v_' .. hubVersion .. message;
+--         errorAnalytics:Report(gameName, reportMessage, 1);
+--     end;
+-- end
 
-if (not debugMode) then
-    ScriptContext.ErrorDetailed:Connect(onScriptError);
-    if (gameName) then
-        errorAnalytics:Report('Loaded', gameName, 1);
+-- if (not debugMode) then
+--     ScriptContext.ErrorDetailed:Connect(onScriptError);
+--     if (gameName) then
+--         errorAnalytics:Report('Loaded', gameName, 1);
 
-        if (not MemStorageService:HasItem('AnalyticsGame')) then
-            MemStorageService:SetItem('AnalyticsGame', true);
-            errorAnalytics:Report('RealLoaded', gameName, 1);
-        end;
-    end;
-end;
+--         if (not MemStorageService:HasItem('AnalyticsGame')) then
+--             MemStorageService:SetItem('AnalyticsGame', true);
+--             errorAnalytics:Report('RealLoaded', gameName, 1);
+--         end;
+--     end;
+-- end;
 
 --//Loads universal part
 

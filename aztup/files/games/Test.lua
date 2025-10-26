@@ -1,6 +1,6 @@
 local Utility = sharedRequire('@utils/Utility.lua');
 local createBaseESP = sharedRequire('@utils/createBaseESP.lua');
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local partsESP = createBaseESP('npcs');
 

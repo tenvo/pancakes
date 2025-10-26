@@ -1,6 +1,6 @@
 local Maid = sharedRequire('@utils/Maid.lua');
 local Services = sharedRequire('@utils/Services.lua');
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local RunService = Services:Get('RunService');
 

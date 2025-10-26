@@ -1,7 +1,7 @@
 local Utility = sharedRequire('@utils/Utility.lua');
 local Services = sharedRequire('@Utils/Services.lua');
 local Maid = sharedRequire('@utils/Maid.lua');
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local TweenService, RunService = Services:Get('TweenService', 'RunService');
 local mobfarmHelper = {};

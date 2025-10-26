@@ -1,6 +1,11 @@
 shared.aztuppy = { -- this my config table pls dont use it
   payload = {
-    Init = false, 
+    Init = false, -- dont touch this
+    root = nil, --[[ (OPTIONAL) change this var to your github/website file hoster, you can call on files using
+        local SomeData = sharedRequire("AztupHubUITemplate.lua"), 
+    
+        this should be done for tables of data you want to keep seperate in your scripts or OOP programming
+    ]]--
   }
 }
 
@@ -16,6 +21,8 @@ end
 
 local mt = {
     __call = function(table,c)
+        if not checkcaller() return end
+
         if c then
             setmetatable(shared.aztuppy.payload,nil)
             shared.aztuppy.payload = nil

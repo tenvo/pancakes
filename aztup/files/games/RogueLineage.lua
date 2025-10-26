@@ -1,4 +1,4 @@
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 
 local ToastNotif = sharedRequire('@classes/ToastNotif.lua');
 local TextLogger = sharedRequire('@classes/TextLogger.lua');

@@ -1,6 +1,6 @@
 local Utility = sharedRequire('@utils/Utility.lua');
 local createBaseESP = sharedRequire('@utils/createBaseESP.lua');
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 local toCamelCase = sharedRequire('@utils/toCamelCase.lua');
 
 local sectionIndex = 1;

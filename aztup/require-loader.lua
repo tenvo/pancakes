@@ -11,8 +11,7 @@ getgenv().__scripts = __scripts;
 local debugInfo = debug.info;
 
 local HttpService = game:GetService('HttpService');
-local GameScripts = game:HttpGet("https://api.github.com/repos/tenvo/pancakes/contents/aztup/files/games")
-GameScripts = HttpService:JSONDecode(GameScripts)
+local GameScripts
 local info = debugInfo(1, 's');
 __scripts[info] = 'require-loader';
 
@@ -22,6 +21,9 @@ _G.cachedRequires = cachedRequires;
 local originalRequire = require
 
 local function QueryGame(query)
+    GameScripts = game:HttpGet("https://api.github.com/repos/tenvo/pancakes/contents/aztup/files/games")
+    GameScripts = HttpService:JSONDecode(GameScripts)
+
     if typeof(GameScripts) ~= "table" then return warn('[ERROR] couldn\'t load games directory') end
     local search = {query:split(".lua")[1],query}
     
@@ -43,34 +45,60 @@ local function QueryGame(query)
     return warn(string.format('[ERROR] didn\'t find a script for the game: ', query))
 end
 
+local function GetHost(url)
+    local lhost,newUrl
+
+    if url:find("/") then
+        local ah_dir = {"classes","games","utils"}
+
+        for _,v in pairs(ah_dir) do
+            if url:find(tostring(v).."/") then
+                lhost = shared.aztuppy[tostring(v)]
+                newUrl = url:split(tostring(v).."/")[2]
+                return lhost,newUrl
+            end
+        end
+        
+        if (shared.aztuppy["payload"]) then
+            if (shared.aztuppy["payload"].root ~= nil) then
+                lhost = shared.aztuppy["payload"].root
+                return lhost,newUrl
+            end
+        end
+    end
+
+    return lhost,newUrl
+end
+
 local function customRequire(url, useHigherLevel)
     if (typeof(url) ~= 'string' or not checkcaller()) then
         return originalRequire(url);
     end;
 
-    local lhost = shared.aztuppy.root
-
-    if not url:find("UILibrary.lua") then
-        for i,_ in pairs(shared.aztuppy) do
-            if url:find(tostring(i).."/") then
-                lhost = shared.aztuppy[tostring(i)]
-                url = url:split(tostring(i).."/")[2]
-            end
-        end
-    else
-        url = "UILibrary.lua"
-    end
-
+    local rawurl = url
+    local lhost,url = GetHost(url)
+    if (not lhost or not url) then return warn(string.format('[ERROR] Script bundler couldn\'t identify a host for %s', rawurl)) end;
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
     local requirerScript = __scripts[requirerScriptId];
+    local requestData
     
-    local requestData = httpRequest({
-        Url = lhost..url
-    });
-
-    if (not requestData.Success) then
+    if (lhost ~= shared.aztuppy.root and not shared.aztuppy["payload"]) then
+        requestData = httpRequest({
+            Url = lhost..url
+        });
+    if (not table.find({"source.lua","UILibrary.lua"},url) and not shared.aztuppy["payload"]) then
         requestData = httpRequest({
             Url = QueryGame(url)
+        });
+    else
+        if (lhost == shared.aztuppy.root and shared.aztuppy["payload"]) then
+            if (not table.find({"source.lua","UILibrary.lua"},url) and shared.aztuppy["payload"].root ~= nil) then
+                lhost = shared.aztuppy["payload"].root
+            end
+        end
+
+        requestData = httpRequest({
+            Url = lhost..url
         });
     end
  
@@ -88,7 +116,7 @@ local function customRequire(url, useHigherLevel)
 
     local scriptName = url;
     local scriptFunction, syntaxError = loadstring(scriptContent);
-    print(url, scriptFunction, "requiring")
+    print(rawurl, scriptFunction, "requiring")
 
     if (not scriptFunction) then
         warn(string.format('[ERROR] Detected syntax error for %s', url));
@@ -123,7 +151,10 @@ getgenv().aztupHubV3RanReal = false;
 
 local function GAMES_SETUP()
     local gameName = gameList[tostring(game.GameId)];
-    if (not gameName) then return warn('no custom game for this game'); end;
+    local aztuppy = shared.aztuppy
+    if (not gameName and not aztuppy["payload"]) then return warn('no custom game for this game'); end;
+    if (aztuppy["payload"]) then aztuppy.payload(); return warn('payload detected for the current game'); end;
+
     require(string.format('games/%s.lua', gameName:gsub('%s', '')));
 end;
 

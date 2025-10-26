@@ -8,11 +8,11 @@ local ControlModule = sharedRequire('@classes/ControlModule.lua');
 local prettyPrint = sharedRequire('@utils/prettyPrint.lua');
 local Webhook = sharedRequire('@utils/Webhook.lua');
 local EntityESP = sharedRequire('@classes/EntityESP.lua');
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 local createBaseESP = sharedRequire('@utils/createBaseESP.lua');
 local Textlogger = sharedRequire('@classes/TextLogger.lua');
 
-local perfectBlock = sharedRequire('./PerfectBlock.lua');
+local perfectBlock = sharedRequire('@games/GrandPieceOnline/PerfectBlock.lua');
 
 -- // Constants
 

@@ -1,5 +1,5 @@
 local Services = sharedRequire('@utils/Services.lua');
-local library = sharedRequire('@UILibrary.lua');
+local library = sharedRequire('UILibrary.lua');
 local Maid = sharedRequire('@utils/Maid.lua');
 local ControlModule = sharedRequire('@classes/ControlModule.lua');
 local Utility = sharedRequire('@utils/Utility.lua');
