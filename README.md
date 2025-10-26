@@ -48,6 +48,6 @@ Voxl Blade 🔴<br>
 Wild West 🔴<br>
 
 ## 🚧 Contributor Request 🚧
-If you want be a contributor DM on Discord: wyk3
+If you want be a contributor DM on Discord: t3nv0
 
 if this gets popular discord will be made
