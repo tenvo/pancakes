@@ -154,7 +154,7 @@ local function GAMES_SETUP()
     local gameName = gameList[tostring(game.GameId)];
     local aztuppy = shared.aztuppy
     if (not gameName and not aztuppy["payload"]) then return warn('no custom game for this game'); end;
-    if (aztuppy["payload"]) then aztuppy.payload(); return warn('payload detected for the current game'); end;
+    if (aztuppy["payload"]) then aztuppy.payload(); return print('[Payload] Finished Call'); end;
 
     require(string.format('games/%s.lua', gameName:gsub('%s', '')));
 end;
