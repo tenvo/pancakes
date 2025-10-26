@@ -1,4 +1,4 @@
- if not shared.aztuppy then shared.aztuppy = {} end
+if not shared.aztuppy then shared.aztuppy = {} end
 if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
 
 
