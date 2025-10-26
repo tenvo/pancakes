@@ -1,5 +1,4 @@
 return [[
-    getgenv().actorRan = true
     local Players = game:GetService('Players');
     local RunService = game:GetService('RunService');
     local LocalPlayer = Players.LocalPlayer;
@@ -8,7 +7,8 @@ return [[
 
     local thisActor = _G.actors[#_G.actors]
 
-    --local originalCommEvent = ...;
+    _G.actorRan = game:GetService("HttpService"):JSONEncode({...}) or true
+    local originalCommEvent = ...;
     local commEvent = thisActor.commEvent;
 
     if (typeof(originalCommEvent) == 'table') then
@@ -24,7 +24,7 @@ return [[
             end
         };
     else
-        commEvent = get_comm_channel(thisActor.commId);
+        commEvent = get_comm_channel(...);
     end;
 
     local flags = {};
