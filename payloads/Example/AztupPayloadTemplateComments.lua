@@ -28,7 +28,7 @@ local prettyPrint = sharedRequire('utils/prettyPrint.lua');
 local ToastNotif = sharedRequire('classes/ToastNotif.lua')
 
 local SunTzuQuotes = sharedRequire('data/ExampleData.lua') --// We call the directory thats in the root variable above
-local theNumber = [math.random(1,#SunTzuQuotes)]
+local theNumber = math.random(1,#SunTzuQuotes)
 local randomQuote = SunTzuQuotes[theNumber] -- random value
 print(randomQuote) -- print it
 
@@ -81,7 +81,7 @@ Main:AddToggle({
 --// library.flags.bigBrother
 local BB = Main:AddToggle({
     text = 'Big Brother',
-    tip = 'dont mess with me!'
+    tip = 'dont mess with me!',
     callback = function(toggle)
         print(toggle)
     end,
@@ -90,7 +90,7 @@ local BB = Main:AddToggle({
 --// library.flags.lilBroTemper (this is a sub option certain types of element support certain things)
 BB:AddSlider({
     text = 'Lil Bro\'s temper',
-    flag = 'Lil Bro Temper' 
+    flag = 'Lil Bro Temper',
     tip = 'dont mess with my big bro!',
     min = 0,
     max = 100,
@@ -130,16 +130,19 @@ local ShowButton = Misc:AddButton({
 oldText = ShowButton.text
 
 -- library.flags.favoriteColor
-Misc:AddColor({
+Main:AddColor({
     text = 'Favorite Color',
 })
 
 -- library.flags.exampleKeybind
 Main:AddBind({
-    text = 'Example Keybind'
+    text = 'Example Keybind',
+    callback = function()
+        print('yuh')
+    end,
 });
 
-ManaViewer:AddBox({
+Misc:AddBox({
     text = 'Favorite Food', 
     callback = function(input,enter)
         print(input,enter)
@@ -153,7 +156,7 @@ Main:AddLabel("If you still confused about the flags, here:")
 local readable = {}
 
 for i,v in pairs(library.flags) do
-    table.insert(readable,tostring("library.flags."i))
+    table.insert(readable,tostring("library.flags."..i))
 end
 
 Main:AddList({

@@ -49,6 +49,7 @@ local function GetHost(url)
     local lhost,newUrl
 
     if url:find("/") then
+        print(url)
         local ah_dir = {"classes","games","utils"}
 
         for _,v in pairs(ah_dir) do
@@ -59,9 +60,12 @@ local function GetHost(url)
             end
         end
         
+        print("heya")
         if (shared.aztuppy["payload"]) then
             if (shared.aztuppy["payload"].root ~= nil) then
+                print("BOOM")
                 lhost = shared.aztuppy["payload"].root
+                newUrl = url
                 return lhost,newUrl
             end
         end

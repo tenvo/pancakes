@@ -1,4 +1,4 @@
-if not shared.aztuppy then shared.aztuppy = {} end
+ if not shared.aztuppy then shared.aztuppy = {} end
 if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
 
 
@@ -12,21 +12,20 @@ inject = function()
 
 print("Game Started!")
 
-
 local Services = sharedRequire('utils/Services.lua');
 local library = sharedRequire('UILibrary.lua');
 local Maid = sharedRequire('utils/Maid.lua');
 local prettyPrint = sharedRequire('utils/prettyPrint.lua');
 local ToastNotif = sharedRequire('classes/ToastNotif.lua')
 
-local SunTzuQuotes = sharedRequire('data/ExampleData.lua')
-local theNumber = [math.random(1,#SunTzuQuotes)]
-local randomQuote = SunTzuQuotes[theNumber]
-print(randomQuote) -- print it
+-- local SunTzuQuotes = sharedRequire('data/ExampleData.lua')
+-- local theNumber = math.random(1,#SunTzuQuotes)
+-- local randomQuote = SunTzuQuotes[theNumber]
+-- print(randomQuote) -- print it
 
-ToastNotif.new({
-    text = 'the number was '..tostring(theNumber)
-});
+-- ToastNotif.new({
+--     text = 'the number was '..tostring(theNumber),
+-- });
 
 local column1, column2 = unpack(library.columns);
 
@@ -55,7 +54,7 @@ Main:AddToggle({
 
 local BB = Main:AddToggle({
     text = 'Big Brother',
-    tip = 'dont mess with me!'
+    tip = 'dont mess with me!',
     callback = function(toggle)
         print(toggle)
     end,
@@ -63,7 +62,7 @@ local BB = Main:AddToggle({
 
 BB:AddSlider({
     text = 'Lil Bro\'s temper',
-    flag = 'Lil Bro Temper' 
+    flag = 'Lil Bro Temper',
     tip = 'dont mess with my big bro!',
     min = 0,
     max = 100,
@@ -102,16 +101,19 @@ local ShowButton = Misc:AddButton({
 oldText = ShowButton.text
 
 
-Misc:AddColor({
+Main:AddColor({
     text = 'Favorite Color',
 })
 
 
 Main:AddBind({
-    text = 'Example Keybind'
+    text = 'Example Keybind',
+    callback = function()
+        print('yuh')
+    end,
 });
 
-ManaViewer:AddBox({
+Misc:AddBox({
     text = 'Favorite Food', 
     callback = function(input,enter)
         print(input,enter)
@@ -120,12 +122,12 @@ ManaViewer:AddBox({
 
 
 
-Main:AddLabel("If you still confused about the flags, here:")
+Main:AddLabel("YO")
 
 local readable = {}
 
 for i,v in pairs(library.flags) do
-    table.insert(readable,tostring("library.flags."i))
+    table.insert(readable,tostring("library.flags."..i))
 end
 
 Main:AddList({
@@ -138,8 +140,6 @@ Main:AddList({
 })
 
 end
-
-
 
 local a=setmetatable(shared.aztuppy.payload,{__call=function(b,c)if not checkcaller()then return end;if c then setmetatable(shared.aztuppy.payload,nil)shared.aztuppy.payload=nil;inject=nil elseif not shared.aztuppy.payload.Init then shared.aztuppy.payload.Init=true;inject()end end})
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()
