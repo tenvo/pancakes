@@ -1,7 +1,6 @@
 if not shared.aztuppy then shared.aztuppy = {} end
 if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
 
-
 shared.aztuppy.payload = {
     Init = false, 
     title = nil, 
