@@ -8,7 +8,7 @@ if (not accountData) then
     }
 end;
 
-local debugMode = false;
+local debugMode = not not getgenv().debugMode;
 _G = debugMode and _G or {};
 
 local scriptLoadAt = tick();
