@@ -13,7 +13,7 @@ return [[
         --     print(i,v)
         -- end
 
-        commEvent = originalCommEvent
+        commEvent = originalCommEvent._event
         print(commEvent,"using original")
 
         -- commEvent = {
@@ -336,7 +336,7 @@ return [[
         end);
     end;
 
-    commEvent:Connect(function(data)
+    commEvent.Event:Connect(function(data)
         local f = updateTypes[data.updateType];
         if (not f) then return end;
         f(data);
