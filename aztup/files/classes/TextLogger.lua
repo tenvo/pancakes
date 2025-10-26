@@ -4,10 +4,12 @@ local Services = sharedRequire('@utils/Services.lua');
 local Signal = sharedRequire('@utils/Signal.lua');
 local ToastNotif = sharedRequire('@classes/ToastNotif.lua');
 local Security = sharedRequire('@utils/Security.lua');
+local Maid = sharedRequire('@utils/Maid.lua')
 
 local UserInputService, TweenService, TextService, ReplicatedStorage, Players, HttpService = Services:Get('UserInputService', 'TweenService', 'TextService', 'ReplicatedStorage', 'Players', 'HttpService');
 local LocalPlayer = Players.LocalPlayer;
 
+local chatLoggerMaid;
 local TextLogger = {};
 TextLogger.__index = TextLogger;
 
@@ -107,21 +109,42 @@ local function setCameraSubject(subject)
 end;
 
 local function initChatLoggerPreset(chatLogger)
-	library.unloadMaid:GiveTask(ReplicatedStorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(messageData)
-        for i = 2, 10 do
-            local l, s, n, f, a = debug.info(i, 'lsnfa');
+    chatLoggerMaid = Maid.new()
+    
+    for _,v in pairs(Players:GetPlayers()) do
+        chatLoggerMaid[v.Name] = v.Chatted:Connect(function(msg)
+            chatLogger.OnPlayerChatted:Fire(v, msg);
+        end)
+    end
 
-            if (l or s or n or f or a) then
-                task.spawn(function() Security:LogInfraction('omdf'); end);
-                return;
-            end;
-        end;
+    chatLoggerMaid["PlayerAdded"] = Players.PlayerAdded:Connect(function(plr)
+        chatLoggerMaid[plr.Name] = plr.Chatted:Connect(function(msg)
+            chatLogger.OnPlayerChatted:Fire(plr, msg);
+        end)
+    end)
 
-		local player, message = originalFunctions.findFirstChild(Players, messageData.FromSpeaker), messageData.Message;
-		if (not player or not message) then return end;
+    chatLoggerMaid["PlayerRemoving"] = Players.PlayerRemoving:Connect(function(plr)
+        chatLoggerMaid[plr.Name] = nil
+    end)
+    
+	library.unloadMaid:GiveTask(function()
+        print("clog cleanup")
+        chatLoggerMaid:Destroy();
 
-		chatLogger.OnPlayerChatted:Fire(player, message);
-	end));
+        -- for i = 2, 10 do
+        --     local l, s, n, f, a = debug.info(i, 'lsnfa');
+
+        --     if (l or s or n or f or a) then
+        --         task.spawn(function() Security:LogInfraction('omdf'); end);
+        --         return;
+        --     end;
+        -- end;
+
+		-- local player, message = originalFunctions.findFirstChild(Players, messageData.FromSpeaker), messageData.Message;
+		-- if (not player or not message) then return end;
+
+		-- chatLogger.OnPlayerChatted:Fire(player, message);
+	end);
 
 	local reported = {};
 
