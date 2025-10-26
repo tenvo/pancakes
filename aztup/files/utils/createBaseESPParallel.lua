@@ -5,8 +5,10 @@ return [[
 
     local camera, rootPart, rootPartPosition;
 
+    local thisActor = _G.actors[#_G.actors]
+
     local originalCommEvent = ...;
-    local commEvent;
+    local commEvent = thisActor.commEvent;
 
     getgenv().actorArgs = originalCommEvent
 
@@ -23,7 +25,7 @@ return [[
             end
         };
     else
-        commEvent = get_comm_channel(originalCommEvent);
+        commEvent = get_comm_channel(thisActor.commId);
     end;
 
     local flags = {};
