@@ -1,13 +1,15 @@
 # pancakes
-lua scripts i made but use aztup hub UI lib, I also plan on having the original aztup hub v3 games working
+Aztup Hub V3 Overhaul by me
 
-Aztup V3 UI Lib open to public use once i have it running, i'll have a section for how to use it
+Added Payloads so that anyone can use the Aztup Hub UI and Modules Natively!
+If interested check the [Example Directory](https://github.com/tenvo/pancakes/tree/main/payloads/Example)
 
 ## Aztup Hub V3 Loader:
 ```lua
 getgenv().silentLaunch = false
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()
 ```
+
 
 ## Aztup Script Status: 🟢
 ### Loader: 🟢<br>
