@@ -128,23 +128,23 @@ local function initChatLoggerPreset(chatLogger)
     end)
     
 	library.unloadMaid:GiveTask(function()
-        print("clog cleanup")
         chatLoggerMaid:Destroy();
-
-        -- for i = 2, 10 do
-        --     local l, s, n, f, a = debug.info(i, 'lsnfa');
-
-        --     if (l or s or n or f or a) then
-        --         task.spawn(function() Security:LogInfraction('omdf'); end);
-        --         return;
-        --     end;
-        -- end;
-
-		-- local player, message = originalFunctions.findFirstChild(Players, messageData.FromSpeaker), messageData.Message;
-		-- if (not player or not message) then return end;
-
-		-- chatLogger.OnPlayerChatted:Fire(player, message);
 	end);
+    
+    --// old code
+    -- for i = 2, 10 do
+    --     local l, s, n, f, a = debug.info(i, 'lsnfa');
+
+    --     if (l or s or n or f or a) then
+    --         task.spawn(function() Security:LogInfraction('omdf'); end);
+    --         return;
+    --     end;
+    -- end;
+
+    -- local player, message = originalFunctions.findFirstChild(Players, messageData.FromSpeaker), messageData.Message;
+    -- if (not player or not message) then return end;
+
+    -- chatLogger.OnPlayerChatted:Fire(player, message);
 
 	local reported = {};
 
