@@ -86,6 +86,25 @@ return [[
 
     local findFirstChild = clonefunction(game.FindFirstChild);
     local getAttribute = clonefunction(game.GetAttribute);
+    local run = false
+
+    --// watched like a video and went crazy
+    local function desynchronize() --/ Desyn runs at the same time
+        task.spawn(function()
+            task.wait()
+            run = true
+        end)
+        repeat RunService.Heartbeat:Wait() until run
+        run = false
+    end
+
+    local function synchronize() --/ Syn runs one after another
+        if run then
+            task.wait()
+        else
+            RunService.Heartbeat:Wait()
+        end
+    end
 
     if (isSynapseV3) then
         setRP = realSetRP;
@@ -336,22 +355,6 @@ return [[
     end);
 
     commEvent:Fire({updateType = 'ready'});
-    local run = false
-
-    --// watched like a video and went crazy
-    local function desynchronize()
-        task.spawn(function()
-            task.wait()
-            run = true
-        end)
-        repeat RunService.Heartbeat:Wait() until run
-        run = false
-    end
-
-    local function synchronize()
-        task.wait()
-        RunService.Heartbeat:Wait()
-    end
 
     RunService.Heartbeat:Connect(function(deltaTime)
         desynchronize();
