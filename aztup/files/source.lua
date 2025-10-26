@@ -128,11 +128,9 @@ if(debugMode) then
     ToastNotif.new({
         text = 'Hub running in debug mode'
     });
-elseif(shared.aztuppy["payload"]) then
-    ToastNotif.new({
-        text = 'Hub is running a payload'
-    });
+end
 
+if(shared.aztuppy["payload"]) then
     -- W game name parser
     if shared.aztuppy.payload["title"] then
         gameName = shared.aztuppy.payload["title"]
@@ -147,6 +145,11 @@ elseif(shared.aztuppy["payload"]) then
         
         gameName = getGameName(MarketplaceService:GetProductInfo(game.PlaceId).Name)
     end
+
+    ToastNotif.new({
+        text = "running "..gameName.." payload"
+        duration = 2,
+    });
 end;
 
 if (gameName) then

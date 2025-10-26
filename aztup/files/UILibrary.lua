@@ -215,6 +215,10 @@ do -- // Load
             end;
         end;
 
+        if shared.aztuppy["payload"] then
+            shared.aztuppy.payload(true)
+        end
+
         library.unloadMaid:Destroy();
     end
 
