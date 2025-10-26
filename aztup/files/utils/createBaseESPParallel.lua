@@ -5,11 +5,8 @@ return [[
 
     local camera, rootPart, rootPartPosition;
 
-    local thisActor = _G.actors[#_G.actors]
-
-    _G.actorRan = game:GetService("HttpService"):JSONEncode({...}) or true
     local originalCommEvent = ...;
-    local commEvent = thisActor.commEvent;
+    local commEvent;
 
     if (typeof(originalCommEvent) == 'table') then
         commEvent = {
@@ -24,7 +21,7 @@ return [[
             end
         };
     else
-        commEvent = get_comm_channel(...);
+        commEvent = getgenv().syn.get_comm_channel(originalCommEvent);
     end;
 
     local flags = {};
@@ -332,19 +329,11 @@ return [[
         end);
     end;
 
-    if (isSynapseV3) then
-		commEvent.Event:Connect(function(data)
-			local f = updateTypes[data.updateType];
-			if (not f) then return end;
-			f(data);
-		end);
-	else
-		commEvent:Connect(function(data)
-			local f = updateTypes[data.updateType];
-			if (not f) then return end;
-			f(data);
-		end);
-	end
+    commEvent:Connect(function(data)
+        local f = updateTypes[data.updateType];
+        if (not f) then return end;
+        f(data);
+    end);
 
     commEvent:Fire({updateType = 'ready'});
 

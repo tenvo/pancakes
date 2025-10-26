@@ -1,8 +1,8 @@
 SX_VM_CNONE();
-local Maid = sharedRequire('utils/Maid.lua');
-local Services = sharedRequire('utils/Services.lua');
+local Maid = sharedRequire('Maid.lua');
+local Services = sharedRequire('Services.lua');
 
-local toCamelCase = sharedRequire('utils/toCamelCase.lua');
+local toCamelCase = sharedRequire('toCamelCase.lua');
 local library = sharedRequire('UILibrary.lua');
 
 local Players, CorePackages, HttpService = Services:Get('Players', 'CorePackages', 'HttpService');
@@ -49,33 +49,17 @@ local NUM_ACTORS = 8;
 local playerScripts = LocalPlayer:WaitForChild('PlayerScripts')
 
 local playerScriptsLoader = playerScripts:FindFirstChild('PlayerScriptsLoader');
-_G.actors = {};
+local actors = {};
 
 local readyCount = 0;
 local broadcastEvent = Instance.new('BindableEvent');
 
-local supportedGamesList = ah_metadata --HttpService:JSONDecode(sharedRequire('metadata.json'));
+local supportedGamesList = HttpService:JSONDecode(sharedRequire('metadata.json'));
 local gameName = supportedGamesList[tostring(game.GameId)];
 
 if (not playerScriptsLoader and gameName == 'Apocalypse Rising 2') then
 	playerScriptsLoader = playerScripts:FindFirstChild('FreecamDelete');
 end;
-
---// Ducktape fix by yours truly!
-local ValidExecutor;
-
-local s = pcall(function()
-	ValidExecutor = isexecutorclosure(create_comm_channel)
-	ValidExecutor = isexecutorclosure(run_on_actor)
-end)
-
-if not s then
-	ValidExecutor = true
-else
-	ValidExecutor = false
-end
-
-local isSynapseV3 = ValidExecutor
 
 if (playerScriptsLoader) then
 	for _ = 1, NUM_ACTORS do
@@ -94,74 +78,49 @@ if (playerScriptsLoader) then
 				end
 			};
 		else
-			commId, commEvent = create_comm_channel();
+			commId, commEvent = getgenv().syn.create_comm_channel();
 		end;
 
 		local clone = playerScriptsLoader:Clone();
 		local actor = Instance.new('Actor');
 		clone.Parent = actor;
 
-		local oldGethui = gethui;
-		local playerModule = CorePackages.Workspace.Packages._Workspace.CoreScriptsCommon.CoreScriptsCommon.MouseIconOverrideService:Clone();
+		local playerModule = game:GetService("CorePackages").Workspace.Packages._Workspace.CoreScriptsCommon.CoreScriptsCommon.MouseIconOverrideService:Clone();
 		playerModule.Name = 'PlayerModule';
 		playerModule.Parent = actor;
-		
-		local function gethui(ui)
-			if (oldGethui ~= nil) then
-				return oldGethui();
-			end;
 
-			return CoreGui;
-		end;
+		-- if (not isSynapseV3) then
+		-- 	syn.protect_gui(actor);
+		-- end;
 
-		if (gethui ~= nil) then
-			actor.Parent = gethui(LocalPlayer.PlayerScripts);
-		else
-			actor.Parent = LocalPlayer.PlayerScripts;
-		end;
+		actor.Parent = LocalPlayer.PlayerScripts;
 
 		local connection;
 
-		if commId then
-			connection = commEvent.Event:Connect(function(data)
-				if (data.updateType == 'ready') then
-					commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
-					actor:Destroy();
+		connection = commEvent:Connect(function(data)
+			if (data.updateType == 'ready') then
+				commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
+				actor:Destroy();
 
-					readyCount += 1;
+				readyCount += 1;
 
-					connection:Disconnect();
-					connection = nil;
-				end;
-			end);
-		else
-			connection = commEvent:Connect(function(data)
-				if (data.updateType == 'ready') then
-					commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
-					actor:Destroy();
-
-					readyCount += 1;
-
-					connection:Disconnect();
-					connection = nil;
-				end;
-			end);
-		end
+				connection:Disconnect();
+				connection = nil;
+			end;
+		end);
 
 		originalFunctions.runOnActor(actor, sharedRequire('@utils/createBaseESPParallel.lua'), commId or commEvent);
-		table.insert(_G.actors, {
+		table.insert(actors, {
 			actor = actor,
-			commEvent = commEvent,
-			commId = commId
+			commEvent = commEvent
 		});
-
 	end;
 
 	print('Waiting for actors');
 	repeat task.wait(); until readyCount >= NUM_ACTORS;
 	print('All actors have been loaded');
 else
-	local commId, commEvent = create_comm_channel();
+	local commId, commEvent = getgenv().syn.create_comm_channel();
 
 	local connection;
 	connection = commEvent:Connect(function(data)
