@@ -21,7 +21,7 @@ return [[
             end
         };
     else
-        commEvent = getgenv().syn.get_comm_channel(originalCommEvent);
+        commEvent = get_comm_channel(originalCommEvent);
     end;
 
     local flags = {};

@@ -78,7 +78,7 @@ if (playerScriptsLoader) then
 				end
 			};
 		else
-			commId, commEvent = getgenv().syn.create_comm_channel();
+			commId, commEvent = create_comm_channel();
 		end;
 
 		local clone = playerScriptsLoader:Clone();
@@ -120,7 +120,7 @@ if (playerScriptsLoader) then
 	repeat task.wait(); until readyCount >= NUM_ACTORS;
 	print('All actors have been loaded');
 else
-	local commId, commEvent = getgenv().syn.create_comm_channel();
+	local commId, commEvent = create_comm_channel();
 
 	local connection;
 	connection = commEvent:Connect(function(data)
