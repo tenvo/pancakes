@@ -2,7 +2,7 @@
 The Loadstring Example:
 
 getgenv().silentLaunch = false
-loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/AztupPayloadTemplate.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/AztupPayloadTemplateComments.lua"))()
 
 ]]--
 
