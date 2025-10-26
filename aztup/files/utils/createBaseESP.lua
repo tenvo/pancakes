@@ -85,7 +85,7 @@ if (playerScriptsLoader) then
 		local actor = Instance.new('Actor');
 		clone.Parent = actor;
 
-		local playerModule = CorePackages.InGameServices.MouseIconOverrideService:Clone();
+		local playerModule = CorePackages.Workspace.Packages._Workspace.CoreScriptsCommon.CoreScriptsCommon.MouseIconOverrideService:Clone();
 		playerModule.Name = 'PlayerModule';
 		playerModule.Parent = actor;
 
