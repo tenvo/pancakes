@@ -85,38 +85,17 @@ if (playerScriptsLoader) then
 		local actor = Instance.new('Actor');
 		clone.Parent = actor;
 
-		local oldGethui = gethui;
 		local playerModule = game:GetService("CorePackages").Workspace.Packages._Workspace.CoreScriptsCommon.CoreScriptsCommon.MouseIconOverrideService:Clone();
 		playerModule.Name = 'PlayerModule';
 		playerModule.Parent = actor;
-
-		local function gethui(ui)
-			if (oldGethui ~= nil) then
-				return oldGethui();
-			end;
-
-			return LocalPlayer.PlayerScripts;
-		end;
 
 		-- if (not isSynapseV3) then
 		-- 	syn.protect_gui(actor);
 		-- end;
 
-		actor.Parent = gethui(actor.Parent);
+		actor.Parent = LocalPlayer.PlayerScripts;
 
 		local connection;
-
-		-- connection = commEvent:Connect(function(data)
-		-- 	if (data.updateType == 'ready') then
-		-- 		commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
-		-- 		actor:Destroy();
-
-		-- 		readyCount += 1;
-
-		-- 		connection:Disconnect();
-		-- 		connection = nil;
-		-- 	end;
-		-- end);
 
 		connection = commEvent.Event:Connect(function(data)
 			if (data.updateType == 'ready') then
