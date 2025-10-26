@@ -8,6 +8,8 @@ return [[
     local originalCommEvent = ...;
     local commEvent;
 
+    getgenv().actorArgs = originalCommEvent
+
     if (typeof(originalCommEvent) == 'table') then
         commEvent = {
             _event = originalCommEvent._event,

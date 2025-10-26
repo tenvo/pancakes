@@ -148,12 +148,13 @@ if (playerScriptsLoader) then
 			end);
 		end
 
+		
 
-		originalFunctions.runOnActor(actor, sharedRequire('@utils/createBaseESPParallel.lua'), commId or commEvent);
-		table.insert(actors, {
-			actor = actor,
-			commEvent = commEvent
-		});
+		-- originalFunctions.runOnActor(actor, sharedRequire('@utils/createBaseESPParallel.lua'), commId or commEvent);
+		-- table.insert(actors, {
+		-- 	actor = actor,
+		-- 	commEvent = commEvent
+		-- });
 	end;
 
 	print('Waiting for actors');
