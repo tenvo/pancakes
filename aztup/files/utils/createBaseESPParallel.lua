@@ -329,11 +329,19 @@ return [[
         end);
     end;
 
-    commEvent:Connect(function(data)
-        local f = updateTypes[data.updateType];
-        if (not f) then return end;
-        f(data);
-    end);
+    if (isSynapseV3) then
+		commEvent.Event:Connect(function(data)
+			local f = updateTypes[data.updateType];
+			if (not f) then return end;
+			f(data);
+		end);
+	else
+		commEvent:Connect(function(data)
+			local f = updateTypes[data.updateType];
+			if (not f) then return end;
+			f(data);
+		end);
+	end
 
     commEvent:Fire({updateType = 'ready'});
 

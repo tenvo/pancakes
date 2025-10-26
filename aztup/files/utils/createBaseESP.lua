@@ -61,6 +61,22 @@ if (not playerScriptsLoader and gameName == 'Apocalypse Rising 2') then
 	playerScriptsLoader = playerScripts:FindFirstChild('FreecamDelete');
 end;
 
+--// Ducktape fix by yours truly!
+local ValidExecutor;
+
+local s = pcall(function()
+	ValidExecutor = isexecutorclosure(create_comm_channel)
+	ValidExecutor = isexecutorclosure(run_on_actor)
+end)
+
+if not s then
+	ValidExecutor = true
+else
+	ValidExecutor = false
+end
+
+local isSynapseV3 = ValidExecutor
+
 if (playerScriptsLoader) then
 	for _ = 1, NUM_ACTORS do
 		local commId, commEvent;
@@ -85,29 +101,53 @@ if (playerScriptsLoader) then
 		local actor = Instance.new('Actor');
 		clone.Parent = actor;
 
+		local oldGethui = gethui;
 		local playerModule = CorePackages.Workspace.Packages._Workspace.CoreScriptsCommon.CoreScriptsCommon.MouseIconOverrideService:Clone();
 		playerModule.Name = 'PlayerModule';
 		playerModule.Parent = actor;
+		
+		local function gethui(ui)
+			if (oldGethui ~= nil) then
+				return oldGethui();
+			end;
 
-		if (not isSynapseV3) then
-			syn.protect_gui(actor);
+			return CoreGui;
 		end;
 
-		actor.Parent = LocalPlayer.PlayerScripts;
+		if (gethui ~= nil) then
+			actor.Parent = gethui(LocalPlayer.PlayerScripts);
+		else
+			actor.Parent = LocalPlayer.PlayerScripts;
+		end;
 
 		local connection;
 
-		connection = commEvent:Connect(function(data)
-			if (data.updateType == 'ready') then
-				commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
-				actor:Destroy();
+		if commId then
+			connection = commEvent.Event:Connect(function(data)
+				if (data.updateType == 'ready') then
+					commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
+					actor:Destroy();
 
-				readyCount += 1;
+					readyCount += 1;
 
-				connection:Disconnect();
-				connection = nil;
-			end;
-		end);
+					connection:Disconnect();
+					connection = nil;
+				end;
+			end);
+		else
+			connection = commEvent:Connect(function(data)
+				if (data.updateType == 'ready') then
+					commEvent:Fire({updateType = 'giveEvent', event = broadcastEvent, gameName = gameName});
+					actor:Destroy();
+
+					readyCount += 1;
+
+					connection:Disconnect();
+					connection = nil;
+				end;
+			end);
+		end
+
 
 		originalFunctions.runOnActor(actor, sharedRequire('@utils/createBaseESPParallel.lua'), commId or commEvent);
 		table.insert(actors, {
