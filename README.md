@@ -4,6 +4,7 @@ Aztup Hub V3 Overhaul by me
 Added Payloads so that anyone can use the Aztup Hub UI and Modules Natively!<br>
 If interested check the [Example Directory](https://github.com/tenvo/pancakes/tree/main/payloads/Example)
 
+I'll also have my own scripts coming up so stay tapped in
 ## Aztup Hub V3 Loader:
 ```lua
 getgenv().silentLaunch = false
