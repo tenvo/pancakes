@@ -49,7 +49,6 @@ local function GetHost(url)
     local lhost,newUrl
 
     if url:find("/") then
-        print(url)
         local ah_dir = {"classes","games","utils"}
 
         for _,v in pairs(ah_dir) do
