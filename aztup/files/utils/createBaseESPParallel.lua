@@ -1,4 +1,5 @@
 return [[
+    getgenv().actorRan = true
     local Players = game:GetService('Players');
     local RunService = game:GetService('RunService');
     local LocalPlayer = Players.LocalPlayer;
@@ -7,10 +8,8 @@ return [[
 
     local thisActor = _G.actors[#_G.actors]
 
-    local originalCommEvent = ...;
+    --local originalCommEvent = ...;
     local commEvent = thisActor.commEvent;
-
-    getgenv().actorArgs = originalCommEvent
 
     if (typeof(originalCommEvent) == 'table') then
         commEvent = {
