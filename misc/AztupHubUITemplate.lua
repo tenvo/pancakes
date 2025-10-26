@@ -1,6 +1,7 @@
 shared.aztuppy = { -- this my config table pls dont use it
   payload = {
     Init = false, -- dont touch this
+    title = nil, -- (OPTIONAL) add a title for main tab (in aztup its usually game name), it will auto set as game name if not picked
     root = nil, --[[ (OPTIONAL) change this var to your github/website file hoster, you can call on files using
         local SomeData = sharedRequire("AztupHubUITemplate.lua"), 
     

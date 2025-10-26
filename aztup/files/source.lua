@@ -134,15 +134,19 @@ elseif(shared.aztuppy["payload"]) then
     });
 
     -- W game name parser
-    local function getGameName(str)
-        local after = string.match(str, "^%b[]%s*(.*)$")
-        if after then return after end
-        local before = string.match(str, "^(.-)%s*%b[]$")
-        if before then return before end
-        return str
+    if shared.aztuppy.payload["title"] then
+        gameName = shared.aztuppy.payload["title"]
+    else
+        local function getGameName(str)
+            local after = string.match(str, "^%b[]%s*(.*)$")
+            if after then return after end
+            local before = string.match(str, "^(.-)%s*%b[]$")
+            if before then return before end
+            return str
+        end
+        
+        gameName = getGameName(MarketplaceService:GetProductInfo(game.PlaceId).Name)
     end
-    
-    gameName = getGameName(MarketplaceService:GetProductInfo(game.PlaceId).Name)
 end;
 
 if (gameName) then

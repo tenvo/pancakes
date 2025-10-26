@@ -2871,8 +2871,6 @@ do -- // Load
     function library:Init(silent)
         if self.hasInit then return end
 
-        print("stupid init..")
-
         self.hasInit = true
         self.base = library:Create('ScreenGui', {IgnoreGuiInset = true, AutoLocalize = false, Enabled = not silent})
         self.dummyBox = library:Create('TextBox', {Visible = false, Parent = self.base});
@@ -3253,7 +3251,6 @@ do -- // Load
             self.open = false;
         end;
 
-        print("UI INIT FIRE")
         library.OnLoad:Fire();
         library.OnLoad:Destroy();
         library.OnLoad = nil;

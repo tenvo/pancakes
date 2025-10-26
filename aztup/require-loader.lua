@@ -77,7 +77,7 @@ local function customRequire(url, useHigherLevel)
 
     local rawurl = url
     local lhost,url = GetHost(url)
-    if (not lhost or not url) then return warn(string.format('[ERROR] Script bundler couldn\'t identify a host for %s', rawurl)) end;
+    if (not lhost and not url) then lhost = shared.aztuppy.root url = rawurl end
     local requirerScriptId = debugInfo(useHigherLevel and 3 or 2, 's');
     local requirerScript = __scripts[requirerScriptId];
     local requestData
@@ -92,7 +92,7 @@ local function customRequire(url, useHigherLevel)
         });
     else
         if (lhost == shared.aztuppy.root and shared.aztuppy["payload"]) then
-            if (not table.find({"source.lua","UILibrary.lua"},url) and shared.aztuppy["payload"].root ~= nil) then
+            if (not table.find({"source.lua","UILibrary.lua","gameList"},url) and shared.aztuppy["payload"].root ~= nil) then
                 lhost = shared.aztuppy["payload"].root
             end
         end
