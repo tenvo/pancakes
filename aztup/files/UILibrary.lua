@@ -2891,7 +2891,7 @@ do -- // Load
                 return CoreGui;
             end;
 
-            self.base.Parent = gethui(self.base.Parent)
+            self.base.Parent = gethui(self.base)
 
             -- if(gethui) then
             --     self.base.Parent = gethui();

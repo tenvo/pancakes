@@ -2428,13 +2428,13 @@ do -- // Functions
             manaHelperGUI.Parent = gethui();
             castZoneGui.Parent = gethui();
         else
-            syn.protect_gui(manaTextGui);
+            --syn.protect_gui(manaTextGui);
             manaTextGui.Parent = CoreGui;
 
-            syn.protect_gui(manaHelperGUI);
+            --syn.protect_gui(manaHelperGUI);
             manaHelperGUI.Parent = CoreGui;
 
-            syn.protect_gui(castZoneGui);
+            --syn.protect_gui(castZoneGui);
             castZoneGui.Parent = CoreGui;
         end;
 
@@ -2592,7 +2592,7 @@ do -- // Functions
         if(gethui) then
             aaGunCounterGUI.Parent = gethui();
         else
-            syn.protect_gui(aaGunCounterGUI);
+            --syn.protect_gui(aaGunCounterGUI);
             aaGunCounterGUI.Parent = CoreGui;
         end;
 

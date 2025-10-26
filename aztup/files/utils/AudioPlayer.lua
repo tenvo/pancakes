@@ -21,7 +21,8 @@ AudioPlayer.__index = AudioPlayer;
 local audioFolder = Instance.new('Folder');
 
 if (not gethui) then
-    syn.protect_gui(audioFolder);
+    --// cooked = true
+    --syn.protect_gui(audioFolder);
 end;
 
 audioFolder.Parent = gethui and gethui() or Services:Get('CoreGui');

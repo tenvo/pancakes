@@ -398,8 +398,16 @@ function TextLogger.new(params)
 
     self._logs = logs;
 
-    syn.protect_gui(screenGui);
-    screenGui.Parent = game.CoreGui;
+    local oldGethui = gethui;
+
+    local function gethui(ui)
+        if (oldGethui ~= nil) then
+            return oldGethui();
+        end;
+
+        return CoreGui;
+    end;
+    screenGui.Parent = gethui(screenGui);
 
     UserInputService.InputBegan:Connect(function(input)
         local userInputType = input.UserInputType;
