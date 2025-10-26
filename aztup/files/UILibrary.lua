@@ -3687,15 +3687,27 @@ do -- // Load
         end));
 
         discordSection:AddButton({
-            text = "Copy Tenvo's Server (SUPPORT)",
-            callback = function() return setclipboard('No Discord Yet') end
+            text = "Tenvo's Server (SUPPORT)",
+            callback = function() 
+                ToastNotif.new({
+                    text = 'Copied to Clipboard',
+                    duration = 2
+                });
+
+                return setclipboard('No Discord Yet') 
+            end
         });
 
         discordSection:AddButton({
-            text = "Copy Aztup's Server (NO SUPPORT)",
+            text = "Aztup's Server (NO SUPPORT)",
             callback = function() 
                 ToastNotif.new({
-                    text = 'Reminder: Aztup does NOT offer support for this script.'
+                    text = 'Copied to Clipboard',
+                    duration = 2
+                });
+
+                ToastNotif.new({
+                    text = 'PSA: Aztup does NOT offer support for this script.'
                 });
                 return setclipboard('discord.gg/gWCk7pTXNs') 
             end
