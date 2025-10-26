@@ -13,7 +13,7 @@ return [[
         --     print(i,v)
         -- end
 
-        commEvent = originalCommEvent._event
+        commEvent = _G.actors[#_G.actors].commEvent
         print(commEvent,"using original")
 
         -- commEvent = {
