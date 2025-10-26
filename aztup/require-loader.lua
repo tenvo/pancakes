@@ -117,7 +117,7 @@ local function customRequire(url, useHigherLevel)
 
     local scriptName = url;
     local scriptFunction, syntaxError = loadstring(scriptContent);
-    print(rawurl, scriptFunction, "requiring")
+    --print(rawurl, scriptFunction, "requiring")
 
     if (not scriptFunction) then
         warn(string.format('[ERROR] Detected syntax error for %s', url));
