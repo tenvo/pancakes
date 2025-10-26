@@ -151,7 +151,7 @@ if (playerScriptsLoader) then
 		originalFunctions.runOnActor(actor, sharedRequire('@utils/createBaseESPParallel.lua'), commId or commEvent);
 		table.insert(_G.actors, {
 			actor = actor,
-			commEvent = commEvent
+			commEvent = commEvent,
 			commId = commId
 		});
 
