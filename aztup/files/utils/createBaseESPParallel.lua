@@ -10,7 +10,7 @@ return [[
 
     if (typeof(originalCommEvent) == 'table') then
         commEvent = {
-            _event = originalCommEvent,
+            _event = originalCommEvent._event,
 
             Connect = function(self, f)
                 return self._event.Event:Connect(f)
@@ -329,7 +329,8 @@ return [[
         end);
     end;
 
-    commEvent:Connect(function(data)
+    print(game.IsA(commEvent))
+    commEvent.Event:Connect(function(data)
         local f = updateTypes[data.updateType];
         if (not f) then return end;
         f(data);
