@@ -20,11 +20,7 @@ return [[
                 self._event:Fire(...);
             end
         };
-
-        print(commEvent._event)
-        print(commEvent.Connect)
     else
-        print(originalCommEvent,"post Change")
         commEvent = get_comm_channel(originalCommEvent);
     end;
 
@@ -286,7 +282,7 @@ return [[
     end;
 
     function updateTypes.destroy(data)
-        task.desynchronize();
+        desynchronize();
         local id = data.id;
 
         for _, v in next, container do
@@ -340,9 +336,25 @@ return [[
     end);
 
     commEvent:Fire({updateType = 'ready'});
+    local run = false
+
+    --// watched like a video and went crazy
+    local function desynchronize()
+        task.spawn(function()
+            task.wait()
+            run = true
+        end)
+        repeat RunService.Heartbeat:Wait() until run
+        run = false
+    end
+
+    local function synchronize()
+        task.wait()
+        RunService.Heartbeat:Wait()
+    end
 
     RunService.Heartbeat:Connect(function(deltaTime)
-        task.desynchronize();
+        desynchronize();
 
         camera = workspace.CurrentCamera;
         rootPart = LocalPlayer.Character and LocalPlayer.Character.PrimaryPart;
@@ -361,7 +373,7 @@ return [[
         end;
 
         local goSerial = #updateDrawingQueue ~= 0 or #destroyDrawingQueue ~= 0;
-        if (goSerial) then task.synchronize(); end;
+        if (goSerial) then synchronize(); end;
         debug.profilebegin('updateDrawingQueue');
 
         for i = 1, #updateDrawingQueue do

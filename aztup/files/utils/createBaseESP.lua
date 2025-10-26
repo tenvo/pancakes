@@ -78,22 +78,31 @@ if (playerScriptsLoader) then
 		-- 		end
 		-- 	};
 		-- else
-			commId, commEvent = create_comm_channel();
+		commId, commEvent = create_comm_channel();
 		--end;
 
 		local clone = playerScriptsLoader:Clone();
 		local actor = Instance.new('Actor');
 		clone.Parent = actor;
 
+		local oldGethui = gethui;
 		local playerModule = game:GetService("CorePackages").Workspace.Packages._Workspace.CoreScriptsCommon.CoreScriptsCommon.MouseIconOverrideService:Clone();
 		playerModule.Name = 'PlayerModule';
 		playerModule.Parent = actor;
+
+		local function gethui(ui)
+			if (oldGethui ~= nil) then
+				return oldGethui();
+			end;
+
+			return LocalPlayer.PlayerScripts;
+		end;
 
 		-- if (not isSynapseV3) then
 		-- 	syn.protect_gui(actor);
 		-- end;
 
-		actor.Parent = LocalPlayer.PlayerScripts;
+		actor.Parent = gethui(actor.Parent);
 
 		local connection;
 
