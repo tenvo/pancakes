@@ -329,7 +329,7 @@ return [[
         end);
     end;
 
-    print(game.IsA(commEvent))
+    print(commEvent)
     commEvent.Event:Connect(function(data)
         local f = updateTypes[data.updateType];
         if (not f) then return end;
