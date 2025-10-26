@@ -49,7 +49,7 @@ local NUM_ACTORS = 8;
 local playerScripts = LocalPlayer:WaitForChild('PlayerScripts')
 
 local playerScriptsLoader = playerScripts:FindFirstChild('PlayerScriptsLoader');
-_G.actors = {};
+local actors = {};
 
 local readyCount = 0;
 local broadcastEvent = Instance.new('BindableEvent');
@@ -110,7 +110,7 @@ if (playerScriptsLoader) then
 		end);
 
 		originalFunctions.runOnActor(actor, sharedRequire('@utils/createBaseESPParallel.lua'), commId or commEvent);
-		table.insert(_G.actors, {
+		table.insert(actors, {
 			actor = actor,
 			commEvent = commEvent
 		});

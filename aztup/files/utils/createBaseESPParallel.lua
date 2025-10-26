@@ -9,24 +9,20 @@ return [[
     local commEvent;
 
     if (typeof(originalCommEvent) == 'table') then
-        -- for i,v in pairs(originalCommEvent) do
-        --     print(i,v)
-        -- end
+        commEvent = {
+            _event = originalCommEvent._event,
 
-        commEvent = _G.actors[#_G.actors].commEvent
-        print(commEvent,"using original")
+            Connect = function(self, f)
+                return self._event.Event:Connect(f)
+            end,
 
-        -- commEvent = {
-        --     _event = originalCommEvent._event,
+            Fire = function(self, ...)
+                self._event:Fire(...);
+            end
+        };
 
-        --     Connect = function(self, f)
-        --         return self._event.Event:Connect(f)
-        --     end,
-
-        --     Fire = function(self, ...)
-        --         self._event:Fire(...);
-        --     end
-        -- };
+        print(commEvent._event)
+        print(commEvent.Connect)
     else
         commEvent = get_comm_channel(originalCommEvent);
     end;
