@@ -1,5 +1,7 @@
-shared.aztuppy = { -- this my config table pls dont use it
-  payload = {
+if not shared.aztuppy then shared.aztuppy = {} end
+if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
+
+shared.aztuppy.payload = {
     Init = false, -- dont touch this
     title = nil, -- (OPTIONAL) add a title for main tab (in aztup its usually game name), it will auto set as game name if not picked
     root = nil, --[[ (OPTIONAL) change this var to your github/website file hoster, you can call on files using
@@ -7,7 +9,6 @@ shared.aztuppy = { -- this my config table pls dont use it
     
         this should be done for tables of data you want to keep seperate in your scripts or OOP programming
     ]]--
-  }
 }
 
 inject = function() -- preferably dont change the function name here, if you do got to change it for the mt code below
