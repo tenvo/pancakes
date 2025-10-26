@@ -86,7 +86,7 @@ local function customRequire(url, useHigherLevel)
         requestData = httpRequest({
             Url = lhost..url
         });
-    if (not table.find({"source.lua","UILibrary.lua"},url) and not shared.aztuppy["payload"]) then
+    elseif (not table.find({"source.lua","UILibrary.lua"},url) and not shared.aztuppy["payload"]) then
         requestData = httpRequest({
             Url = QueryGame(url)
         });
