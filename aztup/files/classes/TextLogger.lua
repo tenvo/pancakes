@@ -200,7 +200,7 @@ function TextLogger.new(params)
 
     self.params = params;
     self._gui = screenGui;
-    self.connections = {}
+    self.uis = {}
     self.logs = {};
     self.allLogs = {};
 
@@ -254,7 +254,7 @@ function TextLogger.new(params)
     local startPos;
     local dragging;
 
-    self.connections[#self.connections+1] = dragger.InputBegan:Connect(function(inputObject, gpe)
+    dragger.InputBegan:Connect(function(inputObject, gpe)
         if (inputObject.UserInputType == Enum.UserInputType.MouseButton1) then
             local dragStart = inputObject.Position;
             dragStart = Vector2.new(dragStart.X, dragStart.Y);
@@ -275,7 +275,7 @@ function TextLogger.new(params)
         end;
     end);
 
-    self.connections[#self.connections+1] = title.InputBegan:Connect(function(inputObject, gpe)
+    title.InputBegan:Connect(function(inputObject, gpe)
         if (inputObject.UserInputType ~= Enum.UserInputType.MouseButton1) then return end;
 
         dragging = true;
@@ -495,9 +495,10 @@ function TextLogger:SetPosition(position)
 end;
 
 function TextLogger:Destroy()
-    for i = 1,#self.connections do
-        self.connections[i]:Disconnect()
+    for i = 1,#self.uis do
+        self.uis[i]:Disconnect()
     end
+
     self._gui:Destroy()
 end;
 

@@ -207,7 +207,7 @@ do -- // Load
 
     function library:Unload()
         task.wait();
-        pcall(visualizer.Remove); -- this started erroring after unloading idk why
+        visualizer:Remove();
 
         for _, o in next, self.options do
             if o.type == 'toggle' and not string.find(string.lower(o.flag), 'panic') and o.flag ~= 'saveconfigauto' then
