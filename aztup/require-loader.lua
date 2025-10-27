@@ -60,8 +60,8 @@ local function GetHost(url)
         end
         
         if (shared.aztuppy["payload"]) then
-            if (shared.aztuppy["payload"].root ~= nil) then
-                lhost = shared.aztuppy["payload"].root
+            if (shared.aztuppy["payload"]._root ~= nil) then
+                lhost = shared.aztuppy["payload"]._root
                 newUrl = url
                 return lhost,newUrl
             end
@@ -93,8 +93,8 @@ local function customRequire(url, useHigherLevel)
         });
     else
         if (lhost == shared.aztuppy.root and shared.aztuppy["payload"]) then
-            if (not table.find({"source.lua","UILibrary.lua","gameList"},url) and shared.aztuppy["payload"].root ~= nil) then
-                lhost = shared.aztuppy["payload"].root
+            if (not table.find({"source.lua","UILibrary.lua","gameList"},url) and shared.aztuppy["payload"]._root ~= nil) then
+                lhost = shared.aztuppy["payload"]._root
             end
         end
 

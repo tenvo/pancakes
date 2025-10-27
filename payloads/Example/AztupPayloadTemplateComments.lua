@@ -10,9 +10,10 @@ if not shared.aztuppy then shared.aztuppy = {} end
 if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
 
 shared.aztuppy.payload = {
-    Init = false, -- <= (required) status of payload, does nothing atm. dont remove it
-    title = "PoopGame", -- <= (optional) changes title of main tab, if nil it uses the game name
-    root = "https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/", -- <= (optional) uses github url/web host to access a directory and files through sharedRequire()
+    _init = false, -- <= (required) status of payload, does nothing atm. dont remove it
+    _maid = nil, -- <= (optional) using Maid module, it adds support to clean up
+    _title = "PoopGame", -- <= (optional) changes title of main tab, if nil it uses the game name
+    _root = "https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/", -- <= (optional) uses github url/web host to access a directory and files through sharedRequire()
 }
 
 inject = function() --// example of aztup hub UI but theres alot of stuff besides what seen
@@ -34,6 +35,9 @@ for i,v in pairs(SunTzuQuotes) do
     });
     break
 end
+
+shared.aztuppy.payload._maid = Maid.new()
+local plMaid = shared.aztuppy.payload._maid
 
 local column1, column2 = unpack(library.columns);
 
@@ -171,5 +175,5 @@ end
 
 --// dont change below, its just a metatable that can be called with payload(), and payload(true) to remove 
 --getgenv().debugMode = true  <= self explanatory, if you want to debug your payload uncomment this!
-local a=setmetatable(shared.aztuppy.payload,{__call=function(b,c)if not checkcaller()then return end;if c then setmetatable(shared.aztuppy.payload,nil)shared.aztuppy.payload=nil;inject=nil elseif not shared.aztuppy.payload.Init then shared.aztuppy.payload.Init=true; xpcall(inject,warn) end end})
+local a=setmetatable(shared.aztuppy.payload,{__call=function(b,c)if not checkcaller()then return end;if c then if shared.aztuppy.payload._maid then shared.aztuppy.payload._maid:Destroy()end;setmetatable(shared.aztuppy.payload,nil)shared.aztuppy.payload=nil;inject=nil elseif not shared.aztuppy.payload._init then shared.aztuppy.payload._init=true;xpcall(inject,warn)end end})
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()

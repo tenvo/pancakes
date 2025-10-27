@@ -1,11 +1,11 @@
 if not shared.aztuppy then shared.aztuppy = {} end
 if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
 
-
 shared.aztuppy.payload = {
-    Init = false, 
-    title = "PoopGame", 
-    root = "https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/",
+    _init = false,
+    _maid = nil,
+    _title = "PoopGame", 
+    _root = "https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/",
 }
 
 inject = function()
@@ -142,5 +142,5 @@ Main:AddList({
 end
 
 -- getgenv().debugMode = true
-local a=setmetatable(shared.aztuppy.payload,{__call=function(b,c)if not checkcaller()then return end;if c then setmetatable(shared.aztuppy.payload,nil)shared.aztuppy.payload=nil;inject=nil elseif not shared.aztuppy.payload.Init then shared.aztuppy.payload.Init=true; xpcall(inject,warn) end end})
+local a=setmetatable(shared.aztuppy.payload,{__call=function(b,c)if not checkcaller()then return end;if c then if shared.aztuppy.payload._maid then shared.aztuppy.payload._maid:Destroy()end;setmetatable(shared.aztuppy.payload,nil)shared.aztuppy.payload=nil;inject=nil elseif not shared.aztuppy.payload._init then shared.aztuppy.payload._init=true;xpcall(inject,warn)end end})
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()

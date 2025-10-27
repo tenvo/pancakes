@@ -132,8 +132,8 @@ end
 
 if(shared.aztuppy["payload"]) then
     -- W game name parser
-    if shared.aztuppy.payload["title"] then
-        gameName = shared.aztuppy.payload["title"]
+    if shared.aztuppy.payload["_title"] then
+        gameName = shared.aztuppy.payload._title
     else
         local function getGameName(str)
             local after = string.match(str, "^%b[]%s*(.*)$")
