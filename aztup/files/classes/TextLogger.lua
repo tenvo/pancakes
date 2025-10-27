@@ -200,7 +200,6 @@ function TextLogger.new(params)
 
     self.params = params;
     self._gui = screenGui;
-    self.uis = {}
     self.logs = {};
     self.allLogs = {};
 
@@ -293,7 +292,7 @@ function TextLogger.new(params)
         self:UpdateCanvas();
     end);
 
-    self.connections[#self.connections+1] = UserInputService.InputChanged:Connect(function(input, gpe)
+    UserInputService.InputChanged:Connect(function(input, gpe)
         if (not dragging or input.UserInputType ~= Enum.UserInputType.MouseMovement) then return end;
 
         local delta = input.Position - dragStart;
@@ -434,7 +433,7 @@ function TextLogger.new(params)
     end;
     screenGui.Parent = gethui(screenGui);
 
-    self.connections[#self.connections+1] = UserInputService.InputBegan:Connect(function(input)
+    UserInputService.InputBegan:Connect(function(input)
         local userInputType = input.UserInputType;
 
         if (userInputType == Enum.UserInputType.MouseButton1) then
@@ -495,10 +494,6 @@ function TextLogger:SetPosition(position)
 end;
 
 function TextLogger:Destroy()
-    for i = 1,#self.uis do
-        self.uis[i]:Disconnect()
-    end
-
     self._gui:Destroy()
 end;
 
