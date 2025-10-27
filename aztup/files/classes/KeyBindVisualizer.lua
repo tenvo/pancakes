@@ -69,6 +69,8 @@ end;
 function keybindVisualizer:_createDrawingInstance(instanceType, properties)
     local instance = Drawing.new(instanceType);
 
+    print(instance, "STUPID INSTANCE RAHHH")
+
     if (properties.Visible == nil) then
         properties.Visible = true;
     end;
@@ -86,6 +88,8 @@ function keybindVisualizer:_init()
         Position = viewportSize-Vector2.new(180, viewportSize.Y/2),
         Color = Color3.new(255, 255, 255)
     });
+
+    print(self._textBox,"TEXT BOX LETS GOOOOOOOOO")
 end
 
 function keybindVisualizer:GetLargest()
@@ -145,6 +149,7 @@ end;
 function keybindVisualizer:Remove()
     self._destroyed = true;
     self._maid:Destroy();
+    print(self._textBox, 'REMOVING THIS LETS GOOOOO')
     self._textBox:Remove();
 end;
 
