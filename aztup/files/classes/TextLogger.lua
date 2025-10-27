@@ -129,8 +129,9 @@ local function initChatLoggerPreset(chatLogger)
     
 	library.unloadMaid:GiveTask(function()
         chatLoggerMaid:Destroy();
+        chatLogger:Destroy()
 	end);
-    
+
     --// old code
     -- for i = 2, 10 do
     --     local l, s, n, f, a = debug.info(i, 'lsnfa');
@@ -199,6 +200,7 @@ function TextLogger.new(params)
 
     self.params = params;
     self._gui = screenGui;
+    self.connections = {}
     self.logs = {};
     self.allLogs = {};
 
@@ -252,7 +254,7 @@ function TextLogger.new(params)
     local startPos;
     local dragging;
 
-    dragger.InputBegan:Connect(function(inputObject, gpe)
+    self.connections[#self.connections+1] = dragger.InputBegan:Connect(function(inputObject, gpe)
         if (inputObject.UserInputType == Enum.UserInputType.MouseButton1) then
             local dragStart = inputObject.Position;
             dragStart = Vector2.new(dragStart.X, dragStart.Y);
@@ -273,7 +275,7 @@ function TextLogger.new(params)
         end;
     end);
 
-    title.InputBegan:Connect(function(inputObject, gpe)
+    self.connections[#self.connections+1] = title.InputBegan:Connect(function(inputObject, gpe)
         if (inputObject.UserInputType ~= Enum.UserInputType.MouseButton1) then return end;
 
         dragging = true;
@@ -291,7 +293,7 @@ function TextLogger.new(params)
         self:UpdateCanvas();
     end);
 
-    UserInputService.InputChanged:Connect(function(input, gpe)
+    self.connections[#self.connections+1] = UserInputService.InputChanged:Connect(function(input, gpe)
         if (not dragging or input.UserInputType ~= Enum.UserInputType.MouseMovement) then return end;
 
         local delta = input.Position - dragStart;
@@ -432,7 +434,7 @@ function TextLogger.new(params)
     end;
     screenGui.Parent = gethui(screenGui);
 
-    UserInputService.InputBegan:Connect(function(input)
+    self.connections[#self.connections+1] = UserInputService.InputBegan:Connect(function(input)
         local userInputType = input.UserInputType;
 
         if (userInputType == Enum.UserInputType.MouseButton1) then
@@ -490,6 +492,13 @@ end;
 function TextLogger:SetPosition(position)
     self._main.Position = position;
     self:UpdateCanvas();
+end;
+
+function TextLogger:Destroy()
+    for i = 1,#self.connections do
+        self.connections[i]:Disconnect()
+    end
+    self._gui:Destroy()
 end;
 
 return TextLogger;
