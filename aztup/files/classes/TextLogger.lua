@@ -9,10 +9,9 @@ local Maid = sharedRequire('@utils/Maid.lua')
 local UserInputService, TweenService, TextService, ReplicatedStorage, Players, HttpService = Services:Get('UserInputService', 'TweenService', 'TextService', 'ReplicatedStorage', 'Players', 'HttpService');
 local LocalPlayer = Players.LocalPlayer;
 
-local textLoggerMaid = Maid.new();
+local chatLoggerMaid = Maid.new();
 local TextLogger = {};
 TextLogger.__index = TextLogger;
-library.textLoggers = {_maid = textLoggerMaid}
 
 TextLogger.Colors = {};
 TextLogger.Colors.Background = Color3.fromRGB(30, 30, 30);
@@ -111,20 +110,21 @@ end;
 
 local function initChatLoggerPreset(chatLogger)
     for _,v in pairs(Players:GetPlayers()) do
-        textLoggerMaid[v.Name] = v.Chatted:Connect(function(msg)
+        chatLoggerMaid[v.Name] = v.Chatted:Connect(function(msg)
             chatLogger.OnPlayerChatted:Fire(v, msg);
         end)
     end
 
-    textLoggerMaid["PlayerAdded"] = Players.PlayerAdded:Connect(function(plr)
-        textLoggerMaid[plr.Name] = plr.Chatted:Connect(function(msg)
+    chatLoggerMaid["PlayerAdded"] = Players.PlayerAdded:Connect(function(plr)
+        chatLoggerMaid[plr.Name] = plr.Chatted:Connect(function(msg)
             chatLogger.OnPlayerChatted:Fire(plr, msg);
         end)
     end)
 
-    textLoggerMaid["PlayerRemoving"] = Players.PlayerRemoving:Connect(function(plr)
-        textLoggerMaid[plr.Name] = nil
+    chatLoggerMaid["PlayerRemoving"] = Players.PlayerRemoving:Connect(function(plr)
+        chatLoggerMaid[plr.Name] = nil
     end)
+    
 
     --// old code
     -- for i = 2, 10 do
@@ -200,10 +200,6 @@ function TextLogger.new(params)
     self.OnPlayerChatted = Signal.new();
     self.OnClick = Signal.new();
     self.OnUpdate = Signal.new();
-
-    table.insert(library.textLoggers,{
-        _obj = self,
-    })
 
     local main = library:Create('Frame', {
         Name = 'Main',
@@ -489,10 +485,6 @@ end;
 function TextLogger:SetPosition(position)
     self._main.Position = position;
     self:UpdateCanvas();
-end;
-
-function TextLogger:Destroy()
-    self._gui:Destroy()
 end;
 
 return TextLogger;
