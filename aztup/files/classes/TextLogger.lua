@@ -9,7 +9,7 @@ local Maid = sharedRequire('@utils/Maid.lua')
 local UserInputService, TweenService, TextService, ReplicatedStorage, Players, HttpService = Services:Get('UserInputService', 'TweenService', 'TextService', 'ReplicatedStorage', 'Players', 'HttpService');
 local LocalPlayer = Players.LocalPlayer;
 
-local chatLoggerMaid = Maid.new();
+local chatLoggerMaid;
 local TextLogger = {};
 TextLogger.__index = TextLogger;
 
@@ -109,6 +109,8 @@ local function setCameraSubject(subject)
 end;
 
 local function initChatLoggerPreset(chatLogger)
+    chatLoggerMaid = Maid.new()
+    
     for _,v in pairs(Players:GetPlayers()) do
         chatLoggerMaid[v.Name] = v.Chatted:Connect(function(msg)
             chatLogger.OnPlayerChatted:Fire(v, msg);
@@ -125,7 +127,10 @@ local function initChatLoggerPreset(chatLogger)
         chatLoggerMaid[plr.Name] = nil
     end)
     
-
+	library.unloadMaid:GiveTask(function()
+        chatLoggerMaid:Destroy();
+	end);
+    
     --// old code
     -- for i = 2, 10 do
     --     local l, s, n, f, a = debug.info(i, 'lsnfa');
