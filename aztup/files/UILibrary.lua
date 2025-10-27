@@ -215,6 +215,17 @@ do -- // Load
             end;
         end;
 
+        if library["textLoggers"] then
+            for _,tl in next, library.textLoggers do
+                if typeof(tl) == 'table' then
+                    tl._obj:Destroy()
+                end
+            end
+
+            library.textLoggers._maid:Destroy()
+            library.textLoggers = nil
+        end
+
         library.unloadMaid:Destroy();
     end
 
