@@ -7,19 +7,28 @@ Webhook.__index = Webhook;
 function Webhook.new(url)
     local self = setmetatable({}, Webhook);
 
-    self._url = url;
+    self._url = url or "";
 
     return self;
 end;
 
+function Webhook:Set(url)
+    self._url = url or "";
+end
+
 function Webhook:Send(data, yields)
+    if (self._url == "") then return; end;
+
     if (typeof(data) == 'string') then
         data = {content = data};
     end;
 
     local function send()
-        syn.request({
-            Url = self._url,
+        local http = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+        if not http then return end
+
+        http({
+            Url = self._url:gsub(" ",""),
             Method = 'POST',
             Headers = {['Content-Type'] = 'application/json'},
             Body = originalFunctions.jsonEncode(HttpService, data)
