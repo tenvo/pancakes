@@ -3694,9 +3694,11 @@ do -- // Load
                     duration = 2
                 });
 
-                return setclipboard('No Discord Yet') 
+                return setclipboard('discord.gg/QrJV3HcJDP') 
             end
         });
+
+        discordSection:AddLabel("Aztup does NOT offer support for this script.")
 
         discordSection:AddButton({
             text = "Aztup's Server (NO SUPPORT)",
@@ -3704,10 +3706,6 @@ do -- // Load
                 ToastNotif.new({
                     text = 'Copied to Clipboard',
                     duration = 2
-                });
-
-                ToastNotif.new({
-                    text = 'PSA: Aztup does NOT offer support for this script.'
                 });
                 return setclipboard('discord.gg/gWCk7pTXNs') 
             end
