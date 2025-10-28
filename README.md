@@ -52,4 +52,3 @@ If you want be a contributor DM on Discord or join my Server
 
 Discord: t3nv0
 [pancake fan club](https://discord.gg/QrJV3HcJDP)
-
