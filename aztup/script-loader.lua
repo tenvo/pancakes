@@ -1,4 +1,6 @@
-getgenv().ah_loaderRan = false;
+if debugMode then
+    getgenv().ah_loaderRan = false;
+end
 if (ah_loaderRan) then return end;
 getgenv().ah_loaderRan = true;
 

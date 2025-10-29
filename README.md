@@ -48,6 +48,7 @@ Voxl Blade 🔴<br>
 Wild West 🔴<br>
 
 ## 🚧 Contributor Request 🚧
-If you want be a contributor DM on Discord: t3nv0
+If you want be a contributor DM on Discord or join my Server 
 
-if this gets popular discord will be made
+Discord: t3nv0
+[pancake fan club](https://discord.gg/QrJV3HcJDP)

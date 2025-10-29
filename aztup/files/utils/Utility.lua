@@ -468,4 +468,23 @@ function Utility.map(t, c)
     return ret;
 end;
 
+--// W Kiro for KiroUtils
+function Utility.deepClone(t,pl) --// Copies Tables & Metatables
+    pl = pl or {}
+	if pl[t] then
+		return pl[t]
+	end
+
+	if typeof(t) == "table" then
+		local new = {}
+		pl[t] = new
+		for i, v in pairs(t) do
+			new[self.deepClone(i, pl)] = self.deepClone(v, pl)
+		end
+		return setmetatable(new, self.deepClone(getmetatable(t), pl))
+	else
+		return t
+	end
+end
+
 return Utility;
