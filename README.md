@@ -75,12 +75,12 @@ To learn how to make "payloads" check `payloads/Example`<br>
 
 <!-- SCRIPT -->
 ## Script
+Note: **this is only for Aztup Hub V3 Games, to use my payloads join the discord to get the scripts**
 
 ```lua
 getgenv().silentLaunch = false
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()
 ```
-Note: **this is only for Aztup Hub V3 Games, to use my payloads join the discord to get the scripts**
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -126,7 +126,7 @@ Discord: t3nv0
 
 <!-- SCRIPT STAUS -->
 ## Script Status
-(relates to aztup hub v3)
+`(only Aztup Hub V3)`
 
 ### Loader: 🟢<br>
 ### Universal: 🟢<br>
