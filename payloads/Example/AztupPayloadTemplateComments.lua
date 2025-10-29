@@ -36,8 +36,8 @@ for i,v in pairs(SunTzuQuotes) do
     break
 end
 
-shared.aztuppy.payload._maid = Maid.new()
-local plMaid = shared.aztuppy.payload._maid
+shared.aztuppy.payload._maid = Maid.new() -- we create the Maid object in the global var
+local plMaid = shared.aztuppy.payload._maid --give it a local alias
 
 local column1, column2 = unpack(library.columns);
 

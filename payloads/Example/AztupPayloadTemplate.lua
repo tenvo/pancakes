@@ -27,6 +27,9 @@ for i,v in pairs(SunTzuQuotes) do
     break
 end
 
+shared.aztuppy.payload._maid = Maid.new()
+local plMaid = shared.aztuppy.payload._maid
+
 local column1, column2 = unpack(library.columns);
 
 local Players, ReplicatedStorage, HttpService, PathfindingService, RunService, TweenService = Services:Get(
