@@ -67,8 +67,8 @@ This project is completely open source with the fixes except for the "payloads" 
 If any scripters reading this and want to use the UI lib feel free to DM me on Discord `t3nv0`, I'm willing to take suggestions and
 make adjustments as needed
 
-To use the Script check below
-To learn how to make "payloads" check `payloads/Example`
+To use the Script scroll down <br>
+To learn how to make "payloads" check `payloads/Example`<br>
 
 <p align="right">(<a href="#pancake-top">back to top</a>)</p>
 
