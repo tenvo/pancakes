@@ -1,4 +1,4 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/  (tanks 4 readme template)-->
+<!-- Improved compatibility of back to top link: See: https://github.com/tenvo/pancakes/  (tanks 4 readme template)-->
 <a id="pancake-top"></a>
 
 <!-- PROJECT SHIELDS -->
@@ -18,7 +18,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/tenvo/pancakes">
     <img src="assets/pancakefanclub.webp" alt="Logo" width="80" height="80">
   </a>
 
@@ -161,11 +161,11 @@ Wild West 🔴<br>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[contributors-shield]: https://img.shields.io/github/contributors/tenvo/pancakes.svg?style=for-the-badge
+[contributors-url]: https://github.com/tenvo/pancakes/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/tenvo/pancakes.svg?style=for-the-badge
+[forks-url]: https://github.com/tenvo/pancakes/network/members
+[stars-shield]: https://img.shields.io/github/stars/tenvo/pancakes.svg?style=for-the-badge
+[stars-url]: https://github.com/tenvo/pancakes/stargazers
+[issues-shield]: https://img.shields.io/github/issues/tenvo/pancakes.svg?style=for-the-badge
+[issues-url]: https://github.com/tenvo/pancakes/issues
