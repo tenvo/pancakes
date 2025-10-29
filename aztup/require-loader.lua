@@ -93,7 +93,7 @@ local function customRequire(url, useHigherLevel)
         });
     else
         if (lhost == shared.aztuppy.root and shared.aztuppy["payload"]) then
-            if (not table.find({"source.lua","UILibrary.lua","gameList"},url) and shared.aztuppy["payload"]._root ~= nil) then
+            if (not table.find({"source.lua","UILibrary.lua","metadata.json"},url) and shared.aztuppy["payload"]._root ~= nil) then
                 lhost = shared.aztuppy["payload"]._root
             end
         end
