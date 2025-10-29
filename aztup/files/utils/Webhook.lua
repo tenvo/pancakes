@@ -33,12 +33,11 @@ function Webhook:SetUrl(url)
 end
 
 function Webhook:SetPing(arg)
-    if arg == nil then self._preset["content"] = "" end
-
     if tonumber(arg) then
         self._ping = string.format("<@%s>",arg) --// UserID
+        return;
     else
-        self._ping = string.format("@%s",arg) --// Username
+        self._ping = nil
     end
 end
 
@@ -48,19 +47,15 @@ function Webhook:Send(data, yields)
     if (typeof(data) == 'table') then
         data = data
     elseif (typeof(data) == 'string') then
-        local presetClone = self._preset
-
         if (data:find("@everyone") and self._ping == nil) then
-            presetClone["content"] = "@everyone"
+            self._preset["content"] = "@everyone"
             data = data:gsub("@everyone","")
         elseif(self._ping ~= nil) then
-            presetClone["content"] = self._ping
+            self._preset["content"] = self._ping
         end
         
-        presetClone["embeds"][1]["description"] = data
-        data = presetClone
-
-        print(self._preset["content"],self._preset["embeds"][1]["description"],"Checking if it clones")
+        self._preset["embeds"][1]["description"] = data
+        data = self._preset
     end;
 
     local function send()

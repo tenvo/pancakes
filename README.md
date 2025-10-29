@@ -50,5 +50,5 @@ Wild West 🔴<br>
 ## 🚧 Contributor Request 🚧
 If you want be a contributor DM on Discord or join my Server 
 
-Discord: t3nv0
+Discord: t3nv0 <br>
 [pancake fan club](https://discord.gg/QrJV3HcJDP)
