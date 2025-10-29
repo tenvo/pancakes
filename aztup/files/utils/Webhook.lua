@@ -13,12 +13,14 @@ function Webhook.new(url)
     self._ping = nil
     self._preset = {
         ["content"] = "",
-        ["username"] = "pancake fan club",
-        ["avatar_url"] = "https://github.com/tenvo/pancakes/blob/main/assets/pancakefanclub.webp?raw=true",
+        -- ["username"] = "pancake fan club",
+        -- ["avatar_url"] = "https://github.com/tenvo/pancakes/blob/main/assets/pancakefanclub.webp?raw=true",
         ["embeds"] = {
             {
-                ["author"] = {
-                    ["name"] = self._gameName.." | Aztup Hub (tenvo Overhaul)",
+                ["title"] = self._gameName.." | Aztup Hub (tenvo Overhaul)"
+                ["footer"] = {
+                    ["text"] = "join the pancake fan club discord.gg/QrJV3HcJDP"
+                    ["icon_url"] = "https://github.com/tenvo/pancakes/blob/main/assets/pancakefanclub.webp?raw=true"
                 },
                 ["description"] = "",
             },
