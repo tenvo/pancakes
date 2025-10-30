@@ -36,14 +36,21 @@ env[#env+1] = {
 env[#env+1] = {
     "Energy Drink",
     "Soda",
-    "Donut",
-    "Hotdog",
     "Pizza",
     "Cheese Bites",
-    "Cheesecake",
+    "Hotdog",
+    "Burger",
     "Cream Cheese Bagel",
     "Bacon Egg & Cheese",
-    "Burger",
+    "Cheesecake",
+    "Donut",
+}
+
+env[#env+1] = {
+    "rbxassetid://87610934490695",
+    "rbxassetid://90974810727103",
+    "rbxassetid://129262933835957",
+    "rbxassetid://139786248064389",
 }
 
 
