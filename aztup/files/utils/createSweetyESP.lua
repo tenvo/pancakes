@@ -9,9 +9,9 @@ local function createSweetyEsp()
     local sweetyEsp = {}
 
     sweetyEsp.plr = Players.LocalPlayer
-    sweetyEsp.char = plr.Character
+    sweetyEsp.char = sweetyEsp.plr.Character
 
-    plr.CharacterAdded:Connect(function(char)
+    sweetyEsp.plr.CharacterAdded:Connect(function(char)
         sweetyEsp.char = char
     end)
 
