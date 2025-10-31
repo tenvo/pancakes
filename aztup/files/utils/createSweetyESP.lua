@@ -50,10 +50,10 @@ local function createSweetyEsp()
         -- healthText.Color = Color3.fromRGB(255,255,255)
         -- healthText.Size = 13
 
-        espClass.maid:GiveTask(cr.AncestryChanged:Connect(function(_,parent)
-            if not parent then
-                espClass:Destroy()
-            end
+        espClass.maid:GiveTask(cr.AncestryChanged:Connect(function()
+            if cr:IsDescendantOf(game) then return; end
+
+            espClass:Destroy()
         end))
 
         --espClass.maid:AddTask(h.HealthChanged:Connect(function(v)
@@ -87,7 +87,7 @@ local function createSweetyEsp()
                     -- healthText.Visible = true
                 else
                     text.Visible = false
-                    healthText.Visible = false
+                    --healthText.Visible = false
                 end
             else
                 return
@@ -101,8 +101,8 @@ local function createSweetyEsp()
 
         function espClass:Destroy()
             text:Remove()
-            healthText:Remove()
-            self._maid:Destroy()
+            --healthText:Remove()
+            espClass.maid:Destroy()
 
             sweetyEsp[flag] = nil
         end
