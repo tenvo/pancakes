@@ -3693,8 +3693,12 @@ do -- // Load
             saveConfigBeforeGameLeave();
         end));
 
+        discordSection:AddLabel("DON'T JOIN AZTUP SERVER FOR SUPPORT")
+
+        discordSection:AddDivider("(SUPPORT)")
+
         discordSection:AddButton({
-            text = "Tenvo's Server (SUPPORT)",
+            text = "pancake fan club discord",
             callback = function() 
                 ToastNotif.new({
                     text = 'Copied to Clipboard',
@@ -3705,10 +3709,10 @@ do -- // Load
             end
         });
 
-        discordSection:AddLabel("Aztup does NOT offer support for this script.")
+        discordSection:AddDivider("(NO SUPPORT)")
 
         discordSection:AddButton({
-            text = "Aztup's Server (NO SUPPORT)",
+            text = "Aztup's Server",
             callback = function() 
                 ToastNotif.new({
                     text = 'Copied to Clipboard',
