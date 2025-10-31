@@ -126,7 +126,7 @@ local column2;
 
 if(debugMode) then
     ToastNotif.new({
-        text = 'Hub running in debug mode'
+        text = 'Lib running in debug mode'
     });
 end
 
