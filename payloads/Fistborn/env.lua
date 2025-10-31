@@ -53,5 +53,15 @@ env[#env+1] = {
     "rbxassetid://139786248064389",
 }
 
+env[#env+1] = {
+    "Accountant",
+    "Big Al",
+    "Dome Ringa",
+    "HospitalNPC",
+    "Rukio",
+    "TalentDeckNPC",
+    "Yuki Mura",
+    "Bing",
+}
 
 return env
