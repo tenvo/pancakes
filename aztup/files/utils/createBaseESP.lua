@@ -1,8 +1,10 @@
-SX_VM_CNONE();
-local Maid = sharedRequire('Maid.lua');
-local Services = sharedRequire('Services.lua');
+--// TODO rewrite completely BC its missing code
 
-local toCamelCase = sharedRequire('toCamelCase.lua');
+SX_VM_CNONE();
+local Maid = sharedRequire('utils/Maid.lua');
+local Services = sharedRequire('utils/Services.lua');
+
+local toCamelCase = sharedRequire('utils/toCamelCase.lua');
 local library = sharedRequire('UILibrary.lua');
 
 local Players, CorePackages, HttpService = Services:Get('Players', 'CorePackages', 'HttpService');
