@@ -3693,12 +3693,10 @@ do -- // Load
             saveConfigBeforeGameLeave();
         end));
 
-        discordSection:AddLabel("DON'T JOIN AZTUP SERVER FOR SUPPORT")
 
         discordSection:AddDivider("(SUPPORT)")
-
         discordSection:AddButton({
-            text = "pancake fan club discord",
+            text = "pancake fan club Server",
             callback = function() 
                 ToastNotif.new({
                     text = 'Copied to Clipboard',
@@ -3710,7 +3708,6 @@ do -- // Load
         });
 
         discordSection:AddDivider("(NO SUPPORT)")
-
         discordSection:AddButton({
             text = "Aztup's Server",
             callback = function() 
