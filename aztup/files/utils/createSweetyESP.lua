@@ -1,15 +1,16 @@
 --// W sweety for making this esp for deepwoken dev, your service to the umarcorp wont be forgotten
-
 local Maid = sharedRequire('utils/Maid.lua');
 local Utility = sharedRequire('utils/Utility.lua')
 local Services = sharedRequire('utils/Services.lua');
-local Players = Services:Get('Players')
+local Players,RunService = Services:Get('Players','RunService');
+
 
 local function createSweetyEsp()
     local sweetyEsp = {}
 
     sweetyEsp.plr = Players.LocalPlayer
     sweetyEsp.char = sweetyEsp.plr.Character
+    sweetyEsp._maid = Maid.new()
 
     sweetyEsp.plr.CharacterAdded:Connect(function(char)
         sweetyEsp.char = char
@@ -23,7 +24,8 @@ local function createSweetyEsp()
         espClass.state = true
         espClass.display = {"%s [%s]",{"flag","dist"}}
         espClass.showDistance = true
-        self._maid = Maid.new()
+        espClass.maid = Maid.new()
+
 
         if sweetyEsp[flag] then return warn('Already an ESP Active of that Flag') end
 
@@ -48,7 +50,7 @@ local function createSweetyEsp()
         -- healthText.Color = Color3.fromRGB(255,255,255)
         -- healthText.Size = 13
 
-        self._maid:AddTask(cr.AncestryChanged:Connect(function(_,parent)
+        espClass.maid:GiveTask(cr.AncestryChanged:Connect(function(_,parent)
             if not parent then
                 espClass:Destroy()
             end
@@ -68,7 +70,7 @@ local function createSweetyEsp()
             return rootPart
         end
 
-        self._maid:AddTask(rs.RenderStepped:Connect(function()
+        espClass.maid:GiveTask(RunService.RenderStepped:Connect(function()
             if espClass.flag then
                 local hrp_pos,hrp_onscreen = c:WorldToViewportPoint(hrp.Position)
                 if hrp_onscreen then
