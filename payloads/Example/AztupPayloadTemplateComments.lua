@@ -12,7 +12,7 @@ if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
 shared.aztuppy.payload = {
     _init = false, -- <= (required) status of payload, does nothing atm. dont remove it
     _maid = nil, -- <= (optional) using Maid module, it adds support to clean up
-    _title = "PoopGame", -- <= (optional) changes title of main tab, if nil it uses the game name
+    _title = "PoopGame", -- <= (optional) changes title of UI lib, if nil it uses "[PFC] Aztup Hub Overhaul"
     _root = "https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/", -- <= (optional) uses github url/web host to access a directory and files through sharedRequire()
 }
 

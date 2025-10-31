@@ -32,7 +32,7 @@ end;
 
 local globalConfFilePath = 'Aztup Hub V3/configs/globalConf.bin';
 local isGlobalConfigOn = readfile(globalConfFilePath) == 'true';
-local UITitle = "Aztup Hub (tenvo Overhaul)"
+local UITitle = "[PFC] Aztup Hub Overhaul"
 
 if shared.aztuppy["payload"] then
     if typeof(shared.aztuppy.payload["_title"]) == 'string' then
