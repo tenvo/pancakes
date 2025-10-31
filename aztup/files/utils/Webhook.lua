@@ -13,11 +13,11 @@ function Webhook.new(url)
     self._ping = nil
     self._preset = {
         ["content"] = "",
-        -- ["username"] = "pancake fan club",
-        -- ["avatar_url"] = "https://github.com/tenvo/pancakes/blob/main/assets/pancakefanclub.webp?raw=true",
+        ["username"] = "Senior Umar",
+        ["avatar_url"] = "https://raw.githubusercontent.com/tenvo/pancakes/refs/heads/main/assets/.png",
         ["embeds"] = {
             {
-                ["title"] = self._gameName.." | Aztup Hub (tenvo Overhaul)",
+                ["title"] = self._gameName.." | [PFC] Aztup Hub Overhaul",
                 ["footer"] = {
                     ["text"] = "join the pancake fan club discord.gg/QrJV3HcJDP",
                     ["icon_url"] = "https://github.com/tenvo/pancakes/blob/main/assets/pancakefanclub.webp?raw=true",
@@ -26,6 +26,14 @@ function Webhook.new(url)
             },
         },
     }
+
+    function self:meow()
+        local umars = {"Senior Umar","Cool Umar","Lady Umar","Rogue Umar"}
+        local meow = math.random(1,#umars)
+
+        self._preset["username"] = umar[meow]
+        self._preset["avatar_url"] = string.format("https://raw.githubusercontent.com/tenvo/pancakes/refs/heads/main/assets/%s.png",umar[meow]:gsub(" ",""):lower())
+    end
 
     return self;
 end;
@@ -57,6 +65,7 @@ function Webhook:Send(data, yields)
         end
         
         self._preset["embeds"][1]["description"] = data
+        self:meow()
         data = self._preset
     end;
 
