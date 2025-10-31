@@ -132,19 +132,15 @@ end
 
 if(shared.aztuppy["payload"]) then
     -- W game name parser
-    if shared.aztuppy.payload["_title"] then
-        gameName = shared.aztuppy.payload._title
-    else
-        local function getGameName(str)
-            local after = string.match(str, "^%b[]%s*(.*)$")
-            if after then return after end
-            local before = string.match(str, "^(.-)%s*%b[]$")
-            if before then return before end
-            return str
-        end
-        
-        gameName = getGameName(MarketplaceService:GetProductInfo(game.PlaceId).Name)
+    local function getGameName(str)
+        local after = string.match(str, "^%b[]%s*(.*)$")
+        if after then return after end
+        local before = string.match(str, "^(.-)%s*%b[]$")
+        if before then return before end
+        return str
     end
+    
+    gameName = getGameName(MarketplaceService:GetProductInfo(game.PlaceId).Name)
 
     ToastNotif.new({
         text = "running "..gameName.." payload",

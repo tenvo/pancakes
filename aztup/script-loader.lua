@@ -250,7 +250,7 @@ local ui = c('ScreenGui', {
                         Enum.FontWeight.Bold,
                         Enum.FontStyle.Normal
                     ),
-                    Text = 'AZTUP HUB LOADER',
+                    Text = "AZTUP UI LOADER",
                     TextColor3 = Color3.fromRGB(255, 255, 255),
                     TextSize = 25,
                     BackgroundColor3 = Color3.fromRGB(255, 255, 255),

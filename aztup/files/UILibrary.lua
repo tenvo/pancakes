@@ -32,13 +32,20 @@ end;
 
 local globalConfFilePath = 'Aztup Hub V3/configs/globalConf.bin';
 local isGlobalConfigOn = readfile(globalConfFilePath) == 'true';
+local UITitle = "Aztup Hub (tenvo Overhaul)"
+
+if shared.aztuppy["payload"] then
+    if typeof(shared.aztuppy.payload["_title"]) == 'string' then
+        UITitle = shared.aztuppy.payload["_title"]
+    end
+end
 
 local library = {
     unloadMaid = Maid.new(),
 	tabs = {},
 	draggable = true,
 	flags = {},
-	title = string.format('Aztup Hub (tenvo Overhaul) | v%s', scriptVersion or 'DEBUG'),
+	title = string.format('%s | v%s', UITitle,(debugMode and 'DEBUG') or scriptVersion), --// scriptVersion represents UI version
 	open = false,
 	popup = nil,
 	instances = {},
