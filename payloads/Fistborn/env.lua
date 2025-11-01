@@ -19,7 +19,7 @@ env[#env+1] =  {
 }
 
 env[#env+1] = {
-    "-- Stats --"
+    "-- Stats --",
     "Strength",
     "Durability",
     "Agility",
