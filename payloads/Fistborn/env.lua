@@ -72,4 +72,33 @@ env[#env+1] = {
     "Bing",
 }
 
+local IT = workspace.InanimateTargets
+local Mac = workspace.Machines
+local GB = workspace.Gangbase
+
+env[#env+1] = {
+    beds = {
+        workspace.BedParts,
+        GB.Upgrades["Rest Area"],
+    },
+    bags = {
+        IT.WoodPost,
+        IT.StandingBag,
+        IT.PunchingBag,
+        GB.Upgrades["Punching Bag"],
+    },
+    machines = {
+        Mac.Treadmill,
+        Mac.Squats,
+        Mac.Pullups,
+        Mac.Curls,
+        Mac.Benchpress,
+        GB.Upgrades.Treadmill,
+        GB.Upgrades.Squats,
+        GB.Upgrades["Pullup Bar"],
+        GB.Upgrades["Curl-Up"],
+        GB.Upgrades.Benchpress,
+    }
+}
+
 return env
