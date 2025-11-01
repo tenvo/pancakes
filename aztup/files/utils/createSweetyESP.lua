@@ -122,6 +122,14 @@ local function createSweetyEsp()
         return false
     end
 
+    function sweetyEsp:Clear()
+        for i = 1,#espClass do
+            if espClass[i] then
+                espClass[i]:Destroy()
+            end
+        end
+    end
+
     return sweetyEsp
 end
 
