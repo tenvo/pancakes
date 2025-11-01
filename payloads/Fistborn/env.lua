@@ -19,8 +19,7 @@ env[#env+1] =  {
 }
 
 env[#env+1] = {
-    "Bank",
-    "Wallet",
+    "-- Stats --"
     "Strength",
     "Durability",
     "Agility",
@@ -28,9 +27,19 @@ env[#env+1] = {
     "MaxStamina",
     "Muscle",
     "TotalPower",
+    "-- Other --",
+    "Bank",
+    "Wallet",
     "Style",
     "GlowingEyes",
     "GlowingMarking",
+    "-- Bones --",
+    "Head",
+    "Torso",
+    "Left_Arm",
+    "Right_Arm",
+    "Left_Leg",
+    "Right_Leg",
 }
 
 env[#env+1] = {
