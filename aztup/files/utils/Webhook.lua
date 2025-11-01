@@ -17,10 +17,11 @@ function Webhook.new(url)
         ["avatar_url"] = "https://raw.githubusercontent.com/tenvo/pancakes/refs/heads/main/assets/.png",
         ["embeds"] = {
             {
-                ["title"] = self._gameName.." | [PFC] Aztup Hub Overhaul",
+                ["author"] = {
+                    ["name"] = self._gameName.." | [PFC] Aztup Hub Overhaul",
+                },
                 ["footer"] = {
-                    ["text"] = "join the pancake fan club discord.gg/QrJV3HcJDP",
-                    ["icon_url"] = "https://github.com/tenvo/pancakes/blob/main/assets/pancakefanclub.webp?raw=true",
+                    ["text"] = "pancake fan club: discord.gg/QrJV3HcJDP",
                 },
                 ["description"] = "",
             },
