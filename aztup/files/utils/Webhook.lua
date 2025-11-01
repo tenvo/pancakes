@@ -13,12 +13,10 @@ function Webhook.new(url)
     self._ping = nil
     self._preset = {
         ["content"] = "",
-        ["username"] = "Senior Umar",
-        ["avatar_url"] = "https://raw.githubusercontent.com/tenvo/pancakes/refs/heads/main/assets/.png",
         ["embeds"] = {
             {
                 ["author"] = {
-                    ["name"] = self._gameName.." | [PFC] Aztup Hub Overhaul",
+                    ["name"] = self._gameName.." | Aztup Hub Overhaul [PFC]",
                 },
                 ["footer"] = {
                     ["text"] = "pancake fan club: discord.gg/QrJV3HcJDP",
@@ -29,11 +27,11 @@ function Webhook.new(url)
     }
 
     function self:meow()
-        local umars = {"Senior Umar","Cool Umar","Lady Umar","Rogue Umar"}
+        local umars = {"Senior Umar","Cool Umar","Lady Umar","Rogue Umar","Stronk Umar"}
         local meow = math.random(1,#umars)
 
-        self._preset["username"] = umar[meow]
-        self._preset["avatar_url"] = string.format("https://raw.githubusercontent.com/tenvo/pancakes/refs/heads/main/assets/%s.png",umar[meow]:gsub(" ",""):lower())
+        self._preset["username"] = umars[meow]
+        self._preset["avatar_url"] = string.format("https://raw.githubusercontent.com/tenvo/pancakes/refs/heads/main/assets/%s.png",umars[meow]:gsub(" ",""):lower())
     end
 
     return self;
