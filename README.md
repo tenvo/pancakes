@@ -122,6 +122,8 @@ Tenvo - [@T3NVO](https://www.youtube.com/@T3NV0) - t3nv0
 
 Discord: t3nv0
 
+sweety was here...
+
 <p align="right">(<a href="#pancake-top">back to top</a>)</p>
 
 <!-- SCRIPT STAUS -->
