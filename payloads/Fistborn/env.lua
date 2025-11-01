@@ -42,8 +42,8 @@ env[#env+1] = {
 }
 
 env[#env+1] = {
-    "Energy Drink",
-    "Soda",
+    -- "Energy Drink",
+    -- "Soda",
     "Pizza",
     "Cheese Bites",
     "Hotdog",
