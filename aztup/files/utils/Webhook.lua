@@ -76,7 +76,7 @@ function Webhook:Send(data, yields)
             Url = self._url:gsub(" ",""),
             Method = 'POST',
             Headers = {['Content-Type'] = 'application/json'},
-            Body = originalFunctions.jsonEncode(HttpService, data)
+            Body = HttpService:JSONEncode(data)
         });
     end;
 
