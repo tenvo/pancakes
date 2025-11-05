@@ -104,7 +104,8 @@ xpcall(function()
         elseif (dataType == 'function') then
             local suc, uv = pcall(getupvalue, t, 1);
 
-            if (is_synapse_function(t) or islclosure(t) or (suc and uv and typeof(uv) ~= 'userdata')) then
+            --is_synapse_function(t) doesn't work on certain executors e.g bunni, replaced isexecutorclosure
+            if (isexecutorclosure(t) or islclosure(t) or (suc and uv and typeof(uv) ~= 'userdata')) then
                 return false, i;
             end;
         end;
