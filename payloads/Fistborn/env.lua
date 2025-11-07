@@ -101,4 +101,16 @@ env[#env+1] = {
     }
 }
 
+env[#env+1] = {
+    "Taekwondo",
+    "Gym",
+    "Bank",
+    "DexDaily",
+    "Hospital",
+    "24/7",
+    "DineNDash",
+    "Neighborhood",
+    "BrokenHouse",
+}
+
 return env
