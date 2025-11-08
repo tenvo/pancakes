@@ -103,7 +103,7 @@ do -- // Load
         Enum.UserInputType.MouseButton1,Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3
     }
 
-    local MobileButton
+    local MobileButton;
 
     local function onInputBegan(input, gpe)
         local inputType = input.UserInputType;
@@ -2878,6 +2878,51 @@ do -- // Load
         library.tooltip.Position = UDim2.fromScale(10, 10);
     end
 
+    function library:AddMobileToggle()
+        if shared.aztuppy["sharedFile"] then
+            local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
+            
+            if isMobile and not MobileButton then
+                MobileButton = {}
+
+                local MBase = library:Create("ImageButton",{
+                    Parent = library.Base,
+                    BackgroundTransparency = 1,
+                    Position = UDim2.fromScale(-0.000680272118,-0.00139275764),
+                    Size = UDim2.new(0, 45, 0, 45),
+                    Image = "https://www.roblox.com/asset/?id=97166444",
+                })
+
+                library:Create('ImageLabel',{
+                    Parent = MBase,
+                    BackgroundTransparency = 1,
+                    Position = UDim2.fromScale(0.174999997, 0.174999997),
+                    Size = UDim2.fromScale(0.649999976, 0.649999976),
+                })
+
+                library:Create('TextLabel',{
+                    Parent = MBase,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.fromScale(1, 1),
+                    Font = Enum.Font.SourceSansBold,
+                    Text = "ahUI",
+                    TextColor3 = Color3.fromRGB(255, 255, 255),
+                    TextSize = 18,
+                    TextStrokeTransparency = 0,
+                    TextWrapped = true,
+                })
+
+                MobileButton.base = MBase
+
+                library.unloadMaid:GiveTask(MBase.InputBegan:connect(function(input)
+                    library:Close()
+                end))
+
+                return MobileButton
+            end
+        end
+    end
+
     function library:Init(silent)
         if self.hasInit then return end
 
@@ -3455,30 +3500,7 @@ do -- // Load
             callback = function() library:Close() end
         })
 
-        --// Mobile Logic
-        if shared.aztuppy["sharedFile"] then
-            local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
-            
-            if isMobile then
-                local ContextActionService = game:GetService("ContextActionService")
-
-                ContextActionService:BindAction("AHUI", function(actionName,inputState)
-                    if inputState == Enum.UserInputState.Begin then
-                        library:Close()
-                    end
-                end, true)
-
-                MobileButton = ContextActionService:GetButton("AHUI")
-                if MobileButton then
-                    ContextActionService:SetTitle("AHUI","ahUI")
-                    MobileButton.Position = UDim2.fromScale(-2.334, -1.004)
-
-                    library.unloadMaid:GiveTask(function()
-                        ContextActionService:UnbindAction("AHUI")
-                    end)
-                end
-            end
-        end
+        library:AddMobileToggle()
 
         settingsMenu:AddColor({
             text = 'Accent Color',
