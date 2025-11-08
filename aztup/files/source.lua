@@ -93,17 +93,25 @@ if (debugMode) then
     }
 end;
 
+local ah_url = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"
+
+if shared.aztuppy["payload"] then
+    if (shared.aztuppy.payload["_root"] ~= nil) then
+        ah_url = string.format("%s/main.lua",shared.aztuppy.payload._root)
+    end
+end
+
 LocalPlayer.OnTeleport:Connect(function(state)
     if (executed or state ~= Enum.TeleportState.InProgress) then return end;
     executed = true;
 
     if(not debugMode) then
-        syn.queue_on_teleport(
+        queue_on_teleport(
             string.format([[
                 if(aztupHubV3Ran) then return end;
                 getgenv().silentLaunch=%s;
-                loadstring(game:HttpGet('https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua'))();
-            ]], tostring(silentLaunch))
+                loadstring(game:HttpGet(%s))();
+            ]], tostring(silentLaunch), ah_url)
         );
     end;
 end);

@@ -558,7 +558,8 @@ end;
 
 statusEvent.Event:Connect(setStatus);
 setStatus('Checking data');
-local rootUrl = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/"
+local gitBranch = (debugMode and 'dev') or 'main'
+local rootUrl = string.format("https://raw.githubusercontent.com/tenvo/pancakes/%s/aztup/files/",gitBranch);
 if (not shared.aztuppy) then
     shared.aztuppy = {
         dependencies = true,
@@ -566,6 +567,7 @@ if (not shared.aztuppy) then
         utils = rootUrl.."utils/",
         classes = rootUrl.."classes/",
         games = rootUrl.."games/",
+        branch = gitBranch
     }
 else
     if (shared.aztuppy.dependencies ~= true) then
@@ -574,6 +576,7 @@ else
         shared.aztuppy.classes = rootUrl.."classes/"
         shared.aztuppy.games = rootUrl.."games/"
         shared.aztuppy.dependencies = true
+        shared.aztuppy.branch = gitBranch
     end
 end
 local repo = rootUrl:gsub('files/', '')
