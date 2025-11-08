@@ -110,7 +110,11 @@ LocalPlayer.OnTeleport:Connect(function(state)
             string.format([[
                 if(aztupHubV3Ran) then return end;
                 getgenv().silentLaunch=%s;
-                loadstring(game:HttpGet(%s))();
+                xpcall(function()
+                    loadstring(game:HttpGet(%s))();
+                end, function(err)
+                    warn(string.format("Couldn't get payload root, %s",err))
+                end)
             ]], tostring(silentLaunch), ah_url)
         );
     end;
