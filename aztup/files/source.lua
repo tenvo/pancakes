@@ -97,7 +97,7 @@ local ah_url = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/scri
 
 if shared.aztuppy["payload"] then
     if (shared.aztuppy.payload["_root"] ~= nil) then
-        ah_url = string.format("%s/main.lua",shared.aztuppy.payload._root)
+        ah_url = string.format("%smain.lua",shared.aztuppy.payload._root)
     end
 end
 
