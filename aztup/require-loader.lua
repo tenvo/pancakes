@@ -36,7 +36,7 @@ local function QueryGame(query)
             if extension ~= nil then
                 return v["download_url"]
             else
-                local download_url = string.format("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/files/games/%s/main.lua",query:split(".lua")[1])
+                local download_url = string.format("%sgames/%s/main.lua",shared.aztuppy.root,query:split(".lua")[1])
                 return download_url
             end
         end
