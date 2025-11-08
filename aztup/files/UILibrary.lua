@@ -45,7 +45,7 @@ local library = {
 	tabs = {},
 	draggable = true,
 	flags = {},
-	title = string.format('%s | v%s', UITitle,(debugMode and 'DEBUG') or scriptVersion), --// scriptVersion represents UI version
+	title = string.format('%s | v%s', UITitle,(debugMode and 'DEBUG') or shared.aztuppy.scriptVersion), --// scriptVersion represents UI version
 	open = false,
 	popup = nil,
 	instances = {},
@@ -3451,6 +3451,27 @@ do -- // Load
             key = 'LeftAlt',
             callback = function() library:Close() end
         })
+
+        --// Mobile Logic
+        if shared.aztuppy["sharedFile"] then
+            local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
+            
+            if isMobile then
+                local ContextActionService = game:GetService("ContextActionService")
+
+                ContextActionService:BindAction("AHUI", function(actionName,inputState)
+                    if inputState == Enum.UserInputState.Begin then
+                        library:Close()
+                    end
+                end, true)
+
+                local button = ContextActionService:GetButton("AHUI")
+                if button then
+                    ContextActionService:SetTitle("AHUI","ahUI")
+                    button.Position = UDim2.fromScale(0.295, 0.77)
+                end
+            end
+        end
 
         settingsMenu:AddColor({
             text = 'Accent Color',

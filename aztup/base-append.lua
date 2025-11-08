@@ -18,6 +18,7 @@ if (typeof(game) ~= 'Instance') then return SX_CRASH() end;
 
 local originalFunctions = {};
 local HttpService = game:GetService('HttpService');
+local UserInputService = game:GetService('UserInputService');
 
 xpcall(function()
     local functionsToCheck = {
@@ -171,7 +172,9 @@ local userId = LocalPlayer.UserId;
 local isUserTrolled = false;
 local accountData;
 local scriptVersion;
-local serverConstants = {};
+local aztuppyitems = 0;
+local isMobile = false
+local aztuppyFile = isfile("Aztup Hub V3/aztuppy.json")
 
 do -- //Hook print debug
     if (not debugMode) then
@@ -181,22 +184,46 @@ do -- //Hook print debug
     end;
 end;
 
--- setStatus('Checking whitelist');
+setStatus('Setting Aztuppy Env');
 
-do -- // Whitelist check
-    -- A lot of this was redacted for obvious reasons
+do -- // Aztuppy Core Init
+    START_AZTUPPY = tick()
 
-    -- This is most likely not working
+    if isfile("Aztup Hub V3/compiled.lua") then
+        delfile("Aztup Hub V3/compiled.lua")
+    end
 
-    -- decryptedData = jsonDecode(HttpService, decryptedData);
-    -- local jsonData = decryptedData.a;
+    if aztuppyFile then 
+        aztuppyFile = HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json")) 
+    else 
+        aztuppyFile = {} 
+    end
 
-    -- isUserTrolled = jsonData.isUserTrolled;
-    -- accountData = jsonData.accountData
-    getgenv().scriptVersion = ah_metadata["version"];
-    -- serverConstants = jsonData.serverConstants;
+    aztuppyitems = #aztuppyFile
 
-    --print("Whitelist Took:" .. tick() - START_WHITELIST);
+    if UserInputService.TouchEnabled and typeof(aztuppyFile["isMobile"]) ~= 'boolean' then
+        -- Possible Emulator/Phone
+        local UserAgent = HttpService:JSONDecode(game:HttpGet("https://httpbin.org/get"))["headers"]["User-Agent"]
+
+        if typeof(UserAgent) == "string" then
+            for _,v in next, {"Tablet","Phone","ROBLOX Android App","Android","GooglePlayStore","iPhone","iPad"} do
+                if UserAgent:find(v) then
+                    isMobile = true
+                    break
+                end
+            end
+
+            aztuppyFile["isMobile"] = isMobile
+        end
+    end
+
+    if (#aztuppyFile > aztuppyFile or (#aztuppyFile < aztuppyitems and aztuppyitems ~= 0)) then
+        writefile("Aztup Hub V3/aztuppy.json",HttpService:JSONEncode(aztuppyFile))
+        print('updated aztuppy shared')
+    end
+    shared.aztuppy.scriptVersion = ah_metadata["version"];
+    shared.aztuppy["sharedFile"] = aztuppyFile
+    print("Aztuppy Core Init:" .. tick() - START_AZTUPPY);
 end;
 
 local sharedRequires = {};

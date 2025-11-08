@@ -715,10 +715,10 @@ xpcall(function()
         
         setStatus('Fetching script');
         repeat task.wait(); until base_append and require_loader;
-        local compiled = writefile("Aztup Hub V3/compiled.lua",tostring(base_append).." "..tostring(require_loader))
+        local compiled = writefile("Aztup Hub V3/scripts/loader.lua",tostring(base_append).." "..tostring(require_loader))
         setStatus('Compiling script')
-        repeat task.wait() until isfile("Aztup Hub V3/compiled.lua")
-        local AztupScript = assert(loadstring(readfile("Aztup Hub V3/compiled.lua")))
+        repeat task.wait() until isfile("Aztup Hub V3/scripts/loader.lua")
+        local AztupScript = assert(loadstring(readfile("Aztup Hub V3/scripts/loader.lua")))
 
         setStatus('Launching script');
         AztupScript()
