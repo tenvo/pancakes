@@ -217,7 +217,7 @@ do -- // Aztuppy Core Init
         end
     end
 
-    if (#aztuppyFile > aztuppyFile or (#aztuppyFile < aztuppyitems and aztuppyitems ~= 0)) then
+    if (#aztuppyFile > aztuppyitems or (#aztuppyFile < aztuppyitems and aztuppyitems ~= 0)) then
         writefile("Aztup Hub V3/aztuppy.json",HttpService:JSONEncode(aztuppyFile))
         print('updated aztuppy shared')
     end
