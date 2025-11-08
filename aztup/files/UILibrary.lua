@@ -13,6 +13,7 @@ local CoreGui, Players, RunService, TextService, UserInputService, ContentProvid
 local toCamelCase = sharedRequire('utils/toCamelCase.lua');
 local Maid = sharedRequire('utils/Maid.lua');
 local ToastNotif = sharedRequire('@classes/ToastNotif.lua');
+local http = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 
 local LocalPlayer = Players.LocalPlayer;
 local visualizer;
@@ -101,6 +102,8 @@ do -- // Load
     local whitelistedMouseinputs = { --add or remove mouse inputs if you find the need to
         Enum.UserInputType.MouseButton1,Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3
     }
+
+    local MobileButton
 
     local function onInputBegan(input, gpe)
         local inputType = input.UserInputType;
@@ -3312,7 +3315,7 @@ do -- // Load
             function joinDiscord(code)
                 for i = 6463, 6472 do -- // Just cause there is a 10 range port
                     if(pcall(function()
-                        syn.request({
+                        http({
                             Url = ('http://127.0.0.1:%s/rpc?v=1'):format(i),
                             Method = 'POST',
                             Headers = {
@@ -3373,7 +3376,7 @@ do -- // Load
             local path = string.format('Aztup Hub V3/CustomBackgrounds/%s.bin', syn.crypt.hash(imageURL));
 
             if (not isfile(path)) then
-                local suc, httpRequest = pcall(syn.request, {
+                local suc, httpRequest = pcall(http, {
                     Url = imageURL,
                 });
 
@@ -3465,10 +3468,14 @@ do -- // Load
                     end
                 end, true)
 
-                local button = ContextActionService:GetButton("AHUI")
-                if button then
+                MobileButton = ContextActionService:GetButton("AHUI")
+                if MobileButton then
                     ContextActionService:SetTitle("AHUI","ahUI")
-                    button.Position = UDim2.fromScale(0.295, 0.77)
+                    MobileButton.Position = UDim2.fromScale(-2.334, -1.004)
+
+                    library.unloadMaid:GiveTask(function()
+                        ContextActionService:UnbindAction("AHUI")
+                    end)
                 end
             end
         end
@@ -3719,6 +3726,8 @@ do -- // Load
         discordSection:AddButton({
             text = "pancake fan club Server",
             callback = function() 
+                joinDiscord('QrJV3HcJDP')
+
                 ToastNotif.new({
                     text = 'Copied to Clipboard',
                     duration = 2
@@ -3732,6 +3741,8 @@ do -- // Load
         discordSection:AddButton({
             text = "Aztup's Server",
             callback = function() 
+                joinDiscord('gWCk7pTXNs')
+
                 ToastNotif.new({
                     text = 'Copied to Clipboard',
                     duration = 2
