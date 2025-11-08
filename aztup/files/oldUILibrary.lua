@@ -1,6 +1,5 @@
 SX_VM_CNONE();
---// THIS IS THE SCALED VERSION
-print("SCALED UI!")
+-- // THIS IS THE OG
 -- // Services
 
 local libraryLoadAt = tick();
@@ -2877,393 +2876,392 @@ do -- // Load
     end
 
     function library:Init(silent)
-		if self.hasInit then return end
+        if self.hasInit then return end
 
-		self.hasInit = true
-		self.base = library:Create('ScreenGui', {IgnoreGuiInset = true, AutoLocalize = false, Enabled = not silent})
-		self.dummyBox = library:Create('TextBox', {Visible = false, Parent = self.base});
-		self.dummyModal = library:Create('TextButton', {Visible = false, Modal = true, Parent = self.base});
+        self.hasInit = true
+        self.base = library:Create('ScreenGui', {IgnoreGuiInset = true, AutoLocalize = false, Enabled = not silent})
+        self.dummyBox = library:Create('TextBox', {Visible = false, Parent = self.base});
+        self.dummyModal = library:Create('TextButton', {Visible = false, Modal = true, Parent = self.base});
 
-		self.unloadMaid:GiveTask(self.base);
+        self.unloadMaid:GiveTask(self.base);
 
-		if RunService:IsStudio() then
-			self.base.Parent = script.Parent
-		else
-			local oldGethui = gethui;
+        if RunService:IsStudio() then
+            self.base.Parent = script.Parent.Parent
+        else
+            local oldGethui = gethui;
 
-			local function gethui(ui)
-				if (oldGethui ~= nil) then
-					return oldGethui();
-				end;
+            local function gethui(ui)
+                if (oldGethui ~= nil) then
+                    return oldGethui();
+                end;
 
-				return CoreGui;
-			end;
+                return CoreGui;
+            end;
 
-			self.base.Parent = gethui(self.base)
+            self.base.Parent = gethui(self.base)
 
-			-- if(gethui) then
-			--     self.base.Parent = gethui();
-			-- else
-			--     -- pcall(syn.protect_gui, self.base);
-			--     self.base.Parent = CoreGui;
-			-- end;
-		end
+            -- if(gethui) then
+            --     self.base.Parent = gethui();
+            -- else
+            --     -- pcall(syn.protect_gui, self.base);
+            --     self.base.Parent = CoreGui;
+            -- end;
+        end
 
-		self.main = self:Create('ImageButton', {
-			AutoButtonColor = false,
-			Position = UDim2.fromScale(0.322, 0.122),
-			Size = UDim2.fromScale(0.36, 0.779),
-			BackgroundColor3 = Color3.fromRGB(20, 20, 20),
-			BorderColor3 = Color3.new(),
-			ScaleType = Enum.ScaleType.Tile,
-			Visible = true,
-			Parent = self.base
-		})
+        self.main = self:Create('ImageButton', {
+            AutoButtonColor = false,
+            Position = UDim2.new(0, 100, 0, 46),
+            Size = UDim2.new(0, 500, 0, 600),
+            BackgroundColor3 = Color3.fromRGB(20, 20, 20),
+            BorderColor3 = Color3.new(),
+            ScaleType = Enum.ScaleType.Tile,
+            Visible = true,
+            Parent = self.base
+        })
 
-		local top = self:Create('Frame', {
-			Size = UDim2.fromScale(1, 0.084),
-			Position = UDim2.fromScale(0, -0.002),
-			BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-			BorderColor3 = Color3.new(),
-			Parent = self.main
-		})
+        local top = self:Create('Frame', {
+            Size = UDim2.new(1, 0, 0, 50),
+            BackgroundColor3 = Color3.fromRGB(30, 30, 30),
+            BorderColor3 = Color3.new(),
+            Parent = self.main
+        })
 
-		self.titleLabel = self:Create('TextLabel', {
-			Position = UDim2.fromScale(0.012, 0,0, 0),
-			Size = UDim2.fromScale(0, 0.032),
-			BackgroundTransparency = 1,
-			Text = tostring(self.title),
-			Font = Enum.Font.Code,
-			TextSize = 18,
-			TextColor3 = Color3.new(1, 1, 1),
-			TextXAlignment = Enum.TextXAlignment.Left,
-			Parent = self.main
-		})
+        self.titleLabel = self:Create('TextLabel', {
+            Position = UDim2.new(0, 6, 0, -1),
+            Size = UDim2.new(0, 0, 0, 20),
+            BackgroundTransparency = 1,
+            Text = tostring(self.title),
+            Font = Enum.Font.Code,
+            TextSize = 18,
+            TextColor3 = Color3.new(1, 1, 1),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            Parent = self.main
+        })
 
-		table.insert(library.theme, self:Create('Frame', {
-			Size = UDim2.fromScale(1, 0.003),
-			Position = UDim2.fromScale(0, 0.041),
-			BackgroundColor3 = library.flags.menuAccentColor,
-			BorderSizePixel = 0,
-			Parent = self.main
-		}))
+        table.insert(library.theme, self:Create('Frame', {
+            Size = UDim2.new(1, 0, 0, 1),
+            Position = UDim2.new(0, 0, 0, 24),
+            BackgroundColor3 = library.flags.menuAccentColor,
+            BorderSizePixel = 0,
+            Parent = self.main
+        }))
 
-		library:Create('ImageLabel', {
-			Size = UDim2.new(1, 0, 1, 0),
-			BackgroundTransparency = 1,
-			Image = 'rbxassetid://2454009026',
-			ImageColor3 = Color3.new(),
-			ImageTransparency = 0.4,
-			Parent = top
-		})
+        library:Create('ImageLabel', {
+            Size = UDim2.new(1, 0, 1, 0),
+            BackgroundTransparency = 1,
+            Image = 'rbxassetid://2454009026',
+            ImageColor3 = Color3.new(),
+            ImageTransparency = 0.4,
+            Parent = top
+        })
 
-		self.tabHighlight = self:Create('Frame', {
-			BackgroundColor3 = library.flags.menuAccentColor,
-			BorderSizePixel = 0,
-			Parent = self.main
-		})
-		table.insert(library.theme, self.tabHighlight)
+        self.tabHighlight = self:Create('Frame', {
+            BackgroundColor3 = library.flags.menuAccentColor,
+            BorderSizePixel = 0,
+            Parent = self.main
+        })
+        table.insert(library.theme, self.tabHighlight)
 
-		self.columnHolder = self:Create('Frame', {
-			Position = UDim2.fromScale(0.01, 0.09),
-			Size = UDim2.fromScale(0.98, 0.901),
-			BackgroundTransparency = 1,
-			Parent = self.main
-		})
+        self.columnHolder = self:Create('Frame', {
+            Position = UDim2.new(0, 5, 0, 55),
+            Size = UDim2.new(1, -10, 1, -60),
+            BackgroundTransparency = 1,
+            Parent = self.main
+        })
 
-		self.tooltip = self:Create('TextLabel', {
-			ZIndex = 2,
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			TextSize = 15,
-			Size = UDim2.fromOffset(0, 0),
-			Position = UDim2.fromScale(10, 10),
-			Font = Enum.Font.Code,
-			TextColor3 = Color3.new(1, 1, 1),
-			Visible = true,
-			Active = false,
-			TextWrapped = true,
-			TextXAlignment = Enum.TextXAlignment.Left,
-			Parent = self.base,
-			AutomaticSize = Enum.AutomaticSize.XY
-		})
+        self.tooltip = self:Create('TextLabel', {
+            ZIndex = 2,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
+            TextSize = 15,
+            Size = UDim2.fromOffset(0, 0),
+            Position = UDim2.fromScale(10, 10),
+            Font = Enum.Font.Code,
+            TextColor3 = Color3.new(1, 1, 1),
+            Visible = true,
+            Active = false,
+            TextWrapped = true,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            Parent = self.base,
+            AutomaticSize = Enum.AutomaticSize.XY
+        })
 
-		self:Create('UISizeConstraint', {
-			Parent = self.tooltip,
-			MaxSize = Vector2.new(400, 1000),
-			MinSize = Vector2.new(0, 0),
-		});
+        self:Create('UISizeConstraint', {
+            Parent = self.tooltip,
+            MaxSize = Vector2.new(400, 1000),
+            MinSize = Vector2.new(0, 0),
+        });
 
-		self:Create('Frame', {
-			AnchorPoint = Vector2.new(0.5, 0),
-			Position = UDim2.new(0.5, 0, 0, 0),
-			Size = UDim2.new(1, 10, 1, 0),
-			Active = false,
-			Style = Enum.FrameStyle.RobloxRound,
-			Parent = self.tooltip
-		})
+        self:Create('Frame', {
+            AnchorPoint = Vector2.new(0.5, 0),
+            Position = UDim2.new(0.5, 0, 0, 0),
+            Size = UDim2.new(1, 10, 1, 0),
+            Active = false,
+            Style = Enum.FrameStyle.RobloxRound,
+            Parent = self.tooltip
+        })
 
-		self:Create('ImageLabel', {
-			Size = UDim2.new(1, 0, 1, 0),
-			BackgroundTransparency = 1,
-			Image = 'rbxassetid://2592362371',
-			ImageColor3 = Color3.fromRGB(60, 60, 60),
-			ScaleType = Enum.ScaleType.Slice,
-			SliceCenter = Rect.new(2, 2, 62, 62),
-			Parent = self.main
-		})
+        self:Create('ImageLabel', {
+            Size = UDim2.new(1, 0, 1, 0),
+            BackgroundTransparency = 1,
+            Image = 'rbxassetid://2592362371',
+            ImageColor3 = Color3.fromRGB(60, 60, 60),
+            ScaleType = Enum.ScaleType.Slice,
+            SliceCenter = Rect.new(2, 2, 62, 62),
+            Parent = self.main
+        })
 
-		self:Create('ImageLabel', {
-			Size = UDim2.fromScale(0.998, 0.997),
-			Position = UDim2.fromScale(0.002, 0.002),
-			BackgroundTransparency = 1,
-			Image = 'rbxassetid://2592362371',
-			ImageColor3 = Color3.new(),
-			ScaleType = Enum.ScaleType.Slice,
-			SliceCenter = Rect.new(2, 2, 62, 62),
-			Parent = self.main
-		})
+        self:Create('ImageLabel', {
+            Size = UDim2.new(1, -2, 1, -2),
+            Position = UDim2.new(0, 1, 0, 1),
+            BackgroundTransparency = 1,
+            Image = 'rbxassetid://2592362371',
+            ImageColor3 = Color3.new(),
+            ScaleType = Enum.ScaleType.Slice,
+            SliceCenter = Rect.new(2, 2, 62, 62),
+            Parent = self.main
+        })
 
-		library.unloadMaid:GiveTask(top.InputBegan:connect(function(input)
-			if input.UserInputType.Name == 'MouseButton1' then
-				dragObject = self.main
-				dragging = true
-				dragStart = input.Position
-				startPos = dragObject.Position
-				if library.popup then library.popup:Close() end
-			end
-		end));
+        library.unloadMaid:GiveTask(top.InputBegan:connect(function(input)
+            if input.UserInputType.Name == 'MouseButton1' then
+                dragObject = self.main
+                dragging = true
+                dragStart = input.Position
+                startPos = dragObject.Position
+                if library.popup then library.popup:Close() end
+            end
+        end));
 
-		library.unloadMaid:GiveTask(top.InputChanged:connect(function(input)
-			if dragging and input.UserInputType.Name == 'MouseMovement' then
-				dragInput = input
-			end
-		end));
+        library.unloadMaid:GiveTask(top.InputChanged:connect(function(input)
+            if dragging and input.UserInputType.Name == 'MouseMovement' then
+                dragInput = input
+            end
+        end));
 
-		library.unloadMaid:GiveTask(top.InputEnded:connect(function(input)
-			if input.UserInputType.Name == 'MouseButton1' then
-				dragging = false
-			end
-		end));
+        library.unloadMaid:GiveTask(top.InputEnded:connect(function(input)
+            if input.UserInputType.Name == 'MouseButton1' then
+                dragging = false
+            end
+        end));
 
-		local titleTextSize = TextService:GetTextSize(self.titleLabel.Text, 18, Enum.Font.Code, Vector2.new(1000, 0));
+        local titleTextSize = TextService:GetTextSize(self.titleLabel.Text, 18, Enum.Font.Code, Vector2.new(1000, 0));
 
-		local searchLabel = library:Create('ImageLabel', {
-			Position = UDim2.new(0, titleTextSize.X + 10, 0.5, -8),
-			Size = UDim2.new(0, 16, 0, 16),
-			BackgroundTransparency = 1,
-			Image = 'rbxasset://textures/ui/Settings/ShareGame/icons.png',
-			ImageRectSize = Vector2.new(16, 16),
-			ImageRectOffset = Vector2.new(6, 106),
-			ClipsDescendants = true,
-			Parent = self.titleLabel
-		});
+        local searchLabel = library:Create('ImageLabel', {
+            Position = UDim2.new(0, titleTextSize.X + 10, 0.5, -8),
+            Size = UDim2.new(0, 16, 0, 16),
+            BackgroundTransparency = 1,
+            Image = 'rbxasset://textures/ui/Settings/ShareGame/icons.png',
+            ImageRectSize = Vector2.new(16, 16),
+            ImageRectOffset = Vector2.new(6, 106),
+            ClipsDescendants = true,
+            Parent = self.titleLabel
+        });
 
-		local searchBox = library:Create('TextBox', {
-			BackgroundTransparency = 1,
-			Position = UDim2.fromOffset(searchLabel.AbsolutePosition.X-80, 5),
-			Size = UDim2.fromOffset(50, 15),
-			TextColor3 = Color3.fromRGB(255, 255, 255),
-			TextXAlignment = Enum.TextXAlignment.Left,
-			Parent = self.titleLabel,
-			Text = '',
-			PlaceholderText = 'Type something to search...',
-			Visible = false
-		});
+        local searchBox = library:Create('TextBox', {
+            BackgroundTransparency = 1,
+            Position = UDim2.fromOffset(searchLabel.AbsolutePosition.X-80, 5),
+            Size = UDim2.fromOffset(50, 15),
+            TextColor3 = Color3.fromRGB(255, 255, 255),
+            TextXAlignment = Enum.TextXAlignment.Left,
+            Parent = self.titleLabel,
+            Text = '',
+            PlaceholderText = 'Type something to search...',
+            Visible = false
+        });
 
-		local searchContainer = library:Create('ScrollingFrame', {
-			BackgroundTransparency = 1,
-			Visible = false,
-			Size = UDim2.fromScale(1, 1),
-			AutomaticCanvasSize = Enum.AutomaticSize.Y,
-			Parent = library.columnHolder,
-			BorderSizePixel = 0,
-			ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100),
-			ScrollBarThickness = 6,
-			CanvasSize = UDim2.new(),
-			ScrollingDirection = Enum.ScrollingDirection.Y,
-			VerticalScrollBarInset = Enum.ScrollBarInset.Always,
-			TopImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png',
-			BottomImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png',
-		});
+        local searchContainer = library:Create('ScrollingFrame', {
+            BackgroundTransparency = 1,
+            Visible = false,
+            Size = UDim2.fromScale(1, 1),
+            AutomaticCanvasSize = Enum.AutomaticSize.Y,
+            Parent = library.columnHolder,
+            BorderSizePixel = 0,
+            ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100),
+            ScrollBarThickness = 6,
+            CanvasSize = UDim2.new(),
+            ScrollingDirection = Enum.ScrollingDirection.Y,
+            VerticalScrollBarInset = Enum.ScrollBarInset.Always,
+            TopImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png',
+            BottomImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png',
+        });
 
-		library:Create('UIListLayout', {
-			Parent = searchContainer
-		})
+        library:Create('UIListLayout', {
+            Parent = searchContainer
+        })
 
-		local allFoundResults = {};
-		local modifiedNames = {};
+        local allFoundResults = {};
+        local modifiedNames = {};
 
-		local function clearFoundResult()
-			for _, option in next, allFoundResults do
-				option.main.Parent = option.originalParent;
-			end;
+        local function clearFoundResult()
+            for _, option in next, allFoundResults do
+                option.main.Parent = option.originalParent;
+            end;
 
-			for _, option in next, modifiedNames do
-				option.title.Text = option.text;
-				option.main.Parent = option.originalParent;
-			end;
+            for _, option in next, modifiedNames do
+                option.title.Text = option.text;
+                option.main.Parent = option.originalParent;
+            end;
 
-			table.clear(allFoundResults);
-			table.clear(modifiedNames);
-		end;
+            table.clear(allFoundResults);
+            table.clear(modifiedNames);
+        end;
 
-		local sFind, sLower = string.find, string.lower;
+        local sFind, sLower = string.find, string.lower;
 
-		library.unloadMaid:GiveTask(searchBox:GetPropertyChangedSignal('Text'):Connect(function()
-			local text = string.lower(searchBox.Text):gsub('%s', '');
+        library.unloadMaid:GiveTask(searchBox:GetPropertyChangedSignal('Text'):Connect(function()
+            local text = string.lower(searchBox.Text):gsub('%s', '');
 
-			for _, v in next, library.options do
-				if (not v.originalParent) then
-					v.originalParent = v.main.Parent;
-				end;
-			end;
+            for _, v in next, library.options do
+                if (not v.originalParent) then
+                    v.originalParent = v.main.Parent;
+                end;
+            end;
 
-			clearFoundResult();
+            clearFoundResult();
 
-			for _, v in next, library.currentTab.columns do
-				v.main.Visible = text == '' and true or false;
-			end;
+            for _, v in next, library.currentTab.columns do
+                v.main.Visible = text == '' and true or false;
+            end;
 
-			if (text == '') then return; end;
-			local matchedResults = false;
+            if (text == '') then return; end;
+            local matchedResults = false;
 
-			for _, v in next, library.options do
-				local main = v.main;
+            for _, v in next, library.options do
+                local main = v.main;
 
-				if (v.text == 'Enable' or v.parentFlag) then
-					if (v.type == 'toggle' or v.type == 'bind') then
-						local parentName = v.parentFlag and 'Bind' or v.section.title;
-						v.title.Text = string.format('%s [%s]', v.text, parentName);
+                if (v.text == 'Enable' or v.parentFlag) then
+                    if (v.type == 'toggle' or v.type == 'bind') then
+                        local parentName = v.parentFlag and 'Bind' or v.section.title;
+                        v.title.Text = string.format('%s [%s]', v.text, parentName);
 
-						table.insert(modifiedNames, v);
-					end;
-				end;
+                        table.insert(modifiedNames, v);
+                    end;
+                end;
 
-				if (sFind(sLower(v.text), text) or sFind(sLower(v.flag), text)) then
-					matchedResults = true;
-					main.Parent = searchContainer;
-					table.insert(allFoundResults, v);
-				else
-					main.Parent = v.originalParent;
-				end;
-			end;
+                if (sFind(sLower(v.text), text) or sFind(sLower(v.flag), text)) then
+                    matchedResults = true;
+                    main.Parent = searchContainer;
+                    table.insert(allFoundResults, v);
+                else
+                    main.Parent = v.originalParent;
+                end;
+            end;
 
-			searchContainer.Visible = matchedResults;
-		end));
+            searchContainer.Visible = matchedResults;
+        end));
 
-		library.unloadMaid:GiveTask(searchLabel.InputBegan:Connect(function(inputObject)
-			if(inputObject.UserInputType ~= Enum.UserInputType.MouseButton1) then return end;
-			searchBox.Visible = true;
-			searchBox:CaptureFocus();
-		end));
+        library.unloadMaid:GiveTask(searchLabel.InputBegan:Connect(function(inputObject)
+            if(inputObject.UserInputType ~= Enum.UserInputType.MouseButton1) then return end;
+            searchBox.Visible = true;
+            searchBox:CaptureFocus();
+        end));
 
-		library.unloadMaid:GiveTask(searchBox.FocusLost:Connect(function()
-			if (searchBox.Text:gsub('%s', '') ~= '') then return end;
-			searchBox.Visible = false;
-		end));
+        library.unloadMaid:GiveTask(searchBox.FocusLost:Connect(function()
+            if (searchBox.Text:gsub('%s', '') ~= '') then return end;
+            searchBox.Visible = false;
+        end));
 
 
-		local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out);
+        local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out);
 
-		function self:selectTab(tab)
-			if self.currentTab == tab then return end
-			if library.popup then library.popup:Close() end
-			clearFoundResult();
-			searchBox.Visible = false;
-			searchBox.Text = '';
+        function self:selectTab(tab)
+            if self.currentTab == tab then return end
+            if library.popup then library.popup:Close() end
+            clearFoundResult();
+            searchBox.Visible = false;
+            searchBox.Text = '';
 
-			if self.currentTab then
-				self.currentTab.button.TextColor3 = Color3.fromRGB(255, 255, 255)
-				for _, column in next, self.currentTab.columns do
-					column.main.Parent = nil;
-					column.main.Visible = true;
-				end
-			end
-			self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 239), 0, 600)
-			self.currentTab = tab
-			tab.button.TextColor3 = library.flags.menuAccentColor;
+            if self.currentTab then
+                self.currentTab.button.TextColor3 = Color3.fromRGB(255, 255, 255)
+                for _, column in next, self.currentTab.columns do
+                    column.main.Parent = nil;
+                    column.main.Visible = true;
+                end
+            end
+            self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 239), 0, 600)
+            self.currentTab = tab
+            tab.button.TextColor3 = library.flags.menuAccentColor;
 
-			TweenService:Create(self.tabHighlight, tweenInfo, {
-				Position = UDim2.new(0, tab.button.Position.X.Offset, 0, 50),
-				Size = UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1)
-			}):Play();
+            TweenService:Create(self.tabHighlight, tweenInfo, {
+                Position = UDim2.new(0, tab.button.Position.X.Offset, 0, 50),
+                Size = UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1)
+            }):Play();
 
-			for _, column in next, tab.columns do
-				column.main.Parent = self.columnHolder
-			end
-		end
+            for _, column in next, tab.columns do
+                column.main.Parent = self.columnHolder
+            end
+        end
 
-		task.spawn(function()
-			while library do
-				local Configs = self:GetConfigs()
-				for _, config in next, Configs do
-					if config ~= 'nil' and not table.find(self.options.configList.values, config) then
-						self.options.configList:AddValue(config)
-					end
-				end
-				for _, config in next, self.options.configList.values do
-					if config ~= 'nil' and not table.find(Configs, config) then
-						self.options.configList:RemoveValue(config)
-					end
-				end
-				task.wait(1);
-			end
-		end)
+        task.spawn(function()
+            while library do
+                local Configs = self:GetConfigs()
+                for _, config in next, Configs do
+                    if config ~= 'nil' and not table.find(self.options.configList.values, config) then
+                        self.options.configList:AddValue(config)
+                    end
+                end
+                for _, config in next, self.options.configList.values do
+                    if config ~= 'nil' and not table.find(Configs, config) then
+                        self.options.configList:RemoveValue(config)
+                    end
+                end
+                task.wait(1);
+            end
+        end)
 
-		for _, tab in next, self.tabs do
-			if tab.canInit then
-				tab:Init();
-			end;
-		end;
+        for _, tab in next, self.tabs do
+            if tab.canInit then
+                tab:Init();
+            end;
+        end;
 
-		self:AddConnection(UserInputService.InputEnded, function(input)
-			if (input.UserInputType.Name == 'MouseButton1') and self.slider then
-				self.slider.slider.BorderColor3 = Color3.new();
-				self.slider = nil;
-			end;
-		end);
+        self:AddConnection(UserInputService.InputEnded, function(input)
+            if (input.UserInputType.Name == 'MouseButton1') and self.slider then
+                self.slider.slider.BorderColor3 = Color3.new();
+                self.slider = nil;
+            end;
+        end);
 
-		self:AddConnection(UserInputService.InputChanged, function(input)
-			if self.open then
-				if input == dragInput and dragging and library.draggable then
-					local delta = input.Position - dragStart;
-					local yPos = (startPos.Y.Offset + delta.Y) < -36 and -36 or startPos.Y.Offset + delta.Y;
+        self:AddConnection(UserInputService.InputChanged, function(input)
+            if self.open then
+                if input == dragInput and dragging and library.draggable then
+                    local delta = input.Position - dragStart;
+                    local yPos = (startPos.Y.Offset + delta.Y) < -36 and -36 or startPos.Y.Offset + delta.Y;
 
-					dragObject:TweenPosition(UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, yPos), 'Out', 'Quint', 0.1, true);
-				end;
+                    dragObject:TweenPosition(UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, yPos), 'Out', 'Quint', 0.1, true);
+                end;
 
-				if self.slider and input.UserInputType.Name == 'MouseMovement' then
-					self.slider:SetValue(self.slider.min + ((input.Position.X - self.slider.slider.AbsolutePosition.X) / self.slider.slider.AbsoluteSize.X) * (self.slider.max - self.slider.min));
-				end;
-			end;
-		end);
+                if self.slider and input.UserInputType.Name == 'MouseMovement' then
+                    self.slider:SetValue(self.slider.min + ((input.Position.X - self.slider.slider.AbsolutePosition.X) / self.slider.slider.AbsoluteSize.X) * (self.slider.max - self.slider.min));
+                end;
+            end;
+        end);
 
-		local configData = readFileAndDecodeIt(library.foldername .. '/' .. library.fileext);
+        local configData = readFileAndDecodeIt(library.foldername .. '/' .. library.fileext);
 
-		if (configData) then
-			library.configVars = configData;
-			library:LoadConfig(configData.config);
+        if (configData) then
+            library.configVars = configData;
+            library:LoadConfig(configData.config);
 
-			library.OnLoad:Connect(function()
-				library.options.configList:SetValue(library.loadedConfig or 'default');
-			end);
-		else
-			print('[Script] [Config Loader] An error has occured', configData);
-		end;
+            library.OnLoad:Connect(function()
+                library.options.configList:SetValue(library.loadedConfig or 'default');
+            end);
+        else
+            print('[Script] [Config Loader] An error has occured', configData);
+        end;
 
-		self:selectTab(self.tabs[1]);
+        self:selectTab(self.tabs[1]);
 
-		if (not silent) then
-			self:Close();
-		else
-			self.open = false;
-		end;
+        if (not silent) then
+            self:Close();
+        else
+            self.open = false;
+        end;
 
-		library.OnLoad:Fire();
-		library.OnLoad:Destroy();
-		library.OnLoad = nil;
-	end;
+        library.OnLoad:Fire();
+        library.OnLoad:Destroy();
+        library.OnLoad = nil;
+    end;
 
     function library:SetTitle(text)
         if (not self.titleLabel) then
