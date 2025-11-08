@@ -3500,7 +3500,7 @@ do -- // Load
             callback = function() library:Close() end
         })
 
-        library:AddMobileToggle()
+        --library:AddMobileToggle()
 
         settingsMenu:AddColor({
             text = 'Accent Color',
