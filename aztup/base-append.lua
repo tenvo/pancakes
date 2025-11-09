@@ -196,10 +196,12 @@ do -- // Aztuppy Core Init
 
     if typeof(aztuppyFile) == "boolean" then
         if aztuppyFile then 
-            aztuppyFile = HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json")) 
+            aztuppyFile = HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json"))
         else 
             aztuppyFile = {} 
         end
+
+        pushUpdate = true
     end
 
     if UserInputService.TouchEnabled and typeof(aztuppyFile["isMobile"]) ~= 'boolean' then
