@@ -170,11 +170,9 @@ local jobId, placeId = game.JobId, game.PlaceId;
 
 local userId = LocalPlayer.UserId;
 local isUserTrolled = false;
+local isMobile = false
 local accountData;
 local scriptVersion;
-local aztuppyitems = 0;
-local isMobile = false
-local aztuppyFile = isfile("Aztup Hub V3/aztuppy.json")
 
 do -- //Hook print debug
     if (not debugMode) then
@@ -189,17 +187,20 @@ setStatus('Setting Aztuppy Env');
 do -- // Aztuppy Core Init
     START_AZTUPPY = tick()
 
+    local aztuppyFile, loaderHash = unpack({...});
+    local pushUpdate = false
+
     if isfile("Aztup Hub V3/compiled.lua") then
         delfile("Aztup Hub V3/compiled.lua")
     end
 
-    if aztuppyFile then 
-        aztuppyFile = HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json")) 
-    else 
-        aztuppyFile = {} 
+    if typeof(aztuppyFile) == "boolean" then
+        if aztuppyFile then 
+            aztuppyFile = HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json")) 
+        else 
+            aztuppyFile = {} 
+        end
     end
-
-    aztuppyitems = #aztuppyFile
 
     if UserInputService.TouchEnabled and typeof(aztuppyFile["isMobile"]) ~= 'boolean' then
         -- Possible Emulator/Phone
@@ -214,13 +215,19 @@ do -- // Aztuppy Core Init
             end
 
             aztuppyFile["isMobile"] = isMobile
+            pushUpdate = true
         end
     end
 
-    if (#aztuppyFile > aztuppyitems or (#aztuppyFile < aztuppyitems and aztuppyitems ~= 0)) then
-        writefile("Aztup Hub V3/aztuppy.json",HttpService:JSONEncode(aztuppyFile))
-        print('updated aztuppy shared')
+    if aztuppyFile["loaderHash"] ~= loaderHash then
+        aztuppyFile["loaderHash"] = loaderHash
+        pushUpdate = true
     end
+
+    if pushUpdate then
+        writefile("Aztup Hub V3/aztuppy.json",HttpService:JSONEncode(aztuppyFile))
+    end
+
     shared.aztuppy.scriptVersion = ah_metadata["version"];
     shared.aztuppy["sharedFile"] = aztuppyFile
     print("Aztuppy Core Init:" .. tick() - START_AZTUPPY);
