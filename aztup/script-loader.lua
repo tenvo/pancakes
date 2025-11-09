@@ -681,7 +681,7 @@ xpcall(function()
                 loaderHash = aztuppyFile["loaderHash"]
             end
         end
-        
+
         local scriptHash = game:HttpGet("https://e-z.tools/p/raw/a5avpra01t")
         if not loaderHash then loaderHash = hash(readfile("Aztup Hub V3/scripts/loader.lua")) end
         
