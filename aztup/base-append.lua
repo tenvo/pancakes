@@ -106,7 +106,8 @@ xpcall(function()
             local suc, uv = pcall(getupvalue, t, 1);
 
             --is_synapse_function(t) doesn't work on certain executors e.g bunni, replaced isexecutorclosure
-            if (isexecutorclosure(t) or islclosure(t) or (suc and uv and typeof(uv) ~= 'userdata')) then
+            print(isexecutorclosure(t),islclosure(t),(suc and uv and typeof(uv) ~= 'userdata'))
+            if (islclosure(t) or (suc and uv and typeof(uv) ~= 'userdata')) then
                 return false, i;
             end;
         end;
