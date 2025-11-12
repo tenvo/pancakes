@@ -4,7 +4,7 @@ local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo
 local interpeter = {}
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 1.05')
+    print('interpreter init 1.1')
     self = interpeter
 
     if self.init and (self.init["loaded"]) then
@@ -36,6 +36,18 @@ function interpeter:Init(silentLaunch)
     --// add metatable to init settings/config
 end
 
+local function getReq(payload,env)
+    for i,v in pairs(env) do
+        if payload[v] == nil then
+            return false
+        end
+    end
+
+    return true
+end
+
+
+
 function interpeter:AddTab(name)
     print("made tab")
     self = interpeter
@@ -54,57 +66,96 @@ function interpeter:AddTab(name)
             print('made section',name)
             local Section = {}
             Section.Name = name
-            thisTab:Label(string.format("-- %s --",name))
+            thisTab:Label(string.format("<<< %s >>>",name))
             
             function Section:AddButton(payload)
-                print(Section.Name,"wants to make a button")
-                print("Payload:")
-                for i,v in pairs(payload) do
-                    print(i,v)
-                end
-                print(" ")
+                self = interpeter
+                print(Section.Name,"wants to make a Button")
+                if not getReq(payload,{"text","callback"}) then return warn("Button didnt get enough args") end
+                local flagName = toCamelCase(payload.text)
+
+                thisTab:Button(payload.text,payload.callback)
+                
+                return Section
             end
 
             function Section:AddToggle(payload)
+                self = interpeter
                 print(Section.Name,"wants to make a Toggle")
-                print("Payload:")
-                for i,v in pairs(payload) do
-                    print(i,v)
-                end
-                print(" ")
+                if not getReq(payload,{"text","callback"}) then return warn("Toggle didnt get enough args") end
+                local flagName = toCamelCase(payload.text)
+
+                self.flags[flagName] = false
+
+                thisTab:Toggle(payload.text,false,function(Value)
+                    self.flags[flagName] = Value
+
+                    xpcall(function()
+                        payload.callback()
+                    end,function(err)
+                        print(payload.text .. " element errored, "..err)
+                    end)
+                end)
+                
+                return Section
             end
 
             function Section:AddDivider(name)
                 print(Section.Name,"wants to make a Divider")
-                print(name)
-                print(" ")
+                thisTab:Label(string.format("-- %s --",name))
             end
 
             function Section:AddSlider(payload)
+                self = interpeter
                 print(Section.Name,"wants to make a Slider")
-                print("Payload:")
-                for i,v in pairs(payload) do
-                    print(i,v)
+                if not getReq(payload,{"text","min","max"}) then return warn("Slider didnt get enough args") end
+                local flagName = toCamelCase(payload.text)
+                payload["def"] = (payload["max"]/2)
+
+                if payload["suffix"] then
+                    payload.text = payload.text .." ".. payload["suffix"]
                 end
-                print(" ")
+
+                thisTab:Slider(payload.text,{def = payload["def"],max = payload["max"],min = payload["min"]},function(Value)
+                    self.flags[flagName] = Value
+                end)
+
+                self.flags[flagName] = payload["def"]
+                
+                return Section
             end
 
             function Section:AddList(payload)
-                print(Section.Name,"wants to make a List")
-                print("Payload:")
-                for i,v in pairs(payload) do
-                    print(i,v)
-                end
-                print(" ")
+                self = interpeter
+                if not getReq(payload,{"text","values"}) then return warn("List didnt get enough args") end
+                local flagName = toCamelCase(payload.text)
+
+                local dd = thisTab:Dropdown(payload.text,false,function(Value)
+                    self.flags[flagName] = Value
+                end)
+
+
+                dd:SetChoice(payload["values"][1])
+
+                return Section
             end
 
             function Section:AddBind(payload)
+                self = interpeter
                 print(Section.Name,"wants to make a Bind")
-                print("Payload:")
-                for i,v in pairs(payload) do
-                    print(i,v)
-                end
-                print(" ")
+                if not getReq(payload,{"text","callback"}) then return warn("Toggle didnt get enough args") end
+
+                thisTab:Bind(payload.text,Enum.KeyCode.Unknown,function(Value)
+                    if Enum.KeyCode.Unknown == Value then return end
+
+                    xpcall(function()
+                        payload.callback()
+                    end,function(err)
+                        print(payload.text .. " element errored, "..err)
+                    end)
+                end)
+                
+                return Section
             end
 
 
