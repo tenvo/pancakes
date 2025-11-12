@@ -38,9 +38,6 @@ function interpeter:AddTab(name)
     function Tab:AddColumn()
         print('made column')
         local Column = {}
-        setmetatable(Column, {__index = function(mytable, key)
-            print(key,"Column Index")
-        end})
 
         function Column:AddSection(name)
             print('made section',name)
