@@ -4,8 +4,17 @@ local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo
 local interpeter = {}
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 1.04')
+    print('interpreter init 1.05')
     self = interpeter
+
+    if self.init and (self.init["loaded"]) then
+        self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
+        self.columns = {}
+        self.tabs = {}
+        self.flags = {}
+    elseif self.init then
+        self.init["loaded"] = true
+    end
 
     if not self.init then
         self.columns = {}
@@ -13,7 +22,7 @@ function interpeter:Init(silentLaunch)
         self.flags = {}
         self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
         self.umarlib = true
-        self.init = true
+        self.init = {}
     end
 
     if silentLaunch and self.init then
