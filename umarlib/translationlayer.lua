@@ -4,7 +4,7 @@ local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo
 local interpeter = {}
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 1.01')
+    print('interpreter init 1.02')
     self = interpeter
 
     if not self.init then
