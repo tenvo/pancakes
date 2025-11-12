@@ -2,10 +2,9 @@ local toCamelCase = sharedRequire("utils/toCamelCase.lua")
 local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/umarlib/library.lua"))()
 
 local interpeter = {}
-getfenv().self = interpeter
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 1.03')
+    print('interpreter init 1.04')
     self = interpeter
 
     if not self.init then
@@ -37,10 +36,12 @@ function interpeter:AddTab(name)
     self.tabs[name] = thisTab
 
     function Tab:AddColumn()
-        print('made column')
+        self = interpeter
+        print('made column',self)
         local Column = {}
 
         function Column:AddSection(name)
+            self = interpeter
             print('made section',name)
             local Section = {}
             Section.Name = name
