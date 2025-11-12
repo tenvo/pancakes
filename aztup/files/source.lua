@@ -207,12 +207,14 @@ local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'versi
 
 --//Loads universal part
 
+if not getgenv().MobileTest then --// add UI check here
 local universalLoadAt = tick();
 
 require('games/Universal/ESP.lua');
 require('games/Universal/Aimbot.lua');
 
 printf('[Script] [Universal] Took %.02f to load', tick() - universalLoadAt);
+end
 
 local loadingGameStart = tick();
 
@@ -229,6 +231,7 @@ GAMES_SETUP();
 Utility.setupRenderOverload();
 printf('[Script] [Game] Took %.02f to load', tick() - loadingGameStart);
 
+if not getgenv().MobileTest then --// add ui check here
 local keybindLoadAt = tick();
 
 do -- // KeyBinds
@@ -304,6 +307,8 @@ do -- // KeyBinds
 end;
 
 printf('[Script] [Keybinds] Took %.02f to load', tick() - keybindLoadAt);
+end
+
 printf('[Script] [Full] Took %.02f to load', tick() - scriptLoadAt);
 
 local libraryStartAt = tick();

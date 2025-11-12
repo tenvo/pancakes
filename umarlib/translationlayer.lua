@@ -3,14 +3,26 @@ local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo
 
 local interpeter = {}
 
-function interpeter:Init()
-    print('interpreter init')
+function interpeter:Init(silentLaunch)
+    print('interpreter init 1.01')
     self = interpeter
-    self.columns = {}
-    self.tabs = {}
-    self.flags = {}
-    self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
-    self.umarlib = true
+
+    if not self.init then
+        self.columns = {}
+        self.tabs = {}
+        self.flags = {}
+        self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
+        self.umarlib = true
+        self.init = true
+    end
+
+    if silentLaunch and self.init then
+        self.main.ToggleVisiblity()
+        self.main.Notify({
+            Title = "Loaded in silentLaunch",
+            Text = "Toggle key is RightAlt"
+        })
+    end
 
     --// add metatable to init settings/config
 end
@@ -34,7 +46,7 @@ function interpeter:AddTab(name)
             print('made section',name)
             local Section = {}
             Section.Name = name
-            self.main:Label(string.format("-- %s --",name))
+            thisTab:Label(string.format("-- %s --",name))
             
             function Section:AddButton(payload)
                 print(Section.Name,"wants to make a button")
