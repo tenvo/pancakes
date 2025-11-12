@@ -1,3 +1,4 @@
+local toCamelCase = sharedRequire("utils/toCamelCase.lua")
 local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/umarlib/library.lua"))()
 
 local interpeter = {}

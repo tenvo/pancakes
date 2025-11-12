@@ -3769,4 +3769,9 @@ library.OnFlagChanged:Connect(function(data)
     end
 end);
 
+if getgenv().MobileTest then
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/umarlib/translationlayer.lua"))()
+end
+
+
 return library;
