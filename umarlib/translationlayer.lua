@@ -4,7 +4,8 @@ local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo
 local interpeter = {}
 
 function interpeter:Init()
-    self = setmetatable({}, interpeter);
+    print('interpreter init')
+    self = interpeter
     self.columns = {}
     self.tabs = {}
     self.flags = {}
@@ -15,18 +16,22 @@ function interpeter:Init()
 end
 
 function interpeter:AddTab(name)
+    print("made tab")
+    self = interpeter
     local Tab = {}
     local thisTab = self.main:Tab(name)
 
     self.tabs[name] = thisTab
 
     function Tab:AddColumn()
+        print('made column')
         local Column = {}
         setmetatable(Column, {__index = function(mytable, key)
             print(key,"Column Index")
         end})
 
         function Column:AddSection(name)
+            print('made section',name)
             local Section = {}
             Section.Name = name
             self.main:Label(string.format("-- %s --",name))
