@@ -742,32 +742,38 @@ function Library:Window(winName,mainColor,hideBind)
             Value = def
             pcall(callback,Value)
 
+            local UserInputService = game:GetService("UserInputService")
+
             SB.MouseButton1Down:Connect(function()
-                SValue = math.floor((((tonumber(max) - tonumber(min)) / NormalSizeX) * SF.AbsoluteSize.X) + tonumber(min)) or 0
-            
-            
-                SF.Size = UDim2.new(0, math.clamp(mouse.X - SF.AbsolutePosition.X, 0, NormalSizeX), 0, NormalSizeY)
-                moveconnection = mouse.Move:Connect(function()
-                    SValue = math.floor((((tonumber(max) - tonumber(min)) / NormalSizeX) * SF.AbsoluteSize.X) + tonumber(min))
+                local inputConnection
+                local releaseConnection
+                
+                local function updateSlider(input)
+                    local deltaX = math.clamp(input.Position.X - SF.AbsolutePosition.X, 0, NormalSizeX)
+                    SF.Size = UDim2.new(0, deltaX, 0, NormalSizeY)
+
+                    local SValue = math.floor((((tonumber(max) - tonumber(min)) / NormalSizeX) * SF.AbsoluteSize.X) + tonumber(min))
                     SV.Text = SValue
-            
-                    pcall(callback,SValue)
-            
-                    SF.Size = UDim2.new(0, math.clamp(mouse.X - SF.AbsolutePosition.X, 0, NormalSizeX), 0,NormalSizeY)
+                    pcall(callback, SValue)
+                end
+
+                updateSlider({ Position = UserInputService:GetMouseLocation() })
+
+                inputConnection = UserInputService.InputChanged:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                        updateSlider(input)
+                    end
                 end)
-            
-                releaseconnection = uis.InputEnded:Connect(function(Mouse)
-                    if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
-                        SValue = math.floor((((tonumber(max) - tonumber(min)) / NormalSizeX) * SF.AbsoluteSize.X) + tonumber(min))
-            
-                        pcall(callback,SValue)
-            
-                        SF.Size = UDim2.new(0, math.clamp(mouse.X - SF.AbsolutePosition.X, 0, NormalSizeX), 0, NormalSizeY)
-                        moveconnection:Disconnect()
-                        releaseconnection:Disconnect()
+
+                releaseConnection = UserInputService.InputEnded:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                        updateSlider(input)
+                        if inputConnection then inputConnection:Disconnect() end
+                        if releaseConnection then releaseConnection:Disconnect() end
                     end
                 end)
             end)
+
 
             local sliderFunc = {}
 
