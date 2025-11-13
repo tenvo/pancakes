@@ -282,7 +282,7 @@ function interpeter:AddTab(tabname)
 end
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 2')
+    print('interpreter init 2.5')
     self = interpeter
 
     if self.init and (self.init["loaded"]) then
