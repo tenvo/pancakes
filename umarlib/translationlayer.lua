@@ -11,7 +11,7 @@ function interpeter:Settings(win)
     local s,res = pcall(function()
         local HttpService = game:GetService("HttpService")
 
-        -- self.settingsTab = settings
+        self.settingsTab = settings
         pcall(function()
             local settings = win:Tab("UI Settings")
 
