@@ -231,7 +231,7 @@ function interpeter:AddTab(tabname)
                 if not getReq(payload,{"text","values"}) then return warn("List didnt get enough args") end
                 local flagName = toCamelCase((payload["flag"] or payload.text))
 
-                local dd = thisTab:Dropdown(payload.text,false,function(Value)
+                local dd = thisTab:Dropdown(payload.text,payload.values,function(Value)
                     self.flags[flagName] = Value
 
                     if payload["callback"] then
@@ -282,7 +282,7 @@ function interpeter:AddTab(tabname)
 end
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 2.5')
+    print('interpreter init 3')
     self = interpeter
 
     if self.init and (self.init["loaded"]) then
