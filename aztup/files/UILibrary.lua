@@ -103,8 +103,6 @@ do -- // Load
         Enum.UserInputType.MouseButton1,Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3
     }
 
-    local MobileButton;
-
     local function onInputBegan(input, gpe)
         local inputType = input.UserInputType;
         if (inputType == mouseMovement) then return end;
@@ -3454,32 +3452,6 @@ do -- // Load
             key = 'LeftAlt',
             callback = function() library:Close() end
         })
-
-        --// Mobile Logic
-        if shared.aztuppy["sharedFile"] then
-            local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
-            
-            if isMobile then
-                local ContextActionService = game:GetService("ContextActionService")
-
-                ContextActionService:BindAction("AHUI", function(actionName,inputState)
-                    if inputState == Enum.UserInputState.Begin then
-                        library:Close()
-                    end
-                end, true)
-
-                MobileButton = ContextActionService:GetButton("AHUI")
-                if MobileButton then
-                    ContextActionService:SetTitle("AHUI","ahUI")
-                    MobileButton.Position = UDim2.fromScale(-2.334, -1.004)
-
-                    library.unloadMaid:GiveTask(function()
-                        ContextActionService:UnbindAction("AHUI")
-                    end)
-                end
-            end
-        end
-        
 
         settingsMenu:AddColor({
             text = 'Accent Color',

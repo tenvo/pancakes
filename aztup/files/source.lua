@@ -207,6 +207,31 @@ local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'versi
 
 --//Loads universal part
 local umarlib = library.umarlib
+local MobileButton;
+
+if shared.aztuppy["sharedFile"] then
+    local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
+    
+    if isMobile then
+        local ContextActionService = game:GetService("ContextActionService")
+
+        ContextActionService:BindAction("AHUI", function(actionName,inputState)
+            if inputState == Enum.UserInputState.Begin then
+                library:Close()
+            end
+        end, true)
+
+        MobileButton = ContextActionService:GetButton("AHUI")
+        if MobileButton then
+            ContextActionService:SetTitle("AHUI","ahUI")
+            MobileButton.Position = UDim2.fromScale(-2.334, -1.004)
+
+            library.unloadMaid:GiveTask(function()
+                ContextActionService:UnbindAction("AHUI")
+            end)
+        end
+    end
+end
 
 if not umarlib  then
     local universalLoadAt = tick();

@@ -161,6 +161,12 @@ local function getReq(payload,env)
     return true
 end
 
+function interpeter:Close()
+    if self.main ~= nil then
+        self.main.ToggleVisiblity()
+    end
+end
+
 function interpeter:AddTab(tabname)
     self = interpeter
     local Tab = {}
