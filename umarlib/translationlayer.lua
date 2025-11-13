@@ -67,10 +67,18 @@ function interpeter:AddTab(tabname)
             local Section = {}
             Section.Name = sectionname
             Section.init = false
+
+            setmetatable(Section,{
+                __call = function(tbl,args)
+                    if Section.init then return end
+
+                    thisTab:Label(string.format("<<< %s >>>",Section.Name))
+                    Section.init = true
+                end
+            })
             
             function Section:AddButton(payload)
-                self = interpeter
-                if not Section.init then thisTab:Label(string.format("<<< %s >>>",Section.Name)) end
+                self = interpeter Section()
 
                 print(Section.Name,"wants to make a Button")
                 if not getReq(payload,{"text","callback"}) then return warn("Button didnt get enough args") end
@@ -80,7 +88,7 @@ function interpeter:AddTab(tabname)
             end
 
             function Section:AddToggle(payload)
-                self = interpeter
+                self = interpeter Section()
                 if not Section.init then thisTab:Label(string.format("<<< %s >>>",Section.Name)) end
 
                 print(Section.Name,"wants to make a Toggle")
@@ -103,6 +111,7 @@ function interpeter:AddTab(tabname)
             end
 
             function Section:AddDivider(name)
+                Section()
                 if not Section.init then thisTab:Label(string.format("<<< %s >>>",Section.Name)) end
 
                 print(Section.Name,"wants to make a Divider")
@@ -111,7 +120,7 @@ function interpeter:AddTab(tabname)
             end
 
             function Section:AddSlider(payload)
-                self = interpeter
+                self = interpeter Section()
                 if not Section.init then thisTab:Label(string.format("<<< %s >>>",Section.Name)) end
                 print(Section.Name,"wants to make a Slider")
                 if not getReq(payload,{"text","min","max"}) then return warn("Slider didnt get enough args") end
@@ -132,7 +141,7 @@ function interpeter:AddTab(tabname)
             end
 
             function Section:AddList(payload)
-                self = interpeter
+                self = interpeter Section()
                 if not Section.init then thisTab:Label(string.format("<<< %s >>>",Section.Name)) end
                 if not getReq(payload,{"text","values"}) then return warn("List didnt get enough args") end
                 local flagName = toCamelCase(payload.text)
@@ -148,7 +157,7 @@ function interpeter:AddTab(tabname)
             end
 
             function Section:AddBind(payload)
-                self = interpeter
+                self = interpeter Section()
                 if not Section.init then thisTab:Label(string.format("<<< %s >>>",Section.Name)) end
                 print(Section.Name,"wants to make a Bind")
                 if not getReq(payload,{"text","callback"}) then return warn("Toggle didnt get enough args") end
