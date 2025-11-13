@@ -239,6 +239,7 @@ do -- // Aztuppy Core Init
 
     shared.aztuppy.scriptVersion = ah_metadata["version"];
     getgenv().aztuppyFile = aztuppyFile
+    shared.aztuppy["sharedFile"] = aztuppyFile
     print("Aztuppy Core Init:" .. tick() - START_AZTUPPY);
 end;
 
