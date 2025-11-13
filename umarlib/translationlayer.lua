@@ -372,6 +372,9 @@ function interpeter:Init(silentLaunch)
                 Text = "Toggle key is RightAlt"
             })
         end
+
+
+        self.init()
         return
     end
 
