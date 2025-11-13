@@ -1,5 +1,6 @@
 local toCamelCase = sharedRequire("utils/toCamelCase.lua")
 local Maid = sharedRequire('utils/Maid.lua');
+local Signal = sharedRequire('utils/Signal.lua');
 local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/umarlib/library.lua"))()
 
 local interpeter = {}
@@ -335,6 +336,7 @@ function interpeter:Init(silentLaunch)
         self.umarlib = true
         self.init = {}
         self.unloadMaid = Maid.new()
+        self.OnLoad = Signal.new();
     end
 
     if self.init and (self.init["loaded"]) then
@@ -343,8 +345,23 @@ function interpeter:Init(silentLaunch)
         task.wait()
         self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
         freshUI()
+
+        return
     elseif self.init then
         self.init["loaded"] = true
+
+        self.OnLoad:Fire();
+        self.OnLoad:Destroy();
+        self.OnLoad = nil;
+
+        if silentLaunch and self.init then
+            self.main.ToggleVisiblity(true)
+            self.main.Notify({
+                Title = "Loaded in silentLaunch",
+                Text = "Toggle key is RightAlt"
+            })
+        end
+        return
     end
 
     if not self.init then
@@ -372,16 +389,6 @@ function interpeter:Init(silentLaunch)
             end
         })
     end
-
-    if silentLaunch and self.init then
-        self.main.ToggleVisiblity(true)
-        self.main.Notify({
-            Title = "Loaded in silentLaunch",
-            Text = "Toggle key is RightAlt"
-        })
-    end
-
-    --// add metatable to init settings/config
 end
 
 interpeter:Init()
