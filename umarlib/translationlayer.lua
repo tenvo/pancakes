@@ -267,11 +267,6 @@ function interpeter:AddTab(tabname)
                 if not getReq(payload,{"text","values"}) then return warn("List didnt get enough args") end
                 local flagName = toCamelCase((payload["flag"] or payload.text))
 
-                print(payload.text)
-                for i,v in pairs(payload.values) do
-                    print(i,v)
-                end
-
                 local dd = thisTab:Dropdown(payload.text,payload.values,function(Value)
                     self.flags[flagName] = Value
 
@@ -281,7 +276,7 @@ function interpeter:AddTab(tabname)
                 end)
 
 
-                dd:SetChoice(payload["values"][1])
+                --dd:SetChoice(payload["values"][1])
 
                 return Section
             end
