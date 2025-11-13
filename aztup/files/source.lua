@@ -213,21 +213,81 @@ if shared.aztuppy["sharedFile"] then
     local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
     
     if isMobile then
-        local ContextActionService = game:GetService("ContextActionService")
+        local TweenService = game:GetService("TweenService")
+        local Players = game:GetService("Players")
+        local Player = Players.LocalPlayer
+        local PlayerGui = Player:WaitForChild("PlayerGui")
 
-        ContextActionService:BindAction("AHUI", function(actionName,inputState)
-            if inputState == Enum.UserInputState.Begin then
+        -- Create ScreenGui container (so it works in live sessions, not StarterGui)
+        local ActionGui = Instance.new("ScreenGui")
+        ActionGui.Name = "CustomContextButtonGui"
+        ActionGui.IgnoreGuiInset = true
+        ActionGui.ResetOnSpawn = false
+        ActionGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        ActionGui.Parent = PlayerGui
+
+        -- Button setup
+        local ContextActionButton = Instance.new("ImageButton")
+        ContextActionButton.Name = "ContextActionButton"
+        ContextActionButton.Parent = ActionGui
+        ContextActionButton.BackgroundTransparency = 1
+        ContextActionButton.Position = UDim2.fromScale(-0.001,0.124) -- bottom-right corner
+        ContextActionButton.Size = UDim2.new(0, 45, 0, 45)
+        ContextActionButton.Image = "https://www.roblox.com/asset/?id=97166444"
+        ContextActionButton.ImageTransparency = 0 -- start visible
+
+        local ActionTitle = Instance.new("TextLabel")
+        ActionTitle.Name = "ActionTitle"
+        ActionTitle.Parent = ContextActionButton
+        ActionTitle.BackgroundTransparency = 1
+        ActionTitle.Size = UDim2.new(1, 0, 1, 0)
+        ActionTitle.Font = Enum.Font.SourceSansBold
+        ActionTitle.Text = "ahUI"
+        ActionTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+        ActionTitle.TextSize = 18
+        ActionTitle.TextStrokeTransparency = 0
+        ActionTitle.TextWrapped = true
+
+        -- Fade utility
+        local function fade(targetTransparency)
+            TweenService:Create(
+                ContextActionButton,
+                TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {ImageTransparency = targetTransparency}
+            ):Play()
+
+            TweenService:Create(
+                ActionTitle,
+                TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {TextTransparency = targetTransparency}
+            ):Play()
+        end
+
+        ContextActionButton.MouseEnter:Connect(function()
+            fade(0.3)
+        end)
+
+        ContextActionButton.MouseLeave:Connect(function()
+            fade(0)
+        end)
+
+        ContextActionButton.MouseButton1Down:Connect(function()
+            fade(0.5)
+        end)
+
+        ContextActionButton.MouseButton1Up:Connect(function()
+            fade(0)
+        end)
+
+        ContextActionButton.MouseButton1Click:Connect(function()
+            if library and library.Close then
                 library:Close()
             end
-        end, true)
+        end)
 
-        MobileButton = ContextActionService:GetButton("AHUI")
-        if MobileButton then
-            ContextActionService:SetTitle("AHUI","ahUI")
-            MobileButton.Position = UDim2.fromScale(-2.334, -1.004)
-
+        if library and library.unloadMaid then
             library.unloadMaid:GiveTask(function()
-                ContextActionService:UnbindAction("AHUI")
+                ActionGui:Destroy()
             end)
         end
     end
