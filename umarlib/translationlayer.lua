@@ -48,24 +48,24 @@ end
 
 
 
-function interpeter:AddTab(name)
+function interpeter:AddTab(tabname)
     print("made tab")
     self = interpeter
     local Tab = {}
-    local thisTab = self.main:Tab(name)
+    local thisTab = self.main:Tab(tabname)
 
-    self.tabs[name] = thisTab
+    self.tabs[tabname] = thisTab
 
     function Tab:AddColumn()
         self = interpeter
         print('made column',self)
         local Column = {}
 
-        function Column:AddSection()
+        function Column:AddSection(sectionname)
             self = interpeter
-            print('made section',name)
+            print('made section',sectionname)
             local Section = {}
-            Section.Name = name
+            Section.Name = sectionname
             Section.init = false
             
             function Section:AddButton(payload)
