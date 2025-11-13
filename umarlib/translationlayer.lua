@@ -1,5 +1,5 @@
 local toCamelCase = sharedRequire("utils/toCamelCase.lua")
-local ToastNotif = sharedRequire('classes/ToastNotif.lua');
+local Maid = sharedRequire('utils/Maid.lua');
 local umarlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/umarlib/library.lua"))()
 
 local interpeter = {}
@@ -9,117 +9,144 @@ function interpeter:Settings(win)
 
     local s,res = pcall(function()
         local HttpService = game:GetService("HttpService")
-        local settings = win:Tab("UI Settings")
-        self.settingsTab = settings
 
-        local folderName = "Aztup Hub V3/umarlib"
-        local fileName = "None"
-        local dataTable = _G.UISettings
-
-        local function ReadConfig()
-            local fileData = readfile("/"..folderName.."/"..fileName)
-            local data = HttpService:JSONDecode(fileData)
-            
-            return data
-        end
-
-        local function AppendConfig()
-            pcall(function()
-                local data = HttpService:JSONEncode(dataTable)
-                writefile("/"..folderName.."/"..fileName,data)
-            end)
-        end
-
-        local function Save()
-            for index,element in pairs(_G.UISettings.ElementCache) do
-            local newtable = element
-            
-            element.Element:SaveConfig()
-            task.wait()
-            end    
-                    
-            pcall(function()
-                writefile("/"..folderName.."/"..fileName,HttpService:JSONEncode(_G.UISettings))
-            end)
-        end
-
-        local function Load()
-            local fileData = ReadConfig()
-                    
-            for index,element in pairs(fileData.ElementCache) do
-                for index2,element2 in pairs(_G.UISettings.ElementCache) do
-                    if element2.Name == element.Name and element2.Type == element.Type then
-                        local newtable = element
-
-                        if element.Value ~= nil then
-                            newtable.Value = element.Value
-                            task.wait()
-                        else
-                            newtable.Value = element2.Value
-                            task.wait()
-                        end
-                        
-                        element2.Element:LoadConfig(newtable)
-                    end
-                end
-            end
-            
-            local dataTable = _G.UISettings.UIConfig
-            
-            for i,v in pairs(fileData.UIConfig) do
-                if typeof(v) ~= "table" then
-                    dataTable[i] = v
-                else
-                    for i2,v2 in pairs(data[i]) do
-                        if tonumber(i2) then
-                        dataTable[i] = v
-                        else
-                            dataTable[i][i2] = v2
-                        end
-                    end
-                end
-            end
-        end
-
-        local folder
-
+        -- self.settingsTab = settings
         pcall(function()
-            folder = isfolder("/"..folderName)
-        end)
+            local settings = win:Tab("UI Settings")
 
-        if not folder then
+            local folderName = "m1keincorporated"
+            local fileName = "None"
+            local dataTable = _G.UISettings
+
+            function ReadConfig()
+                local fileData = readfile("/" .. folderName .. "/" .. fileName)
+                local data = game:GetService("HttpService"):JSONDecode(fileData)
+
+                return data
+            end
+
+            function AppendConfig()
+                pcall(function()
+                    local data = game:GetService("HttpService"):JSONEncode(dataTable)
+                    writefile("/" .. folderName .. "/" .. fileName, data)
+                end)
+            end
+
+            function Save()
+                for index, element in pairs(_G.UISettings.ElementCache) do
+                    local newtable = element
+
+                    element.Element:SaveConfig()
+                    task.wait()
+                end
+
+                pcall(function()
+                    writefile("/" .. folderName .. "/" .. fileName, game:GetService("HttpService"):JSONEncode(_G.UISettings))
+                end)
+            end
+
+            function Load()
+                local fileData = ReadConfig()
+
+                for index, element in pairs(fileData.ElementCache) do
+                    for index2, element2 in pairs(_G.UISettings.ElementCache) do
+                        if element2.Name == element.Name and element2.Type == element.Type then
+                            local newtable = element
+
+                            if element.Value ~= nil then
+                                newtable.Value = element.Value
+                                task.wait()
+                            else
+                                newtable.Value = element2.Value
+                                task.wait()
+                            end
+
+                            element2.Element:LoadConfig(newtable)
+                        end
+                    end
+                end
+
+                local dataTable = _G.UISettings.UIConfig
+
+                for i, v in pairs(fileData.UIConfig) do
+                    if typeof(v) ~= "table" then
+                        dataTable[i] = v
+                    else
+                        for i2, v2 in pairs(data[i]) do
+                            if tonumber(i2) then
+                                dataTable[i] = v
+                            else
+                                dataTable[i][i2] = v2
+                            end
+                        end
+                    end
+                end
+            end
+
+            local folder
+
             pcall(function()
-                makefolder("/"..folderName) 
+                folder = isfolder("/" .. folderName)
             end)
-        end
 
-        settings:Bind("Hide GUI",Enum.KeyCode.RightAlt,function()
-            win.ToggleVisiblity()
+            if not folder then
+                pcall(function()
+                    makefolder("/" .. folderName)
+                end)
+            end
+
+            local hideuibind
+            hideuibind = settings:Bind("Hide GUI", Enum.KeyCode.RightAlt, function()
+                win.ToggleVisiblity()
+            end)
+
+            local fileLabel = settings:Label("File: None")
+
+            settings:Textbox("Config File Name", function(txt)
+                fileName = txt .. "_" .. game.PlaceId .. ".json"
+                fileLabel:SetText(
+                    "Current File Selected: "
+                        .. fileName:gsub("_" .. game.PlaceId, "")
+                        .. " | Exists?:"
+                        .. tostring(isfile("/" .. folderName .. "/" .. fileName))
+                )
+            end)
+
+            settings:Button("Load Config", function()
+                if fileName == "" then
+                    return
+                end
+                Load()
+                fileLabel:SetText("File " .. fileName:gsub("_" .. game.PlaceId, "") .. " Loaded!")
+                task.wait(1)
+                fileLabel:SetText(
+                    "Current File Selected: "
+                        .. fileName:gsub("_" .. game.PlaceId, "")
+                        .. " | Exists?:"
+                        .. tostring(isfile("/" .. folderName .. "/" .. fileName))
+                )
+            end)
+
+            settings:Button("Save Config", function()
+                if fileName == "" then
+                    return
+                end
+                Save()
+                fileLabel:SetText("File " .. fileName:gsub("_" .. game.PlaceId, "") .. " Saved!")
+                task.wait(1)
+                fileLabel:SetText(
+                    "Current File Selected: "
+                        .. fileName:gsub("_" .. game.PlaceId, "")
+                        .. " | Exists?:"
+                        .. tostring(isfile("/" .. folderName .. "/" .. fileName))
+                )
+            end)
+
+            settings:Label("-- Credits: --")
+            settings:Label("t3nvo - UI")
+            settings:Label("Umar OGs:")
+            settings:Label("sweety, L, Kiro, Dohm, Akinxs")
         end)
-
-        local fileLabel = settings:Label("File: None")
-
-        settings:Textbox("Config File Name",function(txt)
-            fileName = txt.."_"..game.PlaceId..".json"
-            fileLabel:SetText("Current File Selected: "..fileName:gsub("_"..game.PlaceId,"").." | Exists?:"..tostring(isfile("/"..folderName.."/"..fileName)))
-        end)
-
-        settings:Button("Load Config",function()
-            if fileName == "" then return end
-            Load()
-            fileLabel:SetText("File "..fileName:gsub("_"..game.PlaceId,"").." Loaded!")
-            task.wait(1)
-            fileLabel:SetText("Current File Selected: "..fileName:gsub("_"..game.PlaceId,"").." | Exists?:"..tostring(isfile("/"..folderName.."/"..fileName)))
-        end)
-
-        settings:Button("Save Config",function()
-            if fileName == "" then return end
-            Save()
-            fileLabel:SetText("File "..fileName:gsub("_"..game.PlaceId,"").." Saved!")
-            task.wait(1)
-            fileLabel:SetText("Current File Selected: "..fileName:gsub("_"..game.PlaceId,"").." | Exists?:"..tostring(isfile("/"..folderName.."/"..fileName)))
-        end)
-
         return true
     end)
 
@@ -281,31 +308,51 @@ function interpeter:AddTab(tabname)
     return Tab
 end
 
+function interpeter:Create(class, properties) --// Straight ripped out of UILibrary.lua
+    self = interpeter
+    properties = properties or {}
+    if not class then return end
+    local a = class == 'Square' or class == 'Line' or class == 'Text' or class == 'Quad' or class == 'Circle' or class == 'Triangle'
+    local t = a and Drawing or Instance
+    local inst = t.new(class)
+    for property, value in next, properties do
+        inst[property] = value
+    end
+    table.insert(self.instances, {object = inst, method = a})
+    return inst
+end
+
 function interpeter:Init(silentLaunch)
-    print('interpreter init 3')
+    print('interpreter init 3.5')
     self = interpeter
 
-    if self.init and (self.init["loaded"]) then
-        self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
+    local function freshUI()
         self.columns = {}
+        self.instances = {}
         self.settingsTab = nil
         self.flags = {}
         self.sections = {}
         self.umarlib = true
         self.init = {}
+        self.unloadMaid = Maid.new()
+    end
 
+    if self.init and (self.init["loaded"]) then
+        self.unloadMaid:Destroy()
+        self.main.ToggleVisiblity(false)
+        task.wait()
+        self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
+        freshUI()
     elseif self.init then
         self.init["loaded"] = true
     end
 
     if not self.init then
-        self.columns = {}
-        self.settingsTab = nil
-        self.sections = {}
-        self.flags = {}
         self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
-        self.umarlib = true
-        self.init = {}
+        if silentLaunch then
+            self.main.ToggleVisiblity(false)
+        end
+        freshUI()
 
         setmetatable(self.init,{
             __call = function()
@@ -327,7 +374,7 @@ function interpeter:Init(silentLaunch)
     end
 
     if silentLaunch and self.init then
-        self.main.ToggleVisiblity()
+        self.main.ToggleVisiblity(true)
         self.main.Notify({
             Title = "Loaded in silentLaunch",
             Text = "Toggle key is RightAlt"

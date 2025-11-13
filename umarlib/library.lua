@@ -279,9 +279,9 @@ function Library:Window(winName,mainColor,hideBind)
     
     local Tabs = {}
 
-    function Tabs.ToggleVisiblity()
+    function Tabs.ToggleVisiblity(status)
         task.spawn(function()
-            UI.Enabled = not UI.Enabled
+            UI.Enabled = (status or not UI.Enabled)
         end)
     end
 

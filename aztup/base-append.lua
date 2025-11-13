@@ -187,11 +187,14 @@ do -- //Hook print debug
 end;
 
 setStatus('Setting Aztuppy Env');
+local aztuppyFile, loaderHash = unpack({...});
+
+getgenv().aztuppySave = function(new) writefile("Aztup Hub V3/aztuppy.json",HttpService:JSONEncode(new)) shared.aztuppy["sharedFile"] = new end
+getgenv().aztuppyLoad = function() return HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json")) end
 
 do -- // Aztuppy Core Init
     START_AZTUPPY = tick()
 
-    local aztuppyFile, loaderHash = unpack({...});
     local pushUpdate = false
 
     if isfile("Aztup Hub V3/compiled.lua") then
@@ -200,7 +203,7 @@ do -- // Aztuppy Core Init
 
     if typeof(aztuppyFile) == "boolean" then
         if aztuppyFile then 
-            aztuppyFile = HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json"))
+            aztuppyFile = aztuppyLoad()
         else 
             aztuppyFile = {} 
         end
@@ -231,25 +234,26 @@ do -- // Aztuppy Core Init
     end
 
     if pushUpdate then
-        writefile("Aztup Hub V3/aztuppy.json",HttpService:JSONEncode(aztuppyFile))
+        aztuppySave(aztuppyFile)
     end
 
     shared.aztuppy.scriptVersion = ah_metadata["version"];
-    shared.aztuppy["sharedFile"] = aztuppyFile
+    getgenv().aztuppyFile = aztuppyFile
     print("Aztuppy Core Init:" .. tick() - START_AZTUPPY);
 end;
 
-local sharedRequires = {};
+if (aztuppyFile["umarlib"] == nil and aztuppyFile["isMobile"]) then
+    setStatus('', 'confirmDevice');
 
--- if (not accountData.tosAccepted) then
---     setStatus('', 'tos');
+    local data = statusEvent.Event:Wait();
+    if (data == 'Mobile') then
+        aztuppyFile["umarlib"] = true
+    elseif (data == "Emulator") then
+        aztuppyFile["umarlib"] = false
+    end;
 
---     local data = statusEvent.Event:Wait();
---     if (data ~= 'tosAccepted') then
---         print("waiting")
---         return task.wait(9e9);
---     end;
--- end;
+    aztuppySave(aztuppyFile)
+end;
 
 setStatus('All done',true);
 task.wait(1)

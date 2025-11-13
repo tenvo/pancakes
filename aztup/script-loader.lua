@@ -466,60 +466,41 @@ function setStatus(text, close, context)
                 return setStatus(errorMessage, true);
             end;
         end);
-    elseif (close == 'tos') then
-        refs.title.Text = 'Please agree to the following';
-        refs.status.Text = 'This script is in no way the successor to Aztup Hub, this is purely made for fun and the UI library is open to use for all individuals. No new games will be added to this main aztup hub archive script.';
+    elseif (close == 'confirmDevice') then
+        TweenService:Create(refs.container, tweenInfo, {Position = UDim2.fromScale(0.5, 0.75)}):Play();
+
+        refs.title.Text = 'Hello "Mobile" User!';
+        refs.status.Text = 'Are you on a emulator or a real mobile device, this will determine whether your compatible with the normal Aztup UI.';
         refs.reason.Visible = false;
 
         refs.secondButton.Visible = true;
-        refs.secondButton.Text = 'I don\'t agree, close the script.';
+        refs.secondButton.Text = 'Mobile';
 
-        refs.thirdButton.Visible = true;
-        refs.thirdButton.Text = 'Copy terms of services link to clipboard.';
+        -- refs.thirdButton.Visible = true;
+        -- refs.thirdButton.Text = 'Copy terms of services link to clipboard.';
 
         refs.button.Visible = true;
         refs.button.BackgroundColor3 = Color3.fromHex('#16a085');
-        refs.button.Text = 'I understand';
+        refs.button.Text = 'Emulator';
 
-        refs.secondButton.MouseButton1Click:Connect(function()
+        local function ChosenSolution(pick)
             refs.button.Visible = false;
             refs.secondButton.Visible = false;
             refs.thirdButton.Visible = false;
+            refs.reason.Visible = false;
 
-            setStatus('Thank you!', true);
-        end);
+            refs.title.Text = "Thank you!"
 
-        refs.thirdButton.MouseButton1Click:Connect(function()
-            --setclipboard('https://aztupscripts.xyz/terms-of-services');
-            refs.thirdButton.Text = 'There is no terms of service idot';
-            task.wait(1);
-            refs.thirdButton.Text = 'Copy terms of services link to clipboard.';
+            statusEvent:Fire(pick);
+            return setStatus('Thank you!', true);
+        end
+
+        refs.secondButton.MouseButton1Click:Connect(function()
+            ChosenSolution(refs.secondButton.Text)
         end);
 
         refs.button.MouseButton1Click:Connect(function()
-            -- local req = httpRequest({
-            --     Method = 'PATCH',
-            --     Url = 'https://aztupscripts.xyz/api/v1/user',
-            --     Body = HttpService:JSONEncode({tosAccepted = true}),
-            --     Headers = {Authorization = websiteKey, ['Content-Type'] = 'application/json'}
-            -- });
-
-            refs.reason.Visible = false;
-            refs.secondButton.Visible = false;
-            refs.thirdButton.Visible = false;
-            refs.button.Visible = false;
-
-            -- req.Success = true
-            -- req.Body = "Lol"
-
-            --if (req.Success) then
-                statusEvent:Fire('tosAccepted');
-                return setStatus('Success!', true);
-            --else
-                --local errorMessage = 'Internal Server Error';
-                --pcall(function() errorMessage = HttpService:JSONDecode(req.Body).message; end);
-                --return setStatus(errorMessage, true);
-            --end;
+            ChosenSolution(refs.button.Text)
         end);
     elseif (close == 'error') then
         refs.reason.Visible = false;

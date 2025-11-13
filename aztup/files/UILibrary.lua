@@ -3769,7 +3769,7 @@ library.OnFlagChanged:Connect(function(data)
     end
 end);
 
-if getgenv().MobileTest then
+if aztuppyFile["umarlib"] then
     return loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/umarlib/translationlayer.lua"))()
 end
 

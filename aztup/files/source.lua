@@ -207,13 +207,13 @@ local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'versi
 
 --//Loads universal part
 
-if not getgenv().MobileTest then --// add UI check here
-local universalLoadAt = tick();
+if not library.umarlib then
+    local universalLoadAt = tick();
 
-require('games/Universal/ESP.lua');
-require('games/Universal/Aimbot.lua');
+    require('games/Universal/ESP.lua');
+    require('games/Universal/Aimbot.lua');
 
-printf('[Script] [Universal] Took %.02f to load', tick() - universalLoadAt);
+    printf('[Script] [Universal] Took %.02f to load', tick() - universalLoadAt);
 end
 
 local loadingGameStart = tick();
@@ -231,82 +231,82 @@ GAMES_SETUP();
 Utility.setupRenderOverload();
 printf('[Script] [Game] Took %.02f to load', tick() - loadingGameStart);
 
-if not getgenv().MobileTest then --// add ui check here
-local keybindLoadAt = tick();
+if not library.umarlib then
+    local keybindLoadAt = tick();
 
-do -- // KeyBinds
-    local Binds = {};
+    do -- // KeyBinds
+        local Binds = {};
 
-    local keybinds = library:AddTab('Keybinds');
+        local keybinds = library:AddTab('Keybinds');
 
-    local column1 = keybinds:AddColumn();
-    local column2 = keybinds:AddColumn();
-    local column3 = keybinds:AddColumn();
+        local column1 = keybinds:AddColumn();
+        local column2 = keybinds:AddColumn();
+        local column3 = keybinds:AddColumn();
 
-    local index = 0;
-    local columns = {};
+        local index = 0;
+        local columns = {};
 
-    table.insert(columns, column1);
-    table.insert(columns, column2);
-    table.insert(columns, column3);
+        table.insert(columns, column1);
+        table.insert(columns, column2);
+        table.insert(columns, column3);
 
-    local sections = setmetatable({}, {
-        __index = function(self, p)
-            index = (index % 3) + 1;
+        local sections = setmetatable({}, {
+            __index = function(self, p)
+                index = (index % 3) + 1;
 
-            local section = columns[index]:AddSection(p);
+                local section = columns[index]:AddSection(p);
 
-            rawset(self, p, section);
+                rawset(self, p, section);
 
-            return section;
-        end
-    });
+                return section;
+            end
+        });
 
-    local blacklistedSections = {'Trinkets', 'Ingredients', 'Spells', 'Bots', 'Configs'};
-    local temp = {};
+        local blacklistedSections = {'Trinkets', 'Ingredients', 'Spells', 'Bots', 'Configs'};
+        local temp = {};
 
-    for _, v in next, library.options do
-        if ((v.type == 'toggle' or v.type == 'button') and v.section and not table.find(blacklistedSections, v.section.title)) then
-            local section = sections[v.section.title];
+        for _, v in next, library.options do
+            if ((v.type == 'toggle' or v.type == 'button') and v.section and not table.find(blacklistedSections, v.section.title)) then
+                local section = sections[v.section.title];
 
-            table.insert(temp, function()
-                return section:AddBind({
-                    text = v.text == 'Enable' and string.format('%s [%s]', v.text, v.section.title) or v.text,
-                    parentFlag = v.flag,
-                    flag = v.flag .. " bind",
-                    callback = function()
-                        if (v.type == 'toggle') then
-                            v:SetState(not v.state);
-                        elseif (v.type == 'button') then
-                            task.spawn(v.callback);
-                        end;
-                    end
-                });
-            end);
-        end;
-    end;
-
-    for _, v in next, temp do
-        local object = v();
-
-        table.insert(Binds, object);
-    end;
-
-    local options = column3:AddSection('Options');
-
-    options:AddButton({
-        text = 'Reset All Keybinds',
-        callback = function()
-            if(library:ShowConfirm('Are you sure you want to reset <font color="rgb(255, 0, 0)">all</font> keybinds?')) then
-                for _, v in next, Binds do
-                    v:SetKey(Enum.KeyCode.Backspace);
-                end;
+                table.insert(temp, function()
+                    return section:AddBind({
+                        text = v.text == 'Enable' and string.format('%s [%s]', v.text, v.section.title) or v.text,
+                        parentFlag = v.flag,
+                        flag = v.flag .. " bind",
+                        callback = function()
+                            if (v.type == 'toggle') then
+                                v:SetState(not v.state);
+                            elseif (v.type == 'button') then
+                                task.spawn(v.callback);
+                            end;
+                        end
+                    });
+                end);
             end;
-        end
-    });
-end;
+        end;
 
-printf('[Script] [Keybinds] Took %.02f to load', tick() - keybindLoadAt);
+        for _, v in next, temp do
+            local object = v();
+
+            table.insert(Binds, object);
+        end;
+
+        local options = column3:AddSection('Options');
+
+        options:AddButton({
+            text = 'Reset All Keybinds',
+            callback = function()
+                if(library:ShowConfirm('Are you sure you want to reset <font color="rgb(255, 0, 0)">all</font> keybinds?')) then
+                    for _, v in next, Binds do
+                        v:SetKey(Enum.KeyCode.Backspace);
+                    end;
+                end;
+            end
+        });
+    end;
+
+    printf('[Script] [Keybinds] Took %.02f to load', tick() - keybindLoadAt);
 end
 
 printf('[Script] [Full] Took %.02f to load', tick() - scriptLoadAt);
