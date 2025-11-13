@@ -197,7 +197,13 @@ function interpeter:AddTab(tabname)
             function Section:AddDivider(name)
                 Section()
             
-                thisTab:Label(string.format("<- %s ->",name))
+                thisTab:Label(string.format("-- %s --",name))
+            end
+
+            function Section:AddLabel(name)
+                Section()
+            
+                thisTab:Label(name)
             end
 
             function Section:AddSlider(payload)
@@ -285,6 +291,9 @@ function interpeter:Init(silentLaunch)
         self.settingsTab = nil
         self.flags = {}
         self.sections = {}
+        self.umarlib = true
+        self.init = {}
+
     elseif self.init then
         self.init["loaded"] = true
     end
