@@ -37,7 +37,7 @@ local Utility = sharedRequire('@utils/Utility.lua');
 
 local _ = sharedRequire('@utils/prettyPrint.lua');
 
-local Players, TeleportService, ScriptContext, MemStorageService, HttpService, ReplicatedStorage,MarketplaceService,CoreGui = Services:Get(getServerConstant('Players'), 'TeleportService', 'ScriptContext', 'MemStorageService', 'HttpService', 'ReplicatedStorage','MarketplaceService','CoreGui');
+local Players, TeleportService, HttpService, ReplicatedStorage,MarketplaceService,CoreGui,TweenService = Services:Get(getServerConstant('Players'), 'TeleportService', 'HttpService', 'ReplicatedStorage','MarketplaceService','CoreGui','TweenService');
 
 local BLOODLINES_MAIN_PLACE = 10266164381;
 local BLOODLINES = 1946714362;
@@ -209,28 +209,22 @@ local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'versi
 local umarlib = library.umarlib
 local MobileButton;
 
-local oldGethui = gethui;
-
-local function gethui(ui)
-    if (oldGethui ~= nil) then
-        return oldGethui();
-    end;
-
-    return CoreGui;
-end;
-
-
 if shared.aztuppy["sharedFile"] then
     local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
     
     if isMobile and umarlib then
-        local TweenService = game:GetService("TweenService")
-        local Players = game:GetService("Players")
-        local Player = Players.LocalPlayer
-        local PlayerGui = Player:WaitForChild("PlayerGui")
+        local oldGethui = gethui;
+
+        local function gethui(ui)
+            if (oldGethui ~= nil) then
+                return oldGethui();
+            end;
+
+            return CoreGui;
+        end;
 
         local ActionGui = Instance.new("ScreenGui")
-        ActionGui.Name = "CustomContextButtonGui"
+        ActionGui.Name = "ContextActionGui"
         ActionGui.IgnoreGuiInset = true
         ActionGui.ResetOnSpawn = false
         ActionGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -240,10 +234,10 @@ if shared.aztuppy["sharedFile"] then
         ContextActionButton.Name = "ContextActionButton"
         ContextActionButton.Parent = ActionGui
         ContextActionButton.BackgroundTransparency = 1
-        ContextActionButton.Position = UDim2.fromScale(-0.001,0.124) -- bottom-right corner
+        ContextActionButton.Position = UDim2.fromScale(-0.001,0.124)
         ContextActionButton.Size = UDim2.new(0, 45, 0, 45)
         ContextActionButton.Image = "https://www.roblox.com/asset/?id=97166444"
-        ContextActionButton.ImageTransparency = 0 -- start visible
+        ContextActionButton.ImageTransparency = 0
 
         local ActionIcon = Instance.new("ImageLabel")
         ActionIcon.Name = "ActionIcon"
@@ -289,29 +283,27 @@ if shared.aztuppy["sharedFile"] then
 
         -- Hover & press animations (works on both touch and mouse)
         ContextActionButton.MouseEnter:Connect(function()
-            fade(0.3) -- fade slightly when hovered
+            fade(0.3)
         end)
 
         ContextActionButton.MouseLeave:Connect(function()
-            fade(0) -- fade back to full opacity
+            fade(0)
         end)
 
         ContextActionButton.MouseButton1Down:Connect(function()
-            fade(0.5) -- quick press feedback
+            fade(0.5)
         end)
 
         ContextActionButton.MouseButton1Up:Connect(function()
             fade(0)
         end)
 
-        -- Actual button action (toggle your UI)
         ContextActionButton.MouseButton1Click:Connect(function()
             if library and library.Close then
                 library:Close()
             end
         end)
 
-        -- Optional cleanup when unloading
         if library and library.unloadMaid then
             library.unloadMaid:GiveTask(function()
                 ActionGui:Destroy()
