@@ -204,7 +204,7 @@ function interpeter:AddTab(tabname)
             function Section:AddToggle(payload)
                 self = interpeter Section()
 
-                if not getReq(payload,{"text","callback"}) then return warn("Toggle didnt get enough args") end
+                if not getReq(payload,{"text"}) then return warn("Toggle didnt get enough args") end
                 local flagName = toCamelCase((payload["flag"] or payload.text))
 
                 self.flags[flagName] = false
@@ -212,11 +212,13 @@ function interpeter:AddTab(tabname)
                 thisTab:Toggle(payload.text,false,function(Value)
                     self.flags[flagName] = Value
 
-                    xpcall(function()
-                        payload.callback(Value)
-                    end,function(err)
-                        warn(payload.text .. " element errored, "..err)
-                    end)
+                    if payload["callback"] then
+                        xpcall(function()
+                            payload.callback(Value)
+                        end,function(err)
+                            warn(payload.text .. " element errored, "..err)
+                        end)
+                    end
                 end)
                 
                 return Section
@@ -230,8 +232,17 @@ function interpeter:AddTab(tabname)
 
             function Section:AddLabel(name)
                 Section()
-            
-                thisTab:Label(name)
+                local Label = {}
+                Label.x = thisTab:Label(name)
+                setmetatable(Label,{
+                    __newindex = function(tbl,key,value)
+                        if key == "Text" and typeof(value) == "string" then
+                            Label.x:SetText(value)
+                        end
+                    end
+                })
+
+                return Label
             end
 
             function Section:AddSlider(payload)
@@ -275,7 +286,7 @@ function interpeter:AddTab(tabname)
 
             function Section:AddBind(payload)
                 self = interpeter Section()
-                if not getReq(payload,{"text","callback"}) then return warn("Toggle didnt get enough args") end
+                if not getReq(payload,{"text","callback"}) then return warn("Bind didnt get enough args") end
 
                 thisTab:Bind(payload.text,Enum.KeyCode.Unknown,function(Value)
                     if Enum.KeyCode.Unknown == Value then return end
@@ -292,7 +303,7 @@ function interpeter:AddTab(tabname)
 
             function Section:AddBox(payload)
                 self = interpeter Section()
-                if not getReq(payload,{"text","callback"}) then return warn("Toggle didnt get enough args") end
+                if not getReq(payload,{"text","callback"}) then return warn("Textbox didnt get enough args") end
 
                 thisTab:Textbox(payload.text,payload.callback)
             end
