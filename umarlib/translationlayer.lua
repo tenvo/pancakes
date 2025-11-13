@@ -276,7 +276,7 @@ function interpeter:AddTab(tabname)
 end
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 1.5')
+    print('interpreter init 2')
     self = interpeter
 
     if self.init and (self.init["loaded"]) then
@@ -292,6 +292,7 @@ function interpeter:Init(silentLaunch)
     if not self.init then
         self.columns = {}
         self.settingsTab = nil
+        self.sections = {}
         self.flags = {}
         self.main = umarlib:Window("pancake fan club <3",Color3.fromRGB(math.random(0,255),math.random(0,255),math.random(0,255)))
         self.umarlib = true
