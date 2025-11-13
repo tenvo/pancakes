@@ -276,7 +276,7 @@ function interpeter:AddTab(tabname)
                 end)
 
 
-                --dd:SetChoice(payload["values"][1])
+                dd:SetChoice(payload["values"][1])
 
                 return Section
             end
