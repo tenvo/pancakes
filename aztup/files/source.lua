@@ -209,6 +209,16 @@ local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'versi
 local umarlib = library.umarlib
 local MobileButton;
 
+local oldGethui = gethui;
+
+local function gethui(ui)
+    if (oldGethui ~= nil) then
+        return oldGethui();
+    end;
+
+    return CoreGui;
+end;
+
 if shared.aztuppy["sharedFile"] then
     local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
     
@@ -218,15 +228,13 @@ if shared.aztuppy["sharedFile"] then
         local Player = Players.LocalPlayer
         local PlayerGui = Player:WaitForChild("PlayerGui")
 
-        -- Create ScreenGui container (so it works in live sessions, not StarterGui)
         local ActionGui = Instance.new("ScreenGui")
         ActionGui.Name = "CustomContextButtonGui"
         ActionGui.IgnoreGuiInset = true
         ActionGui.ResetOnSpawn = false
         ActionGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-        ActionGui.Parent = PlayerGui
+        ActionGui.Parent = gethui(ActionGui)
 
-        -- Button setup
         local ContextActionButton = Instance.new("ImageButton")
         ContextActionButton.Name = "ContextActionButton"
         ContextActionButton.Parent = ActionGui
@@ -235,6 +243,15 @@ if shared.aztuppy["sharedFile"] then
         ContextActionButton.Size = UDim2.new(0, 45, 0, 45)
         ContextActionButton.Image = "https://www.roblox.com/asset/?id=97166444"
         ContextActionButton.ImageTransparency = 0 -- start visible
+
+        local ActionIcon = Instance.new("ImageLabel")
+        ActionIcon.Name = "ActionIcon"
+        ActionIcon.Parent = ContextActionButton
+        ActionIcon.BackgroundTransparency = 1
+        ActionIcon.Position = UDim2.new(0.175, 0, 0.175, 0)
+        ActionIcon.Size = UDim2.new(0.65, 0, 0.65, 0)
+        ActionIcon.ImageRectOffset = Vector2.new(4, 204)
+        ActionIcon.ImageRectSize = Vector2.new(36, 36)
 
         local ActionTitle = Instance.new("TextLabel")
         ActionTitle.Name = "ActionTitle"
@@ -257,34 +274,43 @@ if shared.aztuppy["sharedFile"] then
             ):Play()
 
             TweenService:Create(
+                ActionIcon,
+                TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {ImageTransparency = targetTransparency}
+            ):Play()
+
+            TweenService:Create(
                 ActionTitle,
                 TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
                 {TextTransparency = targetTransparency}
             ):Play()
         end
 
+        -- Hover & press animations (works on both touch and mouse)
         ContextActionButton.MouseEnter:Connect(function()
-            fade(0.3)
+            fade(0.3) -- fade slightly when hovered
         end)
 
         ContextActionButton.MouseLeave:Connect(function()
-            fade(0)
+            fade(0) -- fade back to full opacity
         end)
 
         ContextActionButton.MouseButton1Down:Connect(function()
-            fade(0.5)
+            fade(0.5) -- quick press feedback
         end)
 
         ContextActionButton.MouseButton1Up:Connect(function()
             fade(0)
         end)
 
+        -- Actual button action (toggle your UI)
         ContextActionButton.MouseButton1Click:Connect(function()
             if library and library.Close then
                 library:Close()
             end
         end)
 
+        -- Optional cleanup when unloading
         if library and library.unloadMaid then
             library.unloadMaid:GiveTask(function()
                 ActionGui:Destroy()
