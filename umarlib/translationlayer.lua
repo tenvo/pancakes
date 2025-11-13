@@ -10,144 +10,141 @@ function interpeter:Settings(win)
 
     local s,res = pcall(function()
         local HttpService = game:GetService("HttpService")
-
+        local settings = win:Tab("UI Settings")
         self.settingsTab = settings
-        pcall(function()
-            local settings = win:Tab("UI Settings")
 
-            local folderName = "m1keincorporated"
-            local fileName = "None"
-            local dataTable = _G.UISettings
+        local folderName = "Aztup Hub V3/umarlib"
+        local fileName = "None"
+        local dataTable = _G.UISettings
 
-            function ReadConfig()
-                local fileData = readfile("/" .. folderName .. "/" .. fileName)
-                local data = game:GetService("HttpService"):JSONDecode(fileData)
+        function ReadConfig()
+            local fileData = readfile("/" .. folderName .. "/" .. fileName)
+            local data = HttpService:JSONDecode(fileData)
 
-                return data
+            return data
+        end
+
+        function AppendConfig()
+            pcall(function()
+                local data = HttpService:JSONEncode(dataTable)
+                writefile("/" .. folderName .. "/" .. fileName, data)
+            end)
+        end
+
+        function Save()
+            for index, element in pairs(_G.UISettings.ElementCache) do
+                local newtable = element
+
+                element.Element:SaveConfig()
+                task.wait()
             end
-
-            function AppendConfig()
-                pcall(function()
-                    local data = game:GetService("HttpService"):JSONEncode(dataTable)
-                    writefile("/" .. folderName .. "/" .. fileName, data)
-                end)
-            end
-
-            function Save()
-                for index, element in pairs(_G.UISettings.ElementCache) do
-                    local newtable = element
-
-                    element.Element:SaveConfig()
-                    task.wait()
-                end
-
-                pcall(function()
-                    writefile("/" .. folderName .. "/" .. fileName, game:GetService("HttpService"):JSONEncode(_G.UISettings))
-                end)
-            end
-
-            function Load()
-                local fileData = ReadConfig()
-
-                for index, element in pairs(fileData.ElementCache) do
-                    for index2, element2 in pairs(_G.UISettings.ElementCache) do
-                        if element2.Name == element.Name and element2.Type == element.Type then
-                            local newtable = element
-
-                            if element.Value ~= nil then
-                                newtable.Value = element.Value
-                                task.wait()
-                            else
-                                newtable.Value = element2.Value
-                                task.wait()
-                            end
-
-                            element2.Element:LoadConfig(newtable)
-                        end
-                    end
-                end
-
-                local dataTable = _G.UISettings.UIConfig
-
-                for i, v in pairs(fileData.UIConfig) do
-                    if typeof(v) ~= "table" then
-                        dataTable[i] = v
-                    else
-                        for i2, v2 in pairs(data[i]) do
-                            if tonumber(i2) then
-                                dataTable[i] = v
-                            else
-                                dataTable[i][i2] = v2
-                            end
-                        end
-                    end
-                end
-            end
-
-            local folder
 
             pcall(function()
-                folder = isfolder("/" .. folderName)
+                writefile("/" .. folderName .. "/" .. fileName, HttpService:JSONEncode(_G.UISettings))
             end)
+        end
 
-            if not folder then
-                pcall(function()
-                    makefolder("/" .. folderName)
-                end)
+        function Load()
+            local fileData = ReadConfig()
+
+            for index, element in pairs(fileData.ElementCache) do
+                for index2, element2 in pairs(_G.UISettings.ElementCache) do
+                    if element2.Name == element.Name and element2.Type == element.Type then
+                        local newtable = element
+
+                        if element.Value ~= nil then
+                            newtable.Value = element.Value
+                            task.wait()
+                        else
+                            newtable.Value = element2.Value
+                            task.wait()
+                        end
+
+                        element2.Element:LoadConfig(newtable)
+                    end
+                end
             end
 
-            local hideuibind
-            hideuibind = settings:Bind("Hide GUI", Enum.KeyCode.RightAlt, function()
-                win.ToggleVisiblity()
-            end)
+            local dataTable = _G.UISettings.UIConfig
 
-            local fileLabel = settings:Label("File: None")
-
-            settings:Textbox("Config File Name", function(txt)
-                fileName = txt .. "_" .. game.PlaceId .. ".json"
-                fileLabel:SetText(
-                    "Current File Selected: "
-                        .. fileName:gsub("_" .. game.PlaceId, "")
-                        .. " | Exists?:"
-                        .. tostring(isfile("/" .. folderName .. "/" .. fileName))
-                )
-            end)
-
-            settings:Button("Load Config", function()
-                if fileName == "" then
-                    return
+            for i, v in pairs(fileData.UIConfig) do
+                if typeof(v) ~= "table" then
+                    dataTable[i] = v
+                else
+                    for i2, v2 in pairs(data[i]) do
+                        if tonumber(i2) then
+                            dataTable[i] = v
+                        else
+                            dataTable[i][i2] = v2
+                        end
+                    end
                 end
-                Load()
-                fileLabel:SetText("File " .. fileName:gsub("_" .. game.PlaceId, "") .. " Loaded!")
-                task.wait(1)
-                fileLabel:SetText(
-                    "Current File Selected: "
-                        .. fileName:gsub("_" .. game.PlaceId, "")
-                        .. " | Exists?:"
-                        .. tostring(isfile("/" .. folderName .. "/" .. fileName))
-                )
-            end)
+            end
+        end
 
-            settings:Button("Save Config", function()
-                if fileName == "" then
-                    return
-                end
-                Save()
-                fileLabel:SetText("File " .. fileName:gsub("_" .. game.PlaceId, "") .. " Saved!")
-                task.wait(1)
-                fileLabel:SetText(
-                    "Current File Selected: "
-                        .. fileName:gsub("_" .. game.PlaceId, "")
-                        .. " | Exists?:"
-                        .. tostring(isfile("/" .. folderName .. "/" .. fileName))
-                )
-            end)
+        local folder
 
-            settings:Label("-- Credits: --")
-            settings:Label("t3nvo - UI")
-            settings:Label("Umar OGs:")
-            settings:Label("sweety, L, Kiro, Dohm, Akinxs")
+        pcall(function()
+            folder = isfolder("/" .. folderName)
         end)
+
+        if not folder then
+            pcall(function()
+                makefolder("/" .. folderName)
+            end)
+        end
+
+        local hideuibind
+        hideuibind = settings:Bind("Hide GUI", Enum.KeyCode.RightAlt, function()
+            win.ToggleVisiblity()
+        end)
+
+        local fileLabel = settings:Label("File: None")
+
+        settings:Textbox("Config File Name", function(txt)
+            fileName = txt .. "_" .. game.PlaceId .. ".json"
+            fileLabel:SetText(
+                "Current File Selected: "
+                    .. fileName:gsub("_" .. game.PlaceId, "")
+                    .. " | Exists?:"
+                    .. tostring(isfile("/" .. folderName .. "/" .. fileName))
+            )
+        end)
+
+        settings:Button("Load Config", function()
+            if fileName == "" then
+                return
+            end
+            Load()
+            fileLabel:SetText("File " .. fileName:gsub("_" .. game.PlaceId, "") .. " Loaded!")
+            task.wait(1)
+            fileLabel:SetText(
+                "Current File Selected: "
+                    .. fileName:gsub("_" .. game.PlaceId, "")
+                    .. " | Exists?:"
+                    .. tostring(isfile("/" .. folderName .. "/" .. fileName))
+            )
+        end)
+
+        settings:Button("Save Config", function()
+            if fileName == "" then
+                return
+            end
+            Save()
+            fileLabel:SetText("File " .. fileName:gsub("_" .. game.PlaceId, "") .. " Saved!")
+            task.wait(1)
+            fileLabel:SetText(
+                "Current File Selected: "
+                    .. fileName:gsub("_" .. game.PlaceId, "")
+                    .. " | Exists?:"
+                    .. tostring(isfile("/" .. folderName .. "/" .. fileName))
+            )
+        end)
+
+        settings:Label("-- Credits: --")
+        settings:Label("t3nvo - UI")
+        settings:Label("Umar OGs:")
+        settings:Label("sweety, L, Kiro, Dohm, Akinxs")
         return true
     end)
 
@@ -335,7 +332,7 @@ function interpeter:Create(class, properties) --// Straight ripped out of UILibr
 end
 
 function interpeter:Init(silentLaunch)
-    print('interpreter init 3.5')
+    print('interpreter init 4')
     self = interpeter
 
     local function freshUI()
@@ -358,7 +355,8 @@ function interpeter:Init(silentLaunch)
         freshUI()
 
         return
-    elseif self.init then
+    elseif self.init 
+        print("UI LOADED")
         self.init["loaded"] = true
 
         self.OnLoad:Fire();
@@ -373,7 +371,7 @@ function interpeter:Init(silentLaunch)
             })
         end
 
-
+        print("RUNNING SETTING INIT")
         self.init()
         return
     end
