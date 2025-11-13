@@ -355,7 +355,7 @@ function interpeter:Init(silentLaunch)
         freshUI()
 
         return
-    elseif self.init 
+    elseif self.init then
         print("UI LOADED")
         self.init["loaded"] = true
 
