@@ -37,7 +37,7 @@ local Utility = sharedRequire('@utils/Utility.lua');
 
 local _ = sharedRequire('@utils/prettyPrint.lua');
 
-local Players, TeleportService, ScriptContext, MemStorageService, HttpService, ReplicatedStorage,MarketplaceService = Services:Get(getServerConstant('Players'), 'TeleportService', 'ScriptContext', 'MemStorageService', 'HttpService', 'ReplicatedStorage','MarketplaceService');
+local Players, TeleportService, ScriptContext, MemStorageService, HttpService, ReplicatedStorage,MarketplaceService,CoreGui = Services:Get(getServerConstant('Players'), 'TeleportService', 'ScriptContext', 'MemStorageService', 'HttpService', 'ReplicatedStorage','MarketplaceService','CoreGui');
 
 local BLOODLINES_MAIN_PLACE = 10266164381;
 local BLOODLINES = 1946714362;
@@ -219,10 +219,11 @@ local function gethui(ui)
     return CoreGui;
 end;
 
+
 if shared.aztuppy["sharedFile"] then
     local isMobile = shared.aztuppy["sharedFile"]["isMobile"]
     
-    if isMobile then
+    if isMobile and umarlib then
         local TweenService = game:GetService("TweenService")
         local Players = game:GetService("Players")
         local Player = Players.LocalPlayer
