@@ -206,8 +206,9 @@ local hubVersion = typeof(ah_metadata) == 'table' and rawget(ah_metadata, 'versi
 -- end;
 
 --//Loads universal part
+local umarlib = library.umarlib
 
-if not library.umarlib then
+if not umarlib  then
     local universalLoadAt = tick();
 
     require('games/Universal/ESP.lua');
@@ -228,10 +229,12 @@ end;
 
 GAMES_SETUP();
 
-Utility.setupRenderOverload();
+if not umarlib then
+    Utility.setupRenderOverload();
+end
 printf('[Script] [Game] Took %.02f to load', tick() - loadingGameStart);
 
-if not library.umarlib then
+if not umarlib then
     local keybindLoadAt = tick();
 
     do -- // KeyBinds

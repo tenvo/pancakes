@@ -342,6 +342,7 @@ function interpeter:Init(silentLaunch)
         self.flags = {}
         self.sections = {}
         self.umarlib = true
+        self.configVars = {}
         self.init = {}
         self.unloadMaid = Maid.new()
         self.OnLoad = Signal.new();
