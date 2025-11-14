@@ -123,9 +123,9 @@ local function createSweetyEsp()
     end
 
     function sweetyEsp:Clear()
-        for i = 1,#espClass do
-            if espClass[i] then
-                espClass[i]:Destroy()
+        for _,espClass in next, sweetyEsp do
+            if espClass["flag"] ~= nil then
+                espClass:Destroy()
             end
         end
     end
