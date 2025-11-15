@@ -3542,7 +3542,7 @@ do -- // Load
                     local configName = v2:match('(%w+).config.json');
                     if (not configName) then continue; end;
 
-                    local folderName = v:match('configs/([^/]+)$');
+                    local folderName = v:match('([^/]+)[/]*$');
                     local fullConfigName = string.format('%s - %s', folderName, configName);
 
                     table.insert(files, fullConfigName);
