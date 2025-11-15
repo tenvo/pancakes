@@ -117,7 +117,7 @@ local function createSweetyEsp()
         if typeof("flag") ~= 'string' then return end
 
         if sweetyEsp._objs[flag] then
-            return true
+            return sweetyEsp._objs[flag]
         end
 
         return false
