@@ -32,13 +32,37 @@ function Library:Window(winName,mainColor,hideBind)
         end)
     end
 
-    local function UpdateFrameSize(scrollframe,listlayout)
-        local cS = listlayout.AbsoluteContentSize
+    -- local function UpdateFrameSize(scrollframe,listlayout)
+    --     local cS = listlayout.AbsoluteContentSize
 
-        game.TweenService:Create(scrollframe, TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
-            CanvasSize = UDim2.new(0,cS.X,0,cS.Y)
-        }):Play()
+    --     game.TweenService:Create(scrollframe, TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+    --         CanvasSize = UDim2.new(0,cS.X,0,cS.Y)
+    --     }):Play()
+    -- end
+
+    local function UpdateFrameSize(scrollframe, listlayout)
+        local contentSize = listlayout.AbsoluteContentSize.Y
+
+        -- Use a NumberValue to tween the Canvas Y size safely
+        local tweenValue = Instance.new("NumberValue")
+        tweenValue.Value = scrollframe.CanvasSize.Y.Offset
+
+        local tween = game:GetService("TweenService"):Create(
+            tweenValue,
+            TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+            { Value = contentSize }
+        )
+
+        tweenValue.Changed:Connect(function(val)
+            scrollframe.CanvasSize = UDim2.new(0, 0, 0, val) -- Width = auto, height = tweened
+        end)
+
+        tween:Play()
+        tween.Completed:Connect(function()
+            tweenValue:Destroy()
+        end)
     end
+
 
     local function hidebindConfig()
         local uis = game:GetService("UserInputService")
