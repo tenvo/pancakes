@@ -1,4 +1,3 @@
-getgenv().debugMode = false
 if debugMode then
     getgenv().ah_loaderRan = false;
 end
