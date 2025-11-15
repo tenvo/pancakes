@@ -1,8 +1,7 @@
+getgenv().debugMode = false
 if debugMode then
     getgenv().ah_loaderRan = false;
 end
-if (ah_loaderRan) then return end;
-getgenv().ah_loaderRan = true;
 
 local HttpService = game:GetService('HttpService');
 local TweenService = game:GetService('TweenService');
@@ -538,6 +537,10 @@ function destroyUI()
 end;
 
 statusEvent.Event:Connect(setStatus);
+
+if (ah_loaderRan) then return setStatus('Script already ran', true) end;
+getgenv().ah_loaderRan = true;
+
 setStatus('Checking data');
 
 local function logError(msg)
