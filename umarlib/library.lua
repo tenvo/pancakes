@@ -416,6 +416,7 @@ function Library:Window(winName,mainColor,hideBind)
         TabFrame.Size = UDim2.new(0, 440, 0, 289)
         TabFrame.ScrollBarThickness = 5
         TabFrame.Visible = false
+        TabFrame.AutomaticCanvasSize = "Y"
 
     
         UIListLayout.Parent = TabFrame
@@ -430,15 +431,15 @@ function Library:Window(winName,mainColor,hideBind)
             tabButton.BackgroundTransparency = 0
         end
 
-        UpdateFrameSize(TabFrame,UIListLayout)
+        --UpdateFrameSize(TabFrame,UIListLayout)
 
-        TabFrame.ChildAdded:Connect(function()
-            UpdateFrameSize(TabFrame,UIListLayout)
-        end)
+        -- TabFrame.ChildAdded:Connect(function()
+        --     --UpdateFrameSize(TabFrame,UIListLayout)
+        -- end)
 
-        TabFrame.ChildRemoved:Connect(function()
-            UpdateFrameSize(TabFrame,UIListLayout)
-        end)
+        -- TabFrame.ChildRemoved:Connect(function()
+        --     --UpdateFrameSize(TabFrame,UIListLayout)
+        -- end)
 
         button.MouseButton1Click:Connect(function()
             if TabFrame.Visible == true then return end
@@ -496,7 +497,7 @@ function Library:Window(winName,mainColor,hideBind)
                 pcall(callback)
             end)
 
-            UpdateFrameSize(TabFrame,UIListLayout)
+            --UpdateFrameSize(TabFrame,UIListLayout)
         end
 
         function Elements:Toggle(toggleName,currentState,callback)
@@ -654,7 +655,7 @@ function Library:Window(winName,mainColor,hideBind)
             
             table.insert(_G.UISettings.ElementCache,info)
             
-            UpdateFrameSize(TabFrame,UIListLayout)
+            --UpdateFrameSize(TabFrame,UIListLayout)
 
             return toggleFunc
         end
@@ -826,7 +827,7 @@ function Library:Window(winName,mainColor,hideBind)
             
             table.insert(_G.UISettings.ElementCache,info)
             
-            UpdateFrameSize(TabFrame,UIListLayout)
+            --UpdateFrameSize(TabFrame,UIListLayout)
             
             return sliderFunc
         end
@@ -862,7 +863,7 @@ function Library:Window(winName,mainColor,hideBind)
                 return Label.Text
             end
 
-            UpdateFrameSize(TabFrame,UIListLayout)
+            --UpdateFrameSize(TabFrame,UIListLayout)
 
             return labelFunc
         end
@@ -957,7 +958,7 @@ function Library:Window(winName,mainColor,hideBind)
             
             table.insert(_G.UISettings.ElementCache,info)
             
-            UpdateFrameSize(TabFrame,UIListLayout)
+            --UpdateFrameSize(TabFrame,UIListLayout)
 
             return textboxFunc
         end
@@ -1123,7 +1124,7 @@ function Library:Window(winName,mainColor,hideBind)
 
             table.insert(_G.UISettings.ElementCache,info)
             
-            UpdateFrameSize(TabFrame,UIListLayout)
+            --UpdateFrameSize(TabFrame,UIListLayout)
 
             return bindFunc
         end
@@ -1202,7 +1203,7 @@ function Library:Window(winName,mainColor,hideBind)
             end)
 
             DropdownList:GetPropertyChangedSignal("Size"):Connect(function()
-                UpdateFrameSize(TabFrame,UIListLayout)
+                --UpdateFrameSize(TabFrame,UIListLayout)
             end)
             
             UICorner_20.CornerRadius = UDim.new(0, 16)
@@ -1236,7 +1237,7 @@ function Library:Window(winName,mainColor,hideBind)
                         DropdownList.ScrollBarImageTransparency = 0
                         opened = true
                         dropDebounce = false
-                        UpdateFrameSize(TabFrame,UIListLayout)
+                        --UpdateFrameSize(TabFrame,UIListLayout)
                     end)
                 elseif opened then
                     task.spawn(function()
@@ -1249,7 +1250,7 @@ function Library:Window(winName,mainColor,hideBind)
                         DropdownList.Visible = false
                         opened = false
                         dropDebounce = false
-                        UpdateFrameSize(TabFrame,UIListLayout)
+                        --UpdateFrameSize(TabFrame,UIListLayout)
                     end)
                 end
             end
@@ -1363,7 +1364,7 @@ function Library:Window(winName,mainColor,hideBind)
 
             table.insert(_G.UISettings.ElementCache,info)
             
-            UpdateFrameSize(TabFrame,UIListLayout)
+            --UpdateFrameSize(TabFrame,UIListLayout)
 
             return dropdownFunc
         end
