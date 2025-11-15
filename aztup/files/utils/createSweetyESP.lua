@@ -124,7 +124,7 @@ local function createSweetyEsp()
 
     function sweetyEsp:Clear()
         for _,espClass in next, sweetyEsp do
-            if espClass["flag"] ~= nil then
+            if typeof(espClass) == "table" and  (espClass["flag"] ~= nil) then
                 espClass:Destroy()
             end
         end
