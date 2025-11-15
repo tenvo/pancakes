@@ -11,6 +11,7 @@ local function createSweetyEsp()
     sweetyEsp.plr = Players.LocalPlayer
     sweetyEsp.char = sweetyEsp.plr.Character
     sweetyEsp._maid = Maid.new()
+    sweetyEsp._objs = {}
 
     sweetyEsp.plr.CharacterAdded:Connect(function(char)
         sweetyEsp.char = char
@@ -27,7 +28,7 @@ local function createSweetyEsp()
         espClass.maid = Maid.new()
 
 
-        if sweetyEsp[flag] then return warn('Already an ESP Active of that Flag') end
+        if sweetyEsp._objs[flag] then return warn('Already an ESP Active of that Flag') end
 
         local c = workspace.Camera
         local h = cr:WaitForChild("Humanoid")
@@ -104,10 +105,10 @@ local function createSweetyEsp()
             --healthText:Remove()
             espClass.maid:Destroy()
 
-            sweetyEsp[flag] = nil
+            sweetyEsp._objs[flag] = nil
         end
         
-        sweetyEsp[flag] = espClass
+        sweetyEsp._objs[flag] = espClass
 
         return espClass
     end
@@ -115,7 +116,7 @@ local function createSweetyEsp()
     function sweetyEsp:Get(flag)
         if typeof("flag") ~= 'string' then return end
 
-        if sweetyEsp[flag] then
+        if sweetyEsp._objs[flag] then
             return true
         end
 
@@ -123,10 +124,8 @@ local function createSweetyEsp()
     end
 
     function sweetyEsp:Clear()
-        for _,espClass in next, sweetyEsp do
-            if typeof(espClass) == "table" and  (espClass["flag"] ~= nil) then
-                espClass:Destroy()
-            end
+        for i,v in pairs(sweetyEsp._objs) do
+            v:Destroy()
         end
     end
 
