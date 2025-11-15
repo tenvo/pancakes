@@ -124,7 +124,7 @@ local function createSweetyEsp()
     end
 
     function sweetyEsp:Clear()
-        for i,v in pairs(sweetyEsp._objs) do
+        for _,v in pairs(sweetyEsp._objs) do
             v:Destroy()
         end
     end
