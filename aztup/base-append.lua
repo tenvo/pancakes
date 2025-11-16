@@ -20,7 +20,7 @@ local originalFunctions = {};
 local HttpService = game:GetService('HttpService');
 local UserInputService = game:GetService('UserInputService');
 
---if not shared.aztuppy["payload"] then
+if not shared.aztuppy["payload"] then
 xpcall(function()
     local functionsToCheck = {
         fireServer = Instance.new('RemoteEvent').FireServer,
@@ -133,9 +133,9 @@ end, function()
     messagebox('Sanity check failed\nThis usually happens cause you ran a script before the hub.\n\nIf you don\'t know why this happened.\nPlease check your auto execute folder.\n\nThis error has been logged.', 'Aztup Hub Security Error', 0);
     return SX_CRASH();
 end);
--- else
---     print("Skipping Sanity check, aztuppy payload B)")
--- end
+else
+    print("Skipping Sanity check, aztuppy payload B)")
+end
 
 if (not game:IsLoaded()) then
     setStatus('Waiting for game to load');
