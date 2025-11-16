@@ -79,19 +79,19 @@ local executed = false;
 
 if (debugMode) then
     getgenv().debugMode = debugMode;
-
-    getgenv().originalFunctions = {
-        fireServer = Instance.new('RemoteEvent').FireServer,
-        invokeServer = Instance.new('RemoteFunction').InvokeServer,
-        getRankInGroup = LocalPlayer.GetRankInGroup,
-        index = getrawmetatable(game).__index,
-        jsonEncode = HttpService.JSONEncode,
-        jsonDecode = HttpService.JSONDecode,
-        findFirstChild = game.FindFirstChild,
-        runOnActor = run_on_actor,
-        getCommChannel = get_comm_channel
-    }
 end;
+
+getgenv().originalFunctions = {
+    fireServer = Instance.new('RemoteEvent').FireServer,
+    invokeServer = Instance.new('RemoteFunction').InvokeServer,
+    getRankInGroup = LocalPlayer.GetRankInGroup,
+    index = getrawmetatable(game).__index,
+    jsonEncode = HttpService.JSONEncode,
+    jsonDecode = HttpService.JSONDecode,
+    findFirstChild = game.FindFirstChild,
+    runOnActor = run_on_actor,
+    getCommChannel = get_comm_channel
+}
 
 local ah_url = "https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"
 

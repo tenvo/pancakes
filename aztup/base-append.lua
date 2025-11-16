@@ -19,123 +19,117 @@ if (typeof(game) ~= 'Instance') then return SX_CRASH() end;
 local originalFunctions = {};
 local HttpService = game:GetService('HttpService');
 local UserInputService = game:GetService('UserInputService');
+local aztuppyFile, loaderHash = unpack({...});
+local executor;
 
-if not shared.aztuppy["payload"] then
 xpcall(function()
-    local functionsToCheck = {
-        fireServer = Instance.new('RemoteEvent').FireServer,
-        invokeServer = Instance.new('RemoteFunction').InvokeServer,
+    executor = {
+        env = {},
+        debug_getproto = debug.getproto,
+        makefolder = makefolder,
+        getscriptclosure = getscriptclosure,
+        clonefunction = clonefunction,
+        getconnections = getconnections,
+        checkcaller = checkcaller,
+        crypt_base64encode = crypt.base64encode,
+        rconsoledestroy = rconsoledestroy,
+        rconsolesettitle = rconsolesettitle,
+        hookmetamethod = hookmetamethod,
+        queue_on_teleport = queue_on_teleport or queueonteleport,
+        rconsoleprint = rconsoleprint,
+        getrawmetatable = getrawmetatable,
+        setrenderproperty = setrenderproperty,
+        WebSocket = WebSocket,
+        crypt_hash = crypt.hash,
+        getinstances = getinstances,
+        getcallingscript = getcallingscript,
+        getloadedmodules = getloadedmodules,
+        debug_getinfo = debug.getinfo,
+        mouse1press = mouse1press,
+        crypt_decrypt = crypt.decrypt,
+        compareinstances = compareinstances,
+        newcclosure = newcclosure,
+        delfile = delfile,
+        request = request or http.request or http_request,
+        getrenderproperty = getrenderproperty,
+        readfile = readfile,
+        gethui = gethui,
+        debug_getupvalues = debug.getupvalues,
+        crypt_base64decode = crypt.base64decode,
+        debug_setstack = debug.setstack,
+        setscriptable = setscriptable,
+        getthreadidentity = getthreadidentity or getidentity or getthreadcontext,
+        loadstring = loadstring,
+        WebSocket_connect = WebSocket.connect,
+        cleardrawcache = cleardrawcache,
+        debug_getconstants = debug.getconstants,
+        isexecutorclosure = isexecutorclosure,
+        getnamecallmethod = getnamecallmethod,
+        isrenderobj = isrenderobj,
+        Drawing_Fonts = Drawing.Fonts,
+        hookfunction = hookfunction,
+        Drawing_new = Drawing.new,
+        Drawing = Drawing,
+        isfile = isfile,
+        mouse2release = mouse2release,
+        setthreadidentity = setthreadidentity or setidentity or setthreadcontext,
+        debug_getupvalue = debug.getupvalue,
+        getsenv = getsenv,
+        isscriptable = isscriptable,
+        setfpscap = setfpscap,
+        debug_setconstant = debug.setconstant,
+        mousemoverel = mousemoverel,
+        mousescroll = mousescroll,
+        mousemoveabs = mousemoveabs,
+        messagebox = messagebox,
+        islclosure = islclosure,
+        lz4decompress = lz4decompress,
+        mouse1click = mouse1click,
+        mouse2press = mouse2press,
+        lz4compress = lz4compress,
+        isfolder = isfolder,
+        setreadonly = setreadonly,
+        cache_iscached = cache.iscached,
+        getnilinstances = getnilinstances,
+        getgc = getgc,
+        delfolder = delfolder,
+        iscclosure = iscclosure,
+        getcustomasset = getcustomasset,
+        cache_replace = cache.replace,
+        setrawmetatable = setrawmetatable,
+        isreadonly = isreadonly,
+        getrunningscripts = getrunningscripts,
+        getscriptbytecode = getscriptbytecode or dumpstring,
+        crypt_encrypt = crypt.encrypt,
+        getrenv = getrenv,
+        getgenv = getgenv,
+        identifyexecutor = identifyexecutor or getexecutorname,
+        setrbxclipboard = setrbxclipboard,
+        appendfile = appendfile,
+        cache_invalidate = cache.invalidate,
+        debug_getconstant = debug.getconstant,
+        mouse2click = mouse2click,
+        dofile = dofile,
+        sethiddenproperty = sethiddenproperty,
+        writefile = writefile,
+        cloneref = cloneref,
+        loadfile = loadfile,
+        isrbxactive = isrbxactive or isgameactive,
+    }
 
-        fire = Instance.new('BindableEvent').Fire,
-        invoke = Instance.new('BindableFunction').Invoke,
-
-        enum = getrawmetatable(Enum).__tostring,
-        signals = getrawmetatable(game.Changed),
-        newIndex = getrawmetatable(game).__newindex,
-        namecall = getrawmetatable(game).__namecall,
-        index = getrawmetatable(game).__index,
-
-        stringMT = getrawmetatable(''),
-
-        UDim2,
-        Rect,
-        BrickColor,
-        Instance,
-        Region3,
-        Region3int16,
-        utf8,
-        UDim,
-        Vector2,
-        Vector3,
-        CFrame,
-
-        getrawmetatable(UDim2.new()),
-        getrawmetatable(Rect.new()),
-        getrawmetatable(BrickColor.new()),
-        getrawmetatable(Region3.new()),
-        getrawmetatable(Region3int16.new()),
-        getrawmetatable(utf8),
-        getrawmetatable(UDim.new()),
-        getrawmetatable(Vector2.new()),
-        getrawmetatable(Vector3.new()),
-        getrawmetatable(CFrame.new()),
-
-        task.wait,
-        task.spawn,
-        task.delay,
-        task.defer,
-
-        wait,
-        spawn,
-        ypcall,
-        pcall,
-        xpcall,
-        error,
-
-        tonumber,
-        tostring,
-
-        rawget,
-        rawset,
-        rawequal,
-
-        string = string,
-        math = math,
-        bit32 = bit32,
-        table = table,
-        pairs,
-        next,
-        unpack,
-        getfenv,
-
-        jsonEncode = HttpService.JSONEncode,
-        jsonDecode = HttpService.JSONDecode,
-        findFirstChild = game.FindFirstChild,
-    };
-
-    local function checkForFunction(t, i)
-        local dataType = typeof(t);
-
-        if (dataType == 'table') then
-            for i, v in next, t do
-                local suc, result = checkForFunction(v, i);
-                if (not suc) then
-                    return false, result;
-                end;
-            end;
-        elseif (dataType == 'function') then
-            local suc, uv = pcall(getupvalue, t, 1);
-
-            --is_synapse_function(t) doesn't work on certain executors e.g bunni, replaced isexecutorclosure
-            --pairs returns a userdata usually looks like, but some pc return function so we whitelist it
-            if (isexecutorclosure(t) or islclosure(t) or (suc and uv and typeof(uv) ~= 'userdata' and t ~= pairs)) then
-                return false, i;
-            end;
-        end;
-
-        return true;
-    end;
-
-    if (not checkForFunction(functionsToCheck)) then
-        messagebox('Sanity check failed\nThis usually happens cause you ran a script before the hub.\n\nIf you don\'t know why this happened.\nPlease check your auto execute folder.\n\nThis error has been logged.', 'Aztup Hub Security Error', 0);
-        return SX_CRASH();
-    else
-        for i, v in next, functionsToCheck do
-            if (typeof(v) == 'function') then
-                originalFunctions[i] = clonefunction(v);
-            end;
-        end;
-    end;
-
-    originalFunctions.runOnActor = run_on_actor;
-    originalFunctions.createCommChannel = create_comm_channel;
-end, function()
-    messagebox('Sanity check failed\nThis usually happens cause you ran a script before the hub.\n\nIf you don\'t know why this happened.\nPlease check your auto execute folder.\n\nThis error has been logged.', 'Aztup Hub Security Error', 0);
+    setmetatable(executor,{
+        __index = function(tbl,k)
+            return function(...) 
+                local ExecutorName = tbl.env.UA or "This Executor"
+                warn(string.format("[ERROR] %s does not support %s",ExecutorName,k))
+                return ...
+            end
+        end
+    })
+end, function(err)
+    messagebox('Aztuppy UNC Env Initializer Failed\n\n'..err, 'pancake fan club UNCEnv', 0);
     return SX_CRASH();
 end);
-else
-    print("Skipping Sanity check, aztuppy payload B)")
-end
 
 if (not game:IsLoaded()) then
     setStatus('Waiting for game to load');
@@ -168,7 +162,6 @@ local function httpRequest(...)
 end;
 
 local LocalPlayer = game:GetService('Players').LocalPlayer;
-originalFunctions.getRankInGroup = clonefunction(LocalPlayer.GetRankInGroup);
 
 local websiteKey, scriptKey = getgenv().websiteKey, getgenv().scriptKey;
 local jobId, placeId = game.JobId, game.PlaceId;
@@ -188,7 +181,6 @@ do -- //Hook print debug
 end;
 
 setStatus('Setting Aztuppy Env');
-local aztuppyFile, loaderHash = unpack({...});
 
 getgenv().aztuppySave = function(new) writefile("Aztup Hub V3/aztuppy.json",HttpService:JSONEncode(new)) shared.aztuppy["sharedFile"] = new end
 getgenv().aztuppyLoad = function() return HttpService:JSONDecode(readfile("Aztup Hub V3/aztuppy.json")) end
@@ -234,23 +226,57 @@ do -- // Aztuppy Core Init
         pushUpdate = true
     end
 
+    --// I wonder if this can add support for low UNC executors
+    if executor then
+        if not aztuppyFile["UNCEnv"] then
+            aztuppyFile.UNCEnv = {}
+            local newEnv,failedFunctions = loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/UNCEnv.lua"))(executor)
+
+            executor = newEnv
+            aztuppyFile.UNCEnv.UNC = executor.env.UNC
+            aztuppyFile.UNCEnv.UA = executor.env.UA
+            aztuppyFile.UNCEnv.failedFunctions = failedFunctions
+            pushUpdate = true
+        else
+            executor.env.UNC = aztuppyFile.UNCEnv.UNC
+            executor.env.UA = aztuppyFile.UNCEnv.UA
+
+            for _,v in next, aztuppyFile.UNCEnv.failedFunctions do
+                executor[v] = nil
+            end
+            pushUpdate = true
+        end
+
+        if executor.Drawing_new ~= nil and executor.Drawing_Fonts ~= nil then
+            executor.Drawing_Fonts = nil
+            executor.Drawing_new = nil
+        else
+            executor.Drawing = nil
+            executor.Drawing_Fonts = nil
+            executor.Drawing_new = nil
+        end
+    end
+
     if pushUpdate then
         aztuppySave(aztuppyFile)
     end
 
+
     shared.aztuppy.scriptVersion = ah_metadata["version"];
     getgenv().aztuppyFile = aztuppyFile
+    getgenv().executor = executor
     shared.aztuppy["sharedFile"] = aztuppyFile
-    print("Aztuppy Core Init:" .. tick() - START_AZTUPPY);
+    print(string.format("Executor:\nName:%s\nUNC:%s",executor.env.UA,executor.env.UNC))
+    print(string.format('Aztuppy Env Init in %.02fs', tick() - START_AZTUPPY))
 end;
 
-if (aztuppyFile["umarlib"] == nil and aztuppyFile["isMobile"]) then
-    setStatus('', 'confirmDevice');
+if (aztuppyFile["umarlib"] == nil) then
+    setStatus('', 'confirmUISelection');
 
     local data = statusEvent.Event:Wait();
-    if (data == 'Mobile') then
+    if (data == 'Umarlib') then
         aztuppyFile["umarlib"] = true
-    elseif (data == "Emulator") then
+    elseif (data == "Aztup") then
         aztuppyFile["umarlib"] = false
     end;
 

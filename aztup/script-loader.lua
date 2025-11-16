@@ -464,22 +464,23 @@ function setStatus(text, close, context)
                 return setStatus(errorMessage, true);
             end;
         end);
-    elseif (close == 'confirmDevice') then
+    elseif (close == 'confirmUISelection') then
         TweenService:Create(refs.container, tweenInfo, {Position = UDim2.fromScale(0.5, 0.75)}):Play();
 
-        refs.title.Text = 'Hello "Mobile" User!';
-        refs.status.Text = 'Are you on a emulator or a real mobile device, this will determine whether your compatible with the normal Aztup UI.';
+        refs.title.Text = 'Hello User!';
+        refs.status.Text = 'You have the choice between two UI\'s, You can change if you deleted the script directory\n\nAztup Hub UI: Works on PC & Emulator\nUmarlib: Works on all (including mobile)\n\nNote:Umarlib is a compatibility layer, features MAY not work as intended';
         refs.reason.Visible = false;
 
         refs.secondButton.Visible = true;
-        refs.secondButton.Text = 'Mobile';
+        refs.secondButton.Text = 'Umarlib';
+        refs.secondButton.BackgroundColor3 = Color3.fromHex('#6601a0');
 
         -- refs.thirdButton.Visible = true;
         -- refs.thirdButton.Text = 'Copy terms of services link to clipboard.';
 
         refs.button.Visible = true;
-        refs.button.BackgroundColor3 = Color3.fromHex('#16a085');
-        refs.button.Text = 'Emulator';
+        refs.button.BackgroundColor3 = Color3.fromHex('#3252ba');
+        refs.button.Text = 'Aztup';
 
         local function ChosenSolution(pick)
             refs.button.Visible = false;
@@ -490,7 +491,7 @@ function setStatus(text, close, context)
             refs.title.Text = "Thank you!"
 
             statusEvent:Fire(pick);
-            return setStatus('Thank you!', true);
+            return setStatus('Excellent Choice!! or was it.. ☠️☠️☠️☠️☠️', true);
         end
 
         refs.secondButton.MouseButton1Click:Connect(function()

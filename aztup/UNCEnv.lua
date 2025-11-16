@@ -26,7 +26,6 @@ local function test(name, aliases, callback)
 			--print("⏺️ " .. name)
 		elseif not getGlobal(name) then
 			fails += 1
-			name = name:gsub(".","_")
 			if executor[name] then table.insert(failedFunctions,name) executor[name] = nil end
 			--warn("⛔ " .. name)
 		else
@@ -37,7 +36,6 @@ local function test(name, aliases, callback)
 				--print("✅ " .. name .. (message and " • " .. message or ""))
 			else
 				fails += 1
-				name = name:gsub(".","_")
 				if executor[name] then table.insert(failedFunctions,name) executor[name] = nil end
 				--warn("⛔ " .. name .. " failed: " .. message)
 			end
