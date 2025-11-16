@@ -1,3 +1,6 @@
+--// auto delete script directory
+if isfolder("Aztup Hub V3") then delfolder("Aztup Hub V3") end
+
 if debugMode then
     getgenv().ah_loaderRan = false;
 end
@@ -483,6 +486,7 @@ function setStatus(text, close, context)
         refs.button.Text = 'Aztup';
 
         local function ChosenSolution(pick)
+            TweenService:Create(refs.container, tweenInfo, {Position = UDim2.fromScale(0.5, 0.85)}):Play();
             refs.button.Visible = false;
             refs.secondButton.Visible = false;
             refs.thirdButton.Visible = false;
@@ -714,6 +718,7 @@ xpcall(function()
         local ErrorLine = Error[#Error-1]
         local IntitalLine = Error[2]
         local ErrorMsg = Error[#Error]
+        warn("AztupScript:("..IntitalLine.."):"..ErrorLine..":"..ErrorMsg, true)
         setStatus("AztupScript:("..IntitalLine.."):"..ErrorLine..":"..ErrorMsg, true);
     end);
 end, function(err)
