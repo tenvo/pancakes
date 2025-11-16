@@ -465,7 +465,7 @@ function setStatus(text, close, context)
             end;
         end);
     elseif (close == 'confirmUISelection') then
-        TweenService:Create(refs.container, tweenInfo, {Position = UDim2.fromScale(0.5, 0.75)}):Play();
+        TweenService:Create(refs.container, tweenInfo, {Position = UDim2.fromScale(0.5, 0.65)}):Play();
 
         refs.title.Text = 'Hello User!';
         refs.status.Text = 'You have the choice between two UI\'s, You can change if you deleted the script directory\n\nAztup Hub UI: Works on PC & Emulator\nUmarlib: Works on all (including mobile)\n\nNote:Umarlib is a compatibility layer, features MAY not work as intended';
