@@ -1,6 +1,3 @@
---// auto delete script directory
-if isfolder("Aztup Hub V3") then delfolder("Aztup Hub V3") end
-
 if debugMode then
     getgenv().ah_loaderRan = false;
 end
