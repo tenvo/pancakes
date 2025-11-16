@@ -244,7 +244,6 @@ do -- // Aztuppy Core Init
             for _,v in next, aztuppyFile.UNCEnv.failedFunctions do
                 executor[v] = nil
             end
-            pushUpdate = true
         end
 
         if executor.Drawing_new ~= nil and executor.Drawing_Fonts ~= nil then
