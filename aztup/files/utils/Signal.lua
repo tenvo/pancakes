@@ -32,6 +32,8 @@ end;
 -- @param ... Variable arguments to pass to handler
 -- @treturn nil
 function Signal:Fire(...)
+	if not self._bindableEvent then return error("Signal has been destroyed"); end
+
 	self._argData = {...}
 	self._argCount = select("#", ...)
 	self._bindableEvent:Fire()
