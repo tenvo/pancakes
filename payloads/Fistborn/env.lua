@@ -109,7 +109,7 @@ env[#env+1] = {
         ["24/7"] = CFrame.new(-1059, 15, -999),
         ["Deli"] = CFrame.new(-374, 15, -1129),
     },
-    itemOffsets = { --// Offsets to items to remain undetected
+    itemOffsets = {
         ["default"] = CFrame.new(0,-4.5,0),
         ["Fat_Burner"] = (CFrame.new(0.5,-4.5,0) * CFrame.Angles(0,math.rad(45),0)),
         ["Protein_Shake"] = (CFrame.new(0.7,-4.7,-0.4) * CFrame.Angles(0,math.rad(115),0)),
