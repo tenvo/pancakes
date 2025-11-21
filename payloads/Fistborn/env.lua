@@ -101,4 +101,26 @@ env[#env+1] = {
     }
 }
 
+env[#env+1] = {
+    sleepTween = {
+        ["bed"] = CFrame.new(-560.4, 15, -1308.4),
+    },
+    foodTween = {
+        ["24/7"] = CFrame.new(-1059, 15, -999),
+        ["Deli"] = CFrame.new(-374, 15, -1129),
+    },
+    itemOffsets = { --// Offsets to items to remain undetected
+        ["default"] = CFrame.new(0,-4.5,0),
+        ["Fat_Burner"] = (CFrame.new(0.5,-4.5,0) * CFrame.Angles(0,math.rad(45),0)),
+        ["Protein_Shake"] = (CFrame.new(0.7,-4.7,-0.4) * CFrame.Angles(0,math.rad(115),0)),
+        ["Muscle_Burner"] = (CFrame.new(0.15,-4.7,0) * CFrame.Angles(0,math.rad(127),0)),
+        ["BCAA"] = (CFrame.new(0.15,-4.7,0) * CFrame.Angles(0,math.rad(127),0)),
+        ["Pizza"] = CFrame.new(0,-9,0.6),
+        ["Cheese_Bites"] = CFrame.new(0,-9,0.6),
+        ["Soda"] = CFrame.new(0,-4.5,2),
+        ["Donut"] = CFrame.new(0.1,-4.3,2),
+        ["Cheesecake"] = CFrame.new(-1,-4.5,0),
+    },
+}
+
 return env
