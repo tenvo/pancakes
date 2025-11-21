@@ -25,6 +25,7 @@ env[#env+1] = {
     "Dexterity",
     "MaxStamina",
     "Muscle",
+    "Fat",
     "TotalPower",
     "--Other--",
     "Bank",
