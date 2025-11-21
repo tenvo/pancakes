@@ -102,9 +102,7 @@ env[#env+1] = {
 }
 
 env[#env+1] = {
-    sleepTween = {
-        ["bed"] = CFrame.new(-560.4, 15, -1308.4),
-    },
+    sleepTween = CFrame.new(-560.4, 15, -1308.4),
     foodTween = {
         ["24/7"] = CFrame.new(-1059, 15, -999),
         ["Deli"] = CFrame.new(-374, 15, -1129),
