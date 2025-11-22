@@ -21,6 +21,7 @@ local function createSweetyEsp()
         local espClass = {}
 
         espClass.flag = flag
+        espClass.char = cr
         espClass.dist = 0
         espClass.state = true
         espClass.display = {"%s [%s]",{"flag","dist"}}
@@ -57,7 +58,7 @@ local function createSweetyEsp()
             espClass:Destroy()
         end))
 
-        --espClass.maid:AddTask(h.HealthChanged:Connect(function(v)
+        --espClass.maid:GiveTask(h.HealthChanged:Connect(function(v)
         --     if (v<=0) or (h:GetState() == Enum.HumanoidStateType.Dead) then
         --         dc()
         --     else
