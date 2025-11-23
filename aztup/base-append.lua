@@ -117,14 +117,6 @@ xpcall(function()
         isrbxactive = isrbxactive or isgameactive,
     }
 
-    --// Changing Shitexcutors Functions
-
-    if executor.env.UA == "Solara" then
-        executor.checkcaller = function()
-            return not checkcaller()
-        end
-    end
-
     setmetatable(executor,{
         __index = function(tbl,k)
             return function(...) 
@@ -147,6 +139,16 @@ end;
 local http = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
 local oldRequest = clonefunction(http);
 local gameId = game.GameId;
+
+local function ExecutorEnvFinalize(ExecutorName)
+    --// Changing Shitexcutors Functions
+
+    if ExecutorName == "Solara" then
+        executor.checkcaller = function()
+            return not checkcaller()
+        end
+    end
+end
 
 local function isRequestValid(req)
     if (not req.Headers) then return false end;
@@ -268,13 +270,15 @@ do -- // Aztuppy Core Init
         aztuppySave(aztuppyFile)
     end
 
-
+    --// Globals
     shared.aztuppy.scriptVersion = ah_metadata["version"];
     getgenv().aztuppyFile = aztuppyFile
     getgenv().executor = executor
     shared.aztuppy["sharedFile"] = aztuppyFile
-    print(string.format("Executor:\nName:%s\nUNC:%s",executor.env.UA,executor.env.UNC))
-    print(string.format('Aztuppy Env Init in %.02fs', tick() - START_AZTUPPY))
+
+    ExecutorEnvFinalize(executor.env.UA)
+
+    print(string.format('Aztuppy Env Init in %.02fs\n\nExecutor: %s\nUNC: %s', tick() - START_AZTUPPY,executor.env.UA,executor.env.UNC))
 end;
 
 if (aztuppyFile["umarlib"] == nil) then
