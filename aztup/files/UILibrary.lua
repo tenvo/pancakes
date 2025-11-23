@@ -213,6 +213,20 @@ do -- // Load
         return connection
     end
 
+    function library:Set(f,bool)
+        if typeof(bool) ~= 'boolean' or (typeof(f) ~= 'string' and typeof(f) ~= 'table') then return end
+        local flagsChanged = {}
+
+        for _,o in pairs(self.options) do
+            if o.type == 'toggle' and self.flags[o.flag] ~= bool and ((o.flag == f) or (table.find(f,o.flag))) then
+                pcall(o.SetState, o, bool);
+                table.insert(flagsChanged,o.flag)
+            end;
+        end
+
+        return flagsChanged
+    end
+
     function library:Unload()
         task.wait();
         visualizer:Remove();
