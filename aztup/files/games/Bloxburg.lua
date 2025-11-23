@@ -19,7 +19,7 @@ local Heartbeat = RunService.Heartbeat;
 
 do -- // Functions
     local framework = require(ReplicatedStorage:WaitForChild('Framework'));
-    framework = getupvalue(framework, 3);
+    framework = getupvalue(framework,4)
 
     local modules;
     local network;
@@ -50,13 +50,15 @@ do -- // Functions
         makefolder('Aztup Hub V3/Bloxburg Houses');
     end;
 
-    hookfunction(getfenv(network.FireServer).i, function()
-        print('Ban attempt lel');
-    end);
+    pcall(function()
+        hookfunction(getfenv(network.FireServer).i, function()
+            print('Ban attempt lel');
+        end);
+    end)
 
     -- if(not debugMode) then
         guiHandler:AlertBox(
-            'If you encounter any bugs using the auto farm make sure you post them in the discord #bug-reports channel.In all case to not get banned make sure that you buy a car after you finished your shift and make sure that you dont farm overnight.\n\nWe are not responsible in any shape of form if you get banned!',
+            'If you encounter any bugs using the auto farm make sure you make a thread in the #script-forums channel. Aztup recommended to not get banned make sure that you buy a car after you finished your shift and make sure that you dont farm overnight.\n\nTest on a alt, Im not responsible if you get banned on your main!\n-tenvo',
             'Warning',
             0.5
         );
@@ -82,7 +84,7 @@ do -- // Functions
         local counters = {};
 
         local function getRotation(object)
-            return tostring(plot.PrimaryPart.CFrame:ToObjectSpace(object));
+            return tostring(plot._groundCFrame.Value:ToObjectSpace(object));
             --local rot = -math.atan2(object.lookVector.z, object.lookVector.x) - math.pi * 0.5;
 
             --if(rot < 0) then
@@ -121,7 +123,7 @@ do -- // Functions
 
             local objectData = {};
             objectData.Name = object.Name;
-            objectData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(object);
+            objectData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(object);
             objectData.Rot = getRotation(object.CFrame);
             objectData.Position = tostring(ground.CFrame:PointToObjectSpace(object.Position));
 
@@ -142,7 +144,7 @@ do -- // Functions
                         local itemData = {};
                         itemData.Name = item.Name;
                         itemData.From = tostring(offSetFrom);
-                        itemData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(item);
+                        itemData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(item);
                         itemData.Segment = item.RailingSegment.Value.Name;
 
                         table.insert(objectData.Fences, itemData);
@@ -153,7 +155,7 @@ do -- // Functions
 
                         local itemData = {};
                         itemData.Name = item.Name;
-                        itemData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(item);
+                        itemData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(item);
                         itemData.Rot = getRotation(item.CFrame);
                         itemData.Position = tostring(ground.CFrame:PointToObjectSpace(item.Position));
                         table.insert(objectData.Items, itemData);
@@ -169,7 +171,7 @@ do -- // Functions
 
             local counterData = {};
             counterData.Name = counter.Name;
-            counterData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(counter);
+            counterData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(counter);
             counterData.Rot = getRotation(counter.CFrame);
             counterData.Position = tostring(ground.CFrame:PointToObjectSpace(counter.Position));
 
@@ -185,7 +187,7 @@ do -- // Functions
 
                     local itemData = {};
                     itemData.Name = item.Name;
-                    itemData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(item);
+                    itemData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(item);
                     itemData.Rot = getRotation(item.CFrame);
                     itemData.Position = tostring(ground.CFrame:PointToObjectSpace(item.Position));
                     table.insert(counterData.Items, itemData);
@@ -202,7 +204,7 @@ do -- // Functions
                 local wallData = {};
                 wallData.From = tostring(offSetFrom);
                 wallData.To = tostring(offSetTo);
-                wallData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(wall);
+                wallData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(wall);
                 wallData.Items = {};
 
                 if(wall:FindFirstChild('ItemHolder')) then
@@ -212,7 +214,7 @@ do -- // Functions
                         itemData.Name = item.Name;
                         itemData.Position = tostring(ground.CFrame:PointToObjectSpace(item.Position));
                         itemData.Side = item:FindFirstChild("SideValue") and item.SideValue.Value == -1 or nil;
-                        itemData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(item);
+                        itemData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(item);
 
                         local itemConfig = framework.Items:GetItem(item.Name);
                         if(itemConfig.Type ~= 'Windows' and itemConfig.Type ~= 'Doors') then
@@ -228,7 +230,7 @@ do -- // Functions
                                 itemData2.Name = item2.Name;
                                 itemData2.Rot = getRotation(item2.CFrame);
                                 itemData2.Position = tostring(ground.CFrame:PointToObjectSpace(item2.Position));
-                                itemData2.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(item2);
+                                itemData2.AppearanceData = framework.Shared.ColorService:GetAppearanceData(item2);
 
                                 table.insert(itemData.Items, itemData2);
                             end;
@@ -244,7 +246,7 @@ do -- // Functions
 
         for _, floor in next, plot.House.Floor:GetChildren() do
             local floorData = {};
-            floorData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(floor);
+            floorData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(floor);
             floorData.Points = {};
             floorData.Objects = objects[floor] or {};
             floorData.Counters = counters[floor] or {};
@@ -258,7 +260,7 @@ do -- // Functions
 
         for _, roof in next, plot.House.Roof:GetChildren() do
             local roofData = {};
-            roofData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(roof);
+            roofData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(roof);
             roofData.Name = roof.Name;
             roofData.Points = {};
             roofData.Items = {};
@@ -273,7 +275,7 @@ do -- // Functions
                     itemData.Name = item.Name;
                     itemData.Position = tostring(ground.CFrame:PointToObjectSpace(item.Position));
                     itemData.Rot = getRotation(item.CFrame);
-                    itemData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(item);
+                    itemData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(item);
 
                     table.insert(roofData.Items, itemData);
                 end;
@@ -287,7 +289,7 @@ do -- // Functions
                 local offSetFrom, offSetTo = ground.CFrame:PointToObjectSpace(getPolePosition(path.BPole)), ground.CFrame:PointToObjectSpace(getPolePosition(path.FPole));
                 local floorData = {};
 
-                floorData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(path);
+                floorData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(path);
                 floorData.From = tostring(offSetFrom);
                 floorData.To = tostring(offSetTo);
 
@@ -322,14 +324,14 @@ do -- // Functions
 
                 fenceData.To = tostring(offSetTo);
                 fenceData.From = tostring(offSetFrom);
-                fenceData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(fence);
+                fenceData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(fence);
                 fenceData.Name = fence.Name;
                 fenceData.Items = {};
 
                 if(fence:FindFirstChild('ItemHolder')) then
                     for _, item in next, fence.ItemHolder:GetChildren() do
                         local itemData = {};
-                        itemData.AppearanceData = framework.Shared.ObjectService:GetAppearanceData(item);
+                        itemData.AppearanceData = framework.Shared.ColorService:GetAppearanceData(item);
                         itemData.Name = item.Name;
                         itemData.Rot = getRotation(item.CFrame);
                         itemData.Position = tostring(ground.CFrame:PointToObjectSpace(item.Position));
@@ -494,7 +496,7 @@ do -- // Functions
                     Data = itemData.AppearanceData
                 })
             end;
-
+            
             framework.net:InvokeServer({
                 Type = 'ColorObject',
                 Object = wall,
@@ -823,10 +825,14 @@ do -- // Functions
 
     do -- // Remote Spy
         local oldFireServer = network.FireServer;
-        local blacklistedTypes = {'LookDir', 'GetServerTime', 'CheckOwnsAsset', 'VehicleUpdate'};
+        local blacklistedTypes = {'LookDir', 'GetServerTime', 'CheckOwnsAsset', 'VehicleUpdate',"FloorPos","RequestLockerDataForSpecificLocker"};
 
         oldFireServer = hookfunction(network.FireServer, function(self, data, ...)
             if (data.Type == 'EndShift' and library.flags.pizzaDelivery) then return end;
+
+            if data.Type == "ReportError" then
+                return
+            end
 
             if (not table.find(blacklistedTypes, data.Type)) then
                 print(prettyPrint({
@@ -843,6 +849,10 @@ do -- // Functions
             local fireType = data.Type;
             local returnData = {select(2, pcall(oldInvokeServer, self, data, ...))};
 
+            if data.Type == "ReportError" then
+                return
+            end
+
             if (not table.find(blacklistedTypes, fireType)) then
                 print(prettyPrint({
                     returnData = returnData,
@@ -856,6 +866,27 @@ do -- // Functions
             return unpack(returnData);
         end);
     end;
+    
+    local cachedDirectories = {}
+
+    local function GetLocation(q)
+        if cachedDirectories[q] then
+            return cachedDirectories[q]
+        end
+
+        if workspace.Environment.Locations:FindFirstChild(q) then
+            cachedDirectories[q] = workspace.Environment.Locations:FindFirstChild(q)
+        end
+
+        for i,v in pairs(workspace.Environment.Locations:GetChildren()) do
+            if v:FindFirstChild(q) then
+                cachedDirectories[q] = v:FindFirstChild(q)
+                return cachedDirectories[q]
+            end
+        end
+
+        return nil
+    end
 
     local function findCurrentWorkstation(workStations, justFindIt)
         local closestDistance, currentWorkstation = math.huge, nil;
@@ -925,7 +956,7 @@ do -- // Functions
     end;
 
     local function getOrder()
-        local box = workspace.Environment.Locations.PizzaPlanet.Conveyor.MovingBoxes:WaitForChild('Box_1');
+        local box = GetLocation("PizzaPlanet").Interior.Conveyor.MovingBoxes:WaitForChild('Box_1');
         local rootPart = LocalPlayer.Character and LocalPlayer.Character.PrimaryPart;
         if(not rootPart) then
             return print('No root part :/');
@@ -961,7 +992,8 @@ do -- // Functions
 
     function loadPlayerHousePrompt(house)
         task.wait();
-        local success, houseData = pcall(readfile, string.format('Aztup Hub V3/Bloxburg Houses/%s', house));
+        --local success, houseData = pcall(readfile, string.format('Aztup Hub V3/Bloxburg Houses/%s', house));
+        local success, houseData = pcall(readfile, string.format(house));
         if(not success) then
             return guiHandler:AlertBox('There was an error.','Error');
         end;
@@ -1018,7 +1050,7 @@ do -- // Functions
 
        repeat
             if(jobManager:GetJob() == 'StylezHairdresser') then
-                local workstation = findCurrentWorkstation(workspace.Environment.Locations.StylezHairStudio.HairdresserWorkstations);
+                local workstation = findCurrentWorkstation(GetLocation("StylezHairStudio").Interior.HairdresserWorkstations);
                 if(workstation) then
                     if workstation.Mirror:FindFirstChild("HairdresserGUI") then
                         workstation.Mirror.HairdresserGUI.Overlay:FindFirstChild("false").ImageRectOffset = Vector2.new(0, 0)
@@ -1037,9 +1069,9 @@ do -- // Functions
     end;
 
     local function GetBurgerWorkstations()
-        if workspace.Environment.Locations:FindFirstChild("BloxyBurgers") then
+        if GetLocation("BloxyBurgers") then
             local stations = {}
-            for i, v in next, workspace.Environment.Locations.BloxyBurgers.CashierWorkstations:GetChildren() do
+            for i, v in next, GetLocation("BloxBurgers").Interior.CashierWorkstations:GetChildren() do
                 if v.InUse.Value == LocalPlayer and v.Occupied.Value ~= nil then
                     table.insert(stations, v)
                 end
@@ -1076,7 +1108,7 @@ do -- // Functions
         local closestBlock
         local closestDistance = math.huge
 
-        for i, v in next, workspace.Environment.Locations.Supermarket.Crates:GetChildren() do
+        for i, v in next, GetLocation("Supermarket").Geometry.Crates:GetChildren() do
             if LocalPlayer:DistanceFromCharacter(v.Position) < closestDistance and v.Name == "Crate" then
                 closestDistance = LocalPlayer:DistanceFromCharacter(v.Position)
                 closestBlock = v
@@ -1094,7 +1126,7 @@ do -- // Functions
         local closestBlock
         local closestDistance = math.huge
 
-        for i, v in next, workspace.Environment.Locations.Supermarket.Shelves:GetChildren() do
+        for i, v in next, GetLocation("Supermarket").Interior.Shelves:GetChildren() do
             if LocalPlayer:DistanceFromCharacter(v.PrimaryPart.Position) < closestDistance and v.IsEmpty.Value == true then
                 closestDistance = LocalPlayer:DistanceFromCharacter(v.PrimaryPart.Position)
                 closestBlock = v
@@ -1210,7 +1242,7 @@ do -- // Functions
 
        repeat
             if(jobManager:GetJob() == 'PizzaPlanetBaker') then
-                local workstation = findCurrentWorkstation(workspace.Environment.Locations.PizzaPlanet.BakerWorkstations);
+                local workstation = findCurrentWorkstation(GetLocation("PizzaPlanet").Interior.BakerWorkstations);
                 if(workstation) then
                     local order = workstation.Order;
                     local oldPosition = LocalPlayer.Character.PrimaryPart.Position;
@@ -1224,14 +1256,14 @@ do -- // Functions
 
                         network:FireServer({
                             Type = "TakeIngredientCrate",
-                            Object = workspace.Environment.Locations.PizzaPlanet.IngredientCrates.Crate
+                            Object = GetLocation("PizzaPlanet").Interior.IngredientCrates.Crate
                         })
 
                         task.wait(0.5);
 
                         network:FireServer({
                             Type = "TakeIngredientCrate",
-                            Object = workspace.Environment.Locations.PizzaPlanet.IngredientCrates.Crate
+                            Object =GetLocation("PizzaPlanet").Interior.IngredientCrates.Crate
                         })
 
                         rootPart.CFrame = CFrame.new(oldPosition);
@@ -1292,7 +1324,7 @@ do -- // Functions
             return amount
         end;
         RestockBags = function(stat)
-            local Crate = workspace.Environment.Locations.Supermarket.Crates:FindFirstChild("BagCrate")
+            local Crate = GetLocation("Supermarket").Interior.Geometry.Crates:FindFirstChild("BagCrate")
             tweenTeleport(Crate.Position + Vector3.new(5, 0, -5), 12)
             network:FireServer({
                 Type = "TakeNewBags",
@@ -1311,15 +1343,15 @@ do -- // Functions
             until stat.BagsLeft.Value > 0
         end;
         GetFreeCashierStation = function()
-            if workspace.Environment.Locations:FindFirstChild("Supermarket") then
+            if GetLocation("Supermarket") then
                 local Station
                 local EmptyStations = {}
-                for i, v in next, workspace.Environment.Locations.Supermarket.CashierWorkstations:GetChildren() do
+                for i, v in next, GetLocation("Supermarket").Interior.CashierWorkstations:GetChildren() do
                     if v:FindFirstChild("InUse") and v.InUse.Value == LocalPlayer then
                         Station = v
                     end
                 end
-                for i, v in next, workspace.Environment.Locations.Supermarket.CashierWorkstations:GetChildren() do
+                for i, v in next, GetLocation("Supermarket").Interior.CashierWorkstations:GetChildren() do
                     if v:FindFirstChild("InUse") and v.InUse.Value == nil then
                         table.insert(EmptyStations, v)
                     end
@@ -1443,7 +1475,7 @@ do -- // Functions
                 task.wait(0.1);
                 LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(1170, 14, 275));
 
-                local box = workspace.Environment.Locations:WaitForChild('PizzaPlanet'):WaitForChild('Conveyor'):WaitForChild('MovingBoxes'):FindFirstChildOfClass('UnionOperation');
+                local box = GetLocation("PizzaPlanet"):WaitForChild("Interior"):WaitForChild('Conveyor'):WaitForChild('MovingBoxes'):FindFirstChildOfClass('UnionOperation');
                 if (not box) then continue end;
 
                 customer = network:InvokeServer({
@@ -1480,9 +1512,11 @@ do -- // Functions
         local closestDistance = math.huge
         local closestBlock
 
-        for i, v in next, workspace.Environment.Trees:GetChildren() do
-            if LocalPlayer:DistanceFromCharacter(v.PrimaryPart.Position) < closestDistance and v.PrimaryPart.Position.Y > 5 then
-                closestDistance = LocalPlayer:DistanceFromCharacter(v.PrimaryPart.Position)
+        for _, v in next, workspace.Environment.DetailObjects.Trees["Spruce Trees"]:GetChildren() do
+            local tree = (v:IsA("Model") and v.PrimaryPart) or v
+
+            if LocalPlayer:DistanceFromCharacter(tree.Position) < closestDistance and tree.Position.Y > 5 then
+                closestDistance = LocalPlayer:DistanceFromCharacter(tree.Position)
                 closestBlock = v
             end
         end
@@ -1510,8 +1544,8 @@ do -- // Functions
                 local Tree = GetClosestTree()
 
                 if Tree then
-                    local tweenInfo = TweenInfo.new((LocalPlayer.Character.HumanoidRootPart.Position - Tree.PrimaryPart.Position).Magnitude / 45, Enum.EasingStyle.Linear);
-                    local tween = TweenService:Create(LocalPlayer.Character.HumanoidRootPart, tweenInfo, {CFrame = Tree.PrimaryPart.CFrame});
+                    local tweenInfo = TweenInfo.new((LocalPlayer.Character.HumanoidRootPart.Position - Tree.Position).Magnitude / 45, Enum.EasingStyle.Linear);
+                    local tween = TweenService:Create(LocalPlayer.Character.HumanoidRootPart, tweenInfo, {CFrame = Tree.CFrame});
 
                     tween:Play();
                     tween.Completed:Wait();
@@ -1523,7 +1557,7 @@ do -- // Functions
                         })
 
                         task.wait()
-                    until (Tree.PrimaryPart.Position.Y < 0) or (jobManager:GetJob() ~= "LumberWoodcutter") or (library.flags.lumber == false)
+                    until (Tree.Position.Y < 0) or (jobManager:GetJob() ~= "LumberWoodcutter") or (library.flags.lumber == false)
                 end
             end
 
@@ -1631,7 +1665,7 @@ do -- // Functions
         end;
 
         repeat
-            local workstation = findCurrentWorkstationBens(workspace.Environment.Locations.BensIceCream.CustomerTargets);
+            local workstation = findCurrentWorkstationBens(GetLocation("BensIceCream").CustomerTargets);
             if(jobManager:GetJob() == 'BensIceCreamSeller' and workstation) then
                 local customer = workstation.Occupied.Value;
                 local iceCup;
@@ -1679,14 +1713,14 @@ do -- // Functions
     end;
 
     local function GetMotorWorkstation()
-        if workspace.Environment.Locations:FindFirstChild("MikesMotors") then
+        if GetLocation("MikesMoters") then
             local Station
-            for i, v in next, workspace.Environment.Locations.MikesMotors.MechanicWorkstations:GetChildren() do
+            for i, v in next, GetLocation("MikesMoters").Interior.MechanicWorkstations:GetChildren() do
                 if v:FindFirstChild("InUse") and v.InUse.Value == LocalPlayer then
                     Station = v
                 end
             end
-            for i, v in next, workspace.Environment.Locations.MikesMotors.MechanicWorkstations:GetChildren() do
+            for i, v in next, GetLocation("MikesMoters").Interior.MechanicWorkstations:GetChildren() do
                 if v:FindFirstChild("InUse") and v:FindFirstChild("Occupied") and v.InUse.Value == nil and v.Occupied.Value ~= nil then
                     Station = v
                 end
@@ -1724,7 +1758,7 @@ do -- // Functions
                                     tweenTeleport(Vector3.new(1194, 13, 389), 12)
                                     network:FireServer({
                                         Type = "TakeOil";
-                                        Object = workspace.Environment.Locations.MikesMotors.OilCans:FindFirstChildWhichIsA("Model")
+                                        Object = GetLocation("MikesMoters").Interior.OilCans:FindFirstChildWhichIsA("Model")
                                     })
                                     task.wait()
                                 until LocalPlayer.Character:FindFirstChild("Oil Can") or not library.flags.mechanic
@@ -1749,7 +1783,7 @@ do -- // Functions
                                     tweenTeleport(WheelPos[WheelType], 12)
                                     network:FireServer({
                                         Type = "TakeWheel";
-                                        Object = workspace.Environment.Locations.MikesMotors.TireRacks:FindFirstChild(WheelType)
+                                        Object = GetLocation("MikesMoters").Interior.TireRacks:FindFirstChild(WheelType)
                                     })
                                     task.wait()
                                 until LocalPlayer.Character:FindFirstChild(WheelType.." Wheel") or not library.flags.mechanic
@@ -1784,7 +1818,7 @@ do -- // Functions
                                     tweenTeleport(Vector3.new(1173, 13, 388), 12)
                                     network:FireServer({
                                         Type = "TakePainter";
-                                        Object = workspace.Environment.Locations.MikesMotors.PaintingEquipment:FindFirstChild(ColorValue)
+                                        Object = GetLocation("MikesMoters").Interior.PaintingEquipment:FindFirstChild(ColorValue)
                                     })
                                     task.wait()
                                 until LocalPlayer.Character:FindFirstChild("Spray Painter") or not library.flags.mechanic
@@ -1905,19 +1939,24 @@ local Autofarm = column1:AddSection('Auto Farm');
 local Autobuild = column2:AddSection('Auto Build');
 local Misc = column1:AddSection('Misc');
 
-Autofarm:AddToggle({text = 'Pizza Delivery', callback = pizzaDelivery});
-Autofarm:AddToggle({text = 'Bens Ice Cream', callback = bensIceCream});
-Autofarm:AddToggle({text = 'Stylez Hair Dresser', callback = stylezHairDresser});
-Autofarm:AddToggle({text = 'Bloxy Burgers', callback = bloxyBurgers});
-Autofarm:AddToggle({text = 'Pizza Baker', callback = pizzaBaker});
 Autofarm:AddToggle({text = "Fisherman", callback = fisherMan})
-Autofarm:AddToggle({text = "Mechanic", callback = mechanic})
-Autofarm:AddToggle({text = "Lumber", callback = lumber})
-Autofarm:AddToggle({text = "Miner", callback = miner})
-Autofarm:AddToggle({text = "Janitor", callback = janitor})
-Autofarm:AddToggle({text = "Supermarket Cashier", callback = supermarketCashier})
-Autofarm:AddToggle({text = "Supermarket Stocker", callback = Stocker})
+Autofarm:AddToggle({text = 'Stylez Hair Dresser', callback = stylezHairDresser});
+--// Working Above
+
+--Autofarm:AddToggle({text = 'Pizza Delivery', callback = pizzaDelivery}); fix needed
+--Autofarm:AddToggle({text = 'Bens Ice Cream', callback = bensIceCream}); fix
+
+--Autofarm:AddToggle({text = 'Bloxy Burgers', callback = bloxyBurgers}); outdated heavy
+--Autofarm:AddToggle({text = 'Pizza Baker', callback = pizzaBaker}); need to add restock tp
+--Autofarm:AddToggle({text = "Mechanic", callback = mechanic})  doesnt work
+--Autofarm:AddToggle({text = "Lumber", callback = lumber}) flies out too far bruh :skull:
+--Autofarm:AddToggle({text = "Miner", callback = miner}) hella laggy wtf
+--Autofarm:AddToggle({text = "Janitor", callback = janitor}) job dont exist no more
+--Autofarm:AddToggle({text = "Supermarket Cashier", callback = supermarketCashier}) not auto restocking bags
+--Autofarm:AddToggle({text = "Supermarket Stocker", callback = Stocker}) doesnt work
+
+--// still need to test auto build
 Autobuild:AddList({text = 'Copy House', skipflag = true, noload = true, playerOnly = true, callback = copyPlayerHousePrompt});
-Autobuild:AddList({text = 'Load House', flag = 'Load House', skipflag = true, noload = true, values = {}, callback = loadPlayerHousePrompt});
+Autobuild:AddList({text = 'Load House', flag = 'Load House', skipflag = true, noload = true, values = listfiles("Aztup Hub V3/Bloxburg Houses"), callback = loadPlayerHousePrompt});
 
 Misc:AddList({text = 'Teleport To Player Plot', skipflag = true, noload = true, playerOnly = true, callback = teleportToPlayerPlot});
