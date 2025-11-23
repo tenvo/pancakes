@@ -132,14 +132,14 @@ if executor.getconnections ~= nil then
         v:Disable();
     end;
 else
-    LocalPlayer.Idled:Connect(function()
+    library.unloadMaid:GiveTask(LocalPlayer.Idled:Connect(function()
         for i = 1,3 do
             VirtualInputManager:SendMouseButtonEvent(1, 1, 1, true, game, 1)
             task.wait(0.1)
             VirtualInputManager:SendMouseButtonEvent(1, 1, 1, false, game, 1)
             task.wait(0.1)
         end
-    end)
+    end))
 end
 
 --//Load special game Hub
