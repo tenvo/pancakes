@@ -117,6 +117,14 @@ xpcall(function()
         isrbxactive = isrbxactive or isgameactive,
     }
 
+    --// Changing Shitexcutors Functions
+
+    if executor.env.UA == "Solara" then
+        executor.checkcaller = function()
+            return not checkcaller()
+        end
+    end
+
     setmetatable(executor,{
         __index = function(tbl,k)
             return function(...) 

@@ -72,7 +72,7 @@ local function GetHost(url)
 end
 
 local function customRequire(url, useHigherLevel)
-    if (typeof(url) ~= 'string' or not checkcaller()) then
+    if (typeof(url) ~= 'string' or not executor.checkcaller()) then
         return originalRequire(url);
     end;
 
