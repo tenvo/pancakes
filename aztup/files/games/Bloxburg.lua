@@ -50,11 +50,11 @@ do -- // Functions
         makefolder('Aztup Hub V3/Bloxburg Houses');
     end;
 
-    pcall(function()
+    --pcall(function()
         hookfunction(getfenv(network.FireServer).i, function()
             print('Ban attempt lel');
         end);
-    end)
+    --end)
 
     -- if(not debugMode) then
         guiHandler:AlertBox(
