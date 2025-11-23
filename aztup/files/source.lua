@@ -37,7 +37,7 @@ local Utility = sharedRequire('@utils/Utility.lua');
 
 local _ = sharedRequire('@utils/prettyPrint.lua');
 
-local Players, TeleportService, HttpService, ReplicatedStorage,MarketplaceService,CoreGui,TweenService = Services:Get(getServerConstant('Players'), 'TeleportService', 'HttpService', 'ReplicatedStorage','MarketplaceService','CoreGui','TweenService');
+local Players, TeleportService, HttpService, ReplicatedStorage,MarketplaceService,CoreGui,TweenService,VirtualInputManager = Services:Get(getServerConstant('Players'), 'TeleportService', 'HttpService', 'ReplicatedStorage','MarketplaceService','CoreGui','TweenService','VirtualInputManager');
 
 local BLOODLINES_MAIN_PLACE = 10266164381;
 local BLOODLINES = 1946714362;
@@ -126,10 +126,21 @@ local gameName = supportedGamesList[tostring(game.GameId)];
 
 --//Base library
 
-for _, v in next, getconnections(LocalPlayer.Idled) do
-    if (v.Function) then continue end;
-    v:Disable();
-end;
+if executor.getconnections ~= nil then
+    for _, v in next, getconnections(LocalPlayer.Idled) do
+        if (v.Function) then continue end;
+        v:Disable();
+    end;
+else
+    LocalPlayer.Idled:Connect(function()
+        for i = 1,3 do
+            VirtualInputManager:SendMouseButtonEvent(1, 1, 1, true, game, 1)
+            task.wait(0.1)
+            VirtualInputManager:SendMouseButtonEvent(1, 1, 1, false, game, 1)
+            task.wait(0.1)
+        end
+    end)
+end
 
 --//Load special game Hub
 

@@ -37,7 +37,7 @@ xpcall(function()
         hookmetamethod = hookmetamethod,
         queue_on_teleport = queue_on_teleport or queueonteleport,
         rconsoleprint = rconsoleprint,
-        getrawmetatable = getrawmetatable,
+        getrawmetatable = (typeof(getrawmetatable) ~= "nil" and getrawmetatable) or nil,
         setrenderproperty = setrenderproperty,
         WebSocket = WebSocket,
         crypt_hash = crypt.hash,
@@ -119,10 +119,12 @@ xpcall(function()
 
     setmetatable(executor,{
         __index = function(tbl,k)
-            return function(...) 
+            if k == "getrawmetatable" then
+                return function() return {__index = nil} end
+            else
                 local ExecutorName = tbl.env.UA or "This Executor"
                 warn(string.format("[ERROR] %s does not support %s",ExecutorName,k))
-                return ...
+                return nil
             end
         end
     })
