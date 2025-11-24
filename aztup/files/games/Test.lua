@@ -1,14 +1,14 @@
-local Utility = sharedRequire('@utils/Utility.lua');
-local createBaseESP = sharedRequire('@utils/createBaseESP.lua');
-local library = sharedRequire('UILibrary.lua');
+local Utility = sharedRequire("@utils/Utility.lua")
+local createBaseESP = sharedRequire("@utils/createBaseESP.lua")
+local library = sharedRequire("UILibrary.lua")
 
-local partsESP = createBaseESP('npcs');
+local partsESP = createBaseESP("npcs")
 
-local c = 0;
+local c = 0
 local function onPartAdded(obj)
-    local esp;
+	local esp
 
-    local code = [[
+	local code = [[
         local obj = ...;
         local FindFirstChildWhichIsA = game.FindFirstChildWhichIsA;
 
@@ -21,23 +21,25 @@ local function onPartAdded(obj)
         });
     ]]
 
-    esp = partsESP.new({code = code, vars = {obj}}, obj.Name .. tostring(math.random()) .. ' DA OP', nil, true);
+	esp = partsESP.new({ code = code, vars = { obj } }, obj.Name .. tostring(math.random()) .. " DA OP", nil, true)
 
-    local con;
-    con = obj:GetPropertyChangedSignal('Parent'):Connect(function()
-        if (obj.Parent) then return end;
-        print('destroyed');
+	local con
+	con = obj:GetPropertyChangedSignal("Parent"):Connect(function()
+		if obj.Parent then
+			return
+		end
+		print("destroyed")
 
-        con:Disconnect();
-        esp:Destroy();
-    end);
+		con:Disconnect()
+		esp:Destroy()
+	end)
 end
 
 function Utility:renderOverload(data)
-    data.column1:AddSection('Parts ESP'):AddToggle({
-        text = 'Enable',
-        flag = 'Npcs'
-    })
-end;
+	data.column1:AddSection("Parts ESP"):AddToggle({
+		text = "Enable",
+		flag = "Npcs",
+	})
+end
 
-Utility.listenToChildAdded(workspace.Parts, onPartAdded);
+Utility.listenToChildAdded(workspace.Parts, onPartAdded)

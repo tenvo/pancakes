@@ -1,4 +1,4 @@
-SX_VM_CNONE();
+SX_VM_CNONE()
 --- Lua-side duplication of the API of events on Roblox objects.
 -- Signals are needed for to ensure that for local events objects are passed by
 -- reference rather than by value where possible, as the BindableEvent objects
@@ -24,17 +24,19 @@ function Signal.new()
 end
 
 function Signal.isSignal(object)
-	return typeof(object) == 'table' and getmetatable(object) == Signal;
-end;
+	return typeof(object) == "table" and getmetatable(object) == Signal
+end
 
 --- Fire the event with the given arguments. All handlers will be invoked. Handlers follow
 -- Roblox signal conventions.
 -- @param ... Variable arguments to pass to handler
 -- @treturn nil
 function Signal:Fire(...)
-	if not self._bindableEvent then return error("Signal has been destroyed"); end
+	if not self._bindableEvent then
+		return error("Signal has been destroyed")
+	end
 
-	self._argData = {...}
+	self._argData = { ... }
 	self._argCount = select("#", ...)
 	self._bindableEvent:Fire()
 	self._argData = nil
@@ -45,7 +47,9 @@ end
 -- @tparam function handler Function handler called with arguments passed when `:Fire(...)` is called
 -- @treturn Connection Connection object that can be disconnected
 function Signal:Connect(handler)
-	if not self._bindableEvent then return error("Signal has been destroyed"); end --Fixes an error while respawning with the UI injected
+	if not self._bindableEvent then
+		return error("Signal has been destroyed")
+	end --Fixes an error while respawning with the UI injected
 
 	if not (type(handler) == "function") then
 		error(("connect(%s)"):format(typeof(handler)), 2)

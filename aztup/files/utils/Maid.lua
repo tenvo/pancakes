@@ -1,14 +1,14 @@
-SX_VM_CNONE();
+SX_VM_CNONE()
 ---	Manages the cleaning of events and other things.
 -- Useful for encapsulating state and make deconstructors easy
 -- @classmod Maid
 -- @see Signal
 
-local Signal = sharedRequire('utils/Signal.lua');
-local tableStr = getServerConstant('table');
-local classNameStr = getServerConstant('Maid');
-local funcStr = getServerConstant('function');
-local threadStr = getServerConstant('thread');
+local Signal = sharedRequire("utils/Signal.lua")
+local tableStr = getServerConstant("table")
+local classNameStr = getServerConstant("Maid")
+local funcStr = getServerConstant("function")
+local threadStr = getServerConstant("thread")
 
 local Maid = {}
 Maid.ClassName = "Maid"
@@ -18,7 +18,7 @@ Maid.ClassName = "Maid"
 -- @treturn Maid
 function Maid.new()
 	return setmetatable({
-		_tasks = {}
+		_tasks = {},
 	}, Maid)
 end
 
@@ -63,15 +63,15 @@ function Maid:__newindex(index, newTask)
 		if type(oldTask) == "function" then
 			oldTask()
 		elseif typeof(oldTask) == "RBXScriptConnection" then
-			oldTask:Disconnect();
-		elseif typeof(oldTask) == 'table' then
-			oldTask:Remove();
-		elseif (Signal.isSignal(oldTask)) then
-			oldTask:Destroy();
-		elseif (typeof(oldTask) == 'thread') then
-			task.cancel(oldTask);
+			oldTask:Disconnect()
+		elseif typeof(oldTask) == "table" then
+			oldTask:Remove()
+		elseif Signal.isSignal(oldTask) then
+			oldTask:Destroy()
+		elseif typeof(oldTask) == "thread" then
+			task.cancel(oldTask)
 		elseif oldTask.Destroy then
-			oldTask:Destroy();
+			oldTask:Destroy()
 		end
 	end
 end
@@ -84,7 +84,7 @@ function Maid:GiveTask(task)
 		error("Task cannot be false or nil", 2)
 	end
 
-	local taskId = #self._tasks+1
+	local taskId = #self._tasks + 1
 	self[taskId] = task
 
 	return taskId
@@ -111,12 +111,12 @@ function Maid:DoCleaning()
 			taskData()
 		elseif typeof(taskData) == "RBXScriptConnection" then
 			taskData:Disconnect()
-		elseif (Signal.isSignal(taskData)) then
-			taskData:Destroy();
+		elseif Signal.isSignal(taskData) then
+			taskData:Destroy()
 		elseif typeof(taskData) == tableStr then
-			taskData:Remove();
-		elseif (typeof(taskData) == threadStr) then
-			task.cancel(taskData);
+			taskData:Remove()
+		elseif typeof(taskData) == threadStr then
+			task.cancel(taskData)
 		elseif taskData.Destroy then
 			taskData:Destroy()
 		end
@@ -128,4 +128,4 @@ end
 -- @function Destroy
 Maid.Destroy = Maid.DoCleaning
 
-return Maid;
+return Maid

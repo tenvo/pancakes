@@ -4,53 +4,51 @@ The Loadstring Example:
 getgenv().silentLaunch = false
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/AztupPayloadTemplateComments.lua"))()
 
-]]--
+]]
+--
 
-if not shared.aztuppy then shared.aztuppy = {} end
-if shared.aztuppy["payload"] then shared.aztuppy.payload(true) end
+if not shared.aztuppy then
+	shared.aztuppy = {}
+end
+if shared.aztuppy["payload"] then
+	shared.aztuppy.payload(true)
+end
 
 shared.aztuppy.payload = {
-    _init = false, -- <= (required) status of payload, does nothing atm. dont remove it
-    _maid = nil, -- <= (optional) using Maid module, it adds support to clean up
-    _title = "PoopGame", -- <= (optional) changes title of UI lib, if nil it uses "[PFC] Aztup Hub Overhaul"
-    _root = "https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/", -- <= (optional) uses github url/web host to access a directory and files through sharedRequire(), if you want queue on tp support it needs a main.lua file
+	_init = false, -- <= (required) status of payload, does nothing atm. dont remove it
+	_maid = nil, -- <= (optional) using Maid module, it adds support to clean up
+	_title = "PoopGame", -- <= (optional) changes title of UI lib, if nil it uses "[PFC] Aztup Hub Overhaul"
+	_root = "https://raw.githubusercontent.com/tenvo/pancakes/main/payloads/Example/", -- <= (optional) uses github url/web host to access a directory and files through sharedRequire(), if you want queue on tp support it needs a main.lua file
 }
 
 inject = function() --// example of aztup hub UI but theres alot of stuff besides what seen
+	print("Game Started!")
 
-print("Game Started!")
+	--// Can use modules that aztup has!
+	local Services = sharedRequire("utils/Services.lua")
+	local library = sharedRequire("UILibrary.lua")
+	local Maid = sharedRequire("utils/Maid.lua")
+	local prettyPrint = sharedRequire("utils/prettyPrint.lua")
+	local ToastNotif = sharedRequire("classes/ToastNotif.lua")
 
---// Can use modules that aztup has!
-local Services = sharedRequire('utils/Services.lua');
-local library = sharedRequire('UILibrary.lua');
-local Maid = sharedRequire('utils/Maid.lua');
-local prettyPrint = sharedRequire('utils/prettyPrint.lua');
-local ToastNotif = sharedRequire('classes/ToastNotif.lua')
+	local SunTzuQuotes = sharedRequire("data/ExampleData.lua") --// references the file in the root directory that we set in payload
+	print(SunTzuQuotes)
+	for i, v in pairs(SunTzuQuotes) do
+		ToastNotif.new({
+			text = v, -- we just gonna show sun tzu for this example cause too long
+		})
+		break
+	end
 
-local SunTzuQuotes = sharedRequire('data/ExampleData.lua') --// references the file in the root directory that we set in payload
-print(SunTzuQuotes)
-for i,v in pairs(SunTzuQuotes) do
-    ToastNotif.new({
-        text = v, -- we just gonna show sun tzu for this example cause too long
-    });
-    break
-end
+	shared.aztuppy.payload._maid = Maid.new() -- we create the Maid object in the global var
+	local plMaid = shared.aztuppy.payload._maid --give it a local alias
 
-shared.aztuppy.payload._maid = Maid.new() -- we create the Maid object in the global var
-local plMaid = shared.aztuppy.payload._maid --give it a local alias
+	local column1, column2 = unpack(library.columns)
 
-local column1, column2 = unpack(library.columns);
+	local Players, ReplicatedStorage, HttpService, PathfindingService, RunService, TweenService =
+		Services:Get("Players", "ReplicatedStorage", "HttpService", "PathfindingService", "RunService", "TweenService")
 
-local Players, ReplicatedStorage, HttpService, PathfindingService, RunService, TweenService = Services:Get(
-    'Players',
-    'ReplicatedStorage',
-    'HttpService',
-    'PathfindingService',
-    'RunService',
-    'TweenService'
-);
-
---[[ UI example of the tabs made in source.lua:
+	--[[ UI example of the tabs made in source.lua:
 
 window = library:AddTab(gameName);
 column1 = window:AddColumn();
@@ -64,116 +62,132 @@ library.columns = {
 library.gameName = gameName;
 library.window = window;
 
-]]--
+]]
+	--
 
+	local Main = column1:AddSection("Main")
+	local Some = column1:AddSection("Some")
+	local Misc = column2:AddSection("Misc")
+	local Other = column2:AddSection("Other")
+	local Things = column2:AddSection("Things")
 
-local Main = column1:AddSection('Main');
-local Some = column1:AddSection('Some');
-local Misc = column2:AddSection('Misc');
-local Other = column2:AddSection('Other');
-local Things = column2:AddSection('Things');
+	--// library.flags.exampleToggleCool
+	Main:AddToggle({
+		text = "Example Toggle Cool",
+		callback = function(toggle)
+			print(toggle)
+		end,
+	})
 
---// library.flags.exampleToggleCool
-Main:AddToggle({
-    text = 'Example Toggle Cool', 
-    callback = function(toggle)
-        print(toggle)
-    end,
-})
+	--// library.flags.bigBrother
+	local BB = Main:AddToggle({
+		text = "Big Brother",
+		tip = "dont mess with me!",
+		callback = function(toggle)
+			print(toggle)
+		end,
+	})
 
---// library.flags.bigBrother
-local BB = Main:AddToggle({
-    text = 'Big Brother',
-    tip = 'dont mess with me!',
-    callback = function(toggle)
-        print(toggle)
-    end,
-})
+	--// library.flags.lilBroTemper (this is a sub option certain types of element support certain things)
+	BB:AddSlider({
+		text = "Lil Bro's temper",
+		flag = "Lil Bro Temper", -- we set the flag manually since the apostrophe was there, but i think aztup made it so it wouldn't matter
+		tip = "dont mess with my big bro!",
+		min = 0,
+		max = 100,
+		float = 0.1, -- notice how the float on the slide below is 1 but this .1 and they scale differently
+		value = 100,
+	})
 
---// library.flags.lilBroTemper (this is a sub option certain types of element support certain things)
-BB:AddSlider({
-    text = 'Lil Bro\'s temper',
-    flag = 'Lil Bro Temper', -- we set the flag manually since the apostrophe was there, but i think aztup made it so it wouldn't matter
-    tip = 'dont mess with my big bro!',
-    min = 0,
-    max = 100,
-    float = 0.1, -- notice how the float on the slide below is 1 but this .1 and they scale differently
-    value = 100
-})
+	--// library.flags.luckyMeter
+	Misc:AddSlider({
+		text = "LuckyMeter",
+		tip = "Just Pick a Range",
+		suffix = "%",
+		min = 0,
+		max = 100,
+		float = 1,
+		value = 100,
+	})
 
+	Misc:AddDivider("Check Here!")
 
---// library.flags.luckyMeter
-Misc:AddSlider({
-    text = 'LuckyMeter',
-    tip = 'Just Pick a Range',
-    suffix = '%',
-    min = 0,
-    max = 100,
-    float = 1,
-    value = 100
-});
+	local oldText, running = nil, false
+	local ShowButton = Misc:AddButton({
+		text = "Show What You Have",
+		callback = function()
+			if running then
+				return
+			end
+			running = true
 
-Misc:AddDivider('Check Here!');
+			ShowButton:SetText(tostring(library.flags.luckyMeter))
+			task.wait(1)
+			ShowButton:SetText(oldText)
 
-local oldText,running = nil,false
-local ShowButton = Misc:AddButton({
-    text = 'Show What You Have', 
-    callback = function()
-        if running then return end
-        running = true
+			running = false
+		end,
+	})
 
-        ShowButton:SetText(tostring(library.flags.luckyMeter))
-        task.wait(1)
-        ShowButton:SetText(oldText)
-        
-        running = false
-    end,
-});
+	oldText = ShowButton.text
 
-oldText = ShowButton.text
+	-- library.flags.favoriteColor
+	Main:AddColor({
+		text = "Favorite Color",
+	})
 
--- library.flags.favoriteColor
-Main:AddColor({
-    text = 'Favorite Color',
-})
+	-- library.flags.exampleKeybind
+	Main:AddBind({
+		text = "Example Keybind",
+		callback = function()
+			print("yuh")
+		end,
+	})
 
--- library.flags.exampleKeybind
-Main:AddBind({
-    text = 'Example Keybind',
-    callback = function()
-        print('yuh')
-    end,
-});
+	Misc:AddBox({
+		text = "Favorite Food",
+		callback = function(input, enter)
+			print(input, enter)
+		end,
+	})
 
-Misc:AddBox({
-    text = 'Favorite Food', 
-    callback = function(input,enter)
-        print(input,enter)
-    end,
-});
+	--// library.flags.libraryFlags
+	Main:AddLabel("If you still confused about the flags, here:")
 
+	local readable = {}
 
---// library.flags.libraryFlags
-Main:AddLabel("If you still confused about the flags, here:")
+	for i, v in pairs(library.flags) do
+		table.insert(readable, tostring("library.flags." .. i))
+	end
 
-local readable = {}
-
-for i,v in pairs(library.flags) do
-    table.insert(readable,tostring("library.flags."..i))
+	Main:AddList({
+		text = "Library Flags",
+		flag = "Library Flags",
+		values = readable,
+		callback = function(flag)
+			print(flag)
+		end,
+	})
 end
 
-Main:AddList({
-    text = 'Library Flags', 
-    flag = 'Library Flags',
-    values = readable,
-    callback = function(flag)
-        print(flag)
-    end,
-})
-
-end
-
---// dont change below, its just a metatable that can be called with payload(), and payload(true) to remove 
+--// dont change below, its just a metatable that can be called with payload(), and payload(true) to remove
 --getgenv().debugMode = true  <= self explanatory, if you want to debug your payload uncomment this!
-local a=setmetatable(shared.aztuppy.payload,{__call=function(b,c)if not executor.checkcaller() then return end;if c then if shared.aztuppy.payload._maid then shared.aztuppy.payload._maid:Destroy()end;setmetatable(shared.aztuppy.payload,nil)shared.aztuppy.payload=nil;inject=nil elseif not shared.aztuppy.payload._init then shared.aztuppy.payload._init=true;xpcall(inject,warn)end end})
+local a = setmetatable(shared.aztuppy.payload, {
+	__call = function(b, c)
+		if not executor.checkcaller() then
+			return
+		end
+		if c then
+			if shared.aztuppy.payload._maid then
+				shared.aztuppy.payload._maid:Destroy()
+			end
+			setmetatable(shared.aztuppy.payload, nil)
+			shared.aztuppy.payload = nil
+			inject = nil
+		elseif not shared.aztuppy.payload._init then
+			shared.aztuppy.payload._init = true
+			xpcall(inject, warn)
+		end
+	end,
+})
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tenvo/pancakes/main/aztup/script-loader.lua"))()
