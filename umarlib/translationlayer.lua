@@ -335,8 +335,6 @@ function interpeter:AddTab(tabname)
 					AddValue = function(props, x)
 						local newValues = props.values
 
-						print(#newValues, "ADDING")
-
 						if table.find(newValues, x) then
 							return
 						end
@@ -347,28 +345,20 @@ function interpeter:AddTab(tabname)
 						Section.options[flagName] = properties
 						self.options[flagName] = properties
 
-						print("WRITTEN ADD", #newValues)
-
 						dd:SetOptions(newValues)
 						dd:SetChoice(properties.values[1])
-					end, --// Create These
+					end,
 					RemoveValue = function(props, x)
 						local newValues = props.values
 						local IndexOfRemoving = table.find(newValues, x)
-
-						print(#newValues, IndexOfRemoving, "REMOVING")
 
 						if not IndexOfRemoving then
 							return
 						end
 
-						table.remove(newValues, IndexOfRemoving)
-
 						properties.values = newValues
 						Section.options[flagName] = properties
 						self.options[flagName] = properties
-
-						print("WRITTEN REMOVE", #newValues)
 
 						dd:SetOptions(newValues)
 						dd:SetChoice(properties.values[1])
