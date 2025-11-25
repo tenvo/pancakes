@@ -32,27 +32,29 @@ function Library:Window(winName, mainColor, hideBind)
 		end)
 	end
 
-	-- local function UpdateFrameSize(scrollframe,listlayout)
-	--     local cS = listlayout.AbsoluteContentSize
+	local function UpdateFrameSize(scrollframe, listlayout)
+		local cS = listlayout.AbsoluteContentSize
 
-	--     game.TweenService:Create(scrollframe, TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
-	--         CanvasSize = UDim2.new(0,cS.X,0,cS.Y)
-	--     }):Play()
-	-- end
+		game.TweenService
+			:Create(scrollframe, TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+				CanvasSize = UDim2.new(0, cS.X, 0, cS.Y),
+			})
+			:Play()
+	end
 
 	local TweenService = game:GetService("TweenService")
 
-	local function UpdateFrameSize(scrollframe, listlayout)
-		local content = listlayout.AbsoluteContentSize
+	-- local function UpdateFrameSize(scrollframe, listlayout)
+	-- 	local content = listlayout.AbsoluteContentSize
 
-		local newSize = UDim2.new(0, 0, 0, content.Y)
+	-- 	local newSize = UDim2.new(0, 0, 0, content.Y)
 
-		TweenService:Create(
-			scrollframe,
-			TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In),
-			{ CanvasSize = newSize }
-		):Play()
-	end
+	-- 	TweenService:Create(
+	-- 		scrollframe,
+	-- 		TweenInfo.new(0.15, Enum.EasingStyle.Linear, Enum.EasingDirection.In),
+	-- 		{ CanvasSize = newSize }
+	-- 	):Play()
+	-- end
 
 	local function hidebindConfig()
 		local uis = game:GetService("UserInputService")
@@ -1221,20 +1223,18 @@ function Library:Window(winName, mainColor, hideBind)
 			DropdownList.BorderSizePixel = 0
 			DropdownList.Visible = false
 			DropdownList.ZIndex = true
-			DropdownList.AutomaticCanvasSize = "Y"
+			--DropdownList.AutomaticCanvasSize = "Y"
 
 			UIListLayout_2.Parent = DropdownList
 			UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 
-			-- UpdateFrameSize(DropdownList, UIListLayout_2)
+			DropdownList.ChildAdded:Connect(function()
+				UpdateFrameSize(DropdownList, UIListLayout_2)
+			end)
 
-			-- DropdownList.ChildAdded:Connect(function()
-			-- 	UpdateFrameSize(DropdownList, UIListLayout_2)
-			-- end)
-
-			-- DropdownList.ChildRemoved:Connect(function()
-			-- 	UpdateFrameSize(DropdownList, UIListLayout_2)
-			-- end)
+			DropdownList.ChildRemoved:Connect(function()
+				UpdateFrameSize(DropdownList, UIListLayout_2)
+			end)
 
 			DropdownList:GetPropertyChangedSignal("Size"):Connect(function()
 				--UpdateFrameSize(TabFrame,UIListLayout)
@@ -1357,6 +1357,8 @@ function Library:Window(winName, mainColor, hideBind)
 			function dropdownFunc:SetOptions(newList)
 				RemoveAllItems()
 				CurrentList, InstanceTable = AddItems(newList)
+
+				UpdateFrameSize(DropdownList, UIListLayout_2)
 			end
 
 			function dropdownFunc:SetChoice(ch)
