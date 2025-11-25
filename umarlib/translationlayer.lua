@@ -183,6 +183,7 @@ function interpeter:AddTab(tabname)
 
 			local Section = {}
 			Section.Name = sectionname
+			Section.options = {}
 			Section.init = false
 
 			setmetatable(Section, {
@@ -203,9 +204,19 @@ function interpeter:AddTab(tabname)
 				if not getReq(payload, { "text", "callback" }) then
 					return warn("Button didnt get enough args")
 				end
+
 				local flagName = toCamelCase((payload["flag"] or payload.text))
 
-				thisTab:Button(payload.text, payload.callback)
+				local button = thisTab:Button(payload.text, payload.callback)
+
+				local properties = {
+					type = "button",
+					flag = flagName,
+					SetText = button.SetText,
+				}
+
+				Section.options[flagName] = properties
+				self.options[flagName] = properties
 			end
 
 			function Section:AddToggle(payload)
@@ -215,11 +226,12 @@ function interpeter:AddTab(tabname)
 				if not getReq(payload, { "text" }) then
 					return warn("Toggle didnt get enough args")
 				end
+
 				local flagName = toCamelCase((payload["flag"] or payload.text))
 
 				self.flags[flagName] = false
 
-				thisTab:Toggle(payload.text, false, function(Value)
+				local toggle = thisTab:Toggle(payload.text, false, function(Value)
 					self.flags[flagName] = Value
 
 					if payload["callback"] then
@@ -230,6 +242,15 @@ function interpeter:AddTab(tabname)
 						end)
 					end
 				end)
+
+				local properties = {
+					type = "toggle",
+					flag = flagName,
+					SetState = toggle.SetState,
+				}
+
+				Section.options[flagName] = properties
+				self.options[flagName] = properties
 
 				return Section
 			end
@@ -262,6 +283,10 @@ function interpeter:AddTab(tabname)
 				if not getReq(payload, { "text", "min", "max" }) then
 					return warn("Slider didnt get enough args")
 				end
+
+				table.insert(Section.options, toCamelCase(payload.text))
+				table.insert(self.options, toCamelCase(payload.text))
+
 				local flagName = toCamelCase((payload["flag"] or payload.text))
 				payload["def"] = (payload["value"] or (payload["max"] / 2))
 
@@ -269,7 +294,7 @@ function interpeter:AddTab(tabname)
 					payload.text = payload.text .. " " .. payload["suffix"]
 				end
 
-				thisTab:Slider(
+				local slider = thisTab:Slider(
 					payload.text,
 					{ def = payload["def"], max = payload["max"], min = payload["min"] },
 					function(Value)
@@ -288,6 +313,7 @@ function interpeter:AddTab(tabname)
 				if not getReq(payload, { "text", "values" }) then
 					return warn("List didnt get enough args")
 				end
+
 				local flagName = toCamelCase((payload["flag"] or payload.text))
 
 				local dd = thisTab:Dropdown(payload.text, payload.values, function(Value)
@@ -300,6 +326,17 @@ function interpeter:AddTab(tabname)
 
 				dd:SetChoice(payload["values"][1])
 
+				local properties = {
+					type = "list",
+					values = payload.values,
+					flag = flagName,
+					AddValue = function() end, --// Create These
+					RemoveValue = function() end,
+				}
+
+				Section.options[flagName] = properties
+				self.options[flagName] = properties
+
 				return Section
 			end
 
@@ -310,7 +347,7 @@ function interpeter:AddTab(tabname)
 					return warn("Bind didnt get enough args")
 				end
 
-				thisTab:Bind(payload.text, Enum.KeyCode.Unknown, function(Value)
+				local bind = thisTab:Bind(payload.text, Enum.KeyCode.Unknown, function(Value)
 					if Enum.KeyCode.Unknown == Value then
 						return
 					end
@@ -332,7 +369,7 @@ function interpeter:AddTab(tabname)
 					return warn("Textbox didnt get enough args")
 				end
 
-				thisTab:Textbox(payload.text, payload.callback)
+				local box = thisTab:Textbox(payload.text, payload.callback)
 			end
 
 			table.insert(self.sections, Section)
@@ -369,7 +406,7 @@ function interpeter:Create(class, properties) --// Straight ripped out of UILibr
 end
 
 function interpeter:Init(silentLaunch)
-	print("interpreter init 4")
+	print("interpreter init 4.5")
 	self = interpeter
 
 	local function freshUI()
@@ -381,6 +418,7 @@ function interpeter:Init(silentLaunch)
 		self.umarlib = true
 		self.configVars = {}
 		self.init = {}
+		self.options = {}
 		self.unloadMaid = Maid.new()
 		self.OnLoad = Signal.new()
 	end
