@@ -334,8 +334,8 @@ function interpeter:AddTab(tabname)
 					flag = flagName,
 					AddValue = function(x)
 						local newValues = payload.values
-						local oldChoice = dd:GetChoice()
-						local oldChoiceIndex = table.find(newValues, oldChoice)
+
+						print(#newValues, "ADDING")
 
 						if table.find(newValues, x) then
 							return
@@ -347,20 +347,16 @@ function interpeter:AddTab(tabname)
 						Section.options[flagName] = properties
 						self.options[flagName] = properties
 
+						print("WRITTEN ADD", #newValues)
+
 						dd:SetOptions(newValues)
-						if oldChoiceIndex ~= nil and not table.find(newValues, oldChoice) then
-							if oldChoiceIndex > 1 then
-								dd:SetChoice(properties.values[oldChoiceIndex - 1])
-							else
-								dd:SetChoice(properties.values[1])
-							end
-						end
+						dd:SetChoice(properties.values[1])
 					end, --// Create These
 					RemoveValue = function(x)
 						local newValues = payload.values
 						local IndexOfRemoving = table.find(newValues, x)
-						local oldChoice = dd:GetChoice()
-						local oldChoiceIndex = table.find(newValues, oldChoice)
+
+						print(#newValues, IndexOfRemoving, "REMOVING")
 
 						if not IndexOfRemoving then
 							return
@@ -372,14 +368,10 @@ function interpeter:AddTab(tabname)
 						Section.options[flagName] = properties
 						self.options[flagName] = properties
 
+						print("WRITTEN REMOVE", #newValues)
+
 						dd:SetOptions(newValues)
-						if oldChoiceIndex ~= nil and not table.find(newValues, oldChoice) then
-							if oldChoiceIndex > 1 then
-								dd:SetChoice(properties.values[oldChoiceIndex - 1])
-							else
-								dd:SetChoice(properties.values[1])
-							end
-						end
+						dd:SetChoice(properties.values[1])
 					end,
 				}
 
