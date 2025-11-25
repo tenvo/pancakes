@@ -330,8 +330,12 @@ function interpeter:AddTab(tabname)
 					type = "list",
 					values = payload.values,
 					flag = flagName,
-					AddValue = function() end, --// Create These
-					RemoveValue = function() end,
+					AddValue = function()
+						print("Add Value Here")
+					end, --// Create These
+					RemoveValue = function()
+						print("Remove Value Here")
+					end,
 				}
 
 				Section.options[flagName] = properties
