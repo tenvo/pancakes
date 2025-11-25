@@ -352,13 +352,13 @@ function interpeter:AddTab(tabname)
 						dd:SetOptions(newValues)
 						dd:SetChoice(properties.values[1])
 					end, --// Create These
-					RemoveValue = function(x)
+					RemoveValue = function(x, testarg)
 						local newValues = self.options[flagName].values
-						print(newValues, x)
+						print(newValues, x, testarg)
 
-						for i, v in pairs(x) do
-							print(i, v)
-						end
+						-- for i, v in pairs(x) do
+						-- 	print(i, v)
+						-- end
 
 						local IndexOfRemoving = table.find(newValues, x)
 
