@@ -332,8 +332,8 @@ function interpeter:AddTab(tabname)
 					type = "list",
 					values = payload.values,
 					flag = flagName,
-					AddValue = function(x)
-						local newValues = self.options[flagName].values
+					AddValue = function(props, x)
+						local newValues = props.values
 
 						print(#newValues, "ADDING")
 
@@ -352,14 +352,8 @@ function interpeter:AddTab(tabname)
 						dd:SetOptions(newValues)
 						dd:SetChoice(properties.values[1])
 					end, --// Create These
-					RemoveValue = function(x, testarg)
-						local newValues = self.options[flagName].values
-						print(newValues, x, testarg)
-
-						-- for i, v in pairs(x) do
-						-- 	print(i, v)
-						-- end
-
+					RemoveValue = function(props, x)
+						local newValues = props.values
 						local IndexOfRemoving = table.find(newValues, x)
 
 						print(#newValues, IndexOfRemoving, "REMOVING")
