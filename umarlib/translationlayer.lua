@@ -333,7 +333,7 @@ function interpeter:AddTab(tabname)
 					values = payload.values,
 					flag = flagName,
 					AddValue = function(x)
-						local newValues = payload.values
+						local newValues = properties.values
 
 						print(#newValues, "ADDING")
 
@@ -353,7 +353,7 @@ function interpeter:AddTab(tabname)
 						dd:SetChoice(properties.values[1])
 					end, --// Create These
 					RemoveValue = function(x)
-						local newValues = payload.values
+						local newValues = properties.values
 						local IndexOfRemoving = table.find(newValues, x)
 
 						print(#newValues, IndexOfRemoving, "REMOVING")
