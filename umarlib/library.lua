@@ -1221,19 +1221,20 @@ function Library:Window(winName, mainColor, hideBind)
 			DropdownList.BorderSizePixel = 0
 			DropdownList.Visible = false
 			DropdownList.ZIndex = true
+			DropdownList.AutomaticCanvasSize = "Y"
 
 			UIListLayout_2.Parent = DropdownList
 			UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
 
-			UpdateFrameSize(DropdownList, UIListLayout_2)
+			-- UpdateFrameSize(DropdownList, UIListLayout_2)
 
-			DropdownList.ChildAdded:Connect(function()
-				UpdateFrameSize(DropdownList, UIListLayout_2)
-			end)
+			-- DropdownList.ChildAdded:Connect(function()
+			-- 	UpdateFrameSize(DropdownList, UIListLayout_2)
+			-- end)
 
-			DropdownList.ChildRemoved:Connect(function()
-				UpdateFrameSize(DropdownList, UIListLayout_2)
-			end)
+			-- DropdownList.ChildRemoved:Connect(function()
+			-- 	UpdateFrameSize(DropdownList, UIListLayout_2)
+			-- end)
 
 			DropdownList:GetPropertyChangedSignal("Size"):Connect(function()
 				--UpdateFrameSize(TabFrame,UIListLayout)
