@@ -355,6 +355,11 @@ function interpeter:AddTab(tabname)
 					RemoveValue = function(x)
 						local newValues = self.options[flagName].values
 						print(newValues, x)
+
+						for i, v in pairs(x) do
+							print(i, v)
+						end
+
 						local IndexOfRemoving = table.find(newValues, x)
 
 						print(#newValues, IndexOfRemoving, "REMOVING")
