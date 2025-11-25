@@ -316,6 +316,7 @@ function interpeter:AddTab(tabname)
 				end
 
 				local flagName = toCamelCase((payload["flag"] or payload.text))
+				local properties
 
 				local dd = thisTab:Dropdown(payload.text, payload.values, function(Value)
 					self.flags[flagName] = Value
@@ -327,15 +328,38 @@ function interpeter:AddTab(tabname)
 
 				dd:SetChoice(payload["values"][1])
 
-				local properties = {
+				properties = {
 					type = "list",
 					values = payload.values,
 					flag = flagName,
-					AddValue = function()
-						print("Add Value Here")
+					AddValue = function(x)
+						local newValues = payload.values
+						if table.find(newValues, x) then
+							return
+						end
+
+						table.insert(newValues, x)
+
+						properties.values = newValues
+						Section.options[flagName] = properties
+						self.options[flagName] = properties
+
+						dd:SetOptions(newValues)
 					end, --// Create These
-					RemoveValue = function()
-						print("Remove Value Here")
+					RemoveValue = function(x)
+						local newValues = payload.values
+						local IndexOfRemoving = table.find(newValues, x)
+						if not IndexOfRemoving then
+							return
+						end
+
+						table.remove(newValues, IndexOfRemoving)
+
+						properties.values = newValues
+						Section.options[flagName] = properties
+						self.options[flagName] = properties
+
+						dd:SetOptions(newValues)
 					end,
 				}
 
@@ -411,7 +435,7 @@ function interpeter:Create(class, properties) --// Straight ripped out of UILibr
 end
 
 function interpeter:Init(silentLaunch)
-	print("interpreter init 4.5")
+	print("interpreter init 5")
 	self = interpeter
 
 	local function freshUI()
