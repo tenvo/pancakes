@@ -212,6 +212,7 @@ function interpeter:AddTab(tabname)
 				local properties = {
 					type = "button",
 					flag = flagName,
+					text = payload.text,
 					SetText = button.SetText,
 				}
 
