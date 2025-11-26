@@ -285,9 +285,6 @@ function interpeter:AddTab(tabname)
 					return warn("Slider didnt get enough args")
 				end
 
-				table.insert(Section.options, toCamelCase(payload.text))
-				table.insert(self.options, toCamelCase(payload.text))
-
 				local flagName = toCamelCase((payload["flag"] or payload.text))
 				payload["def"] = (payload["value"] or (payload["max"] / 2))
 
@@ -303,7 +300,15 @@ function interpeter:AddTab(tabname)
 					end
 				)
 
+				local properties = {
+					type = "slider",
+					flag = flagName,
+					text = payload.text,
+				}
+
 				self.flags[flagName] = payload["def"]
+				Section.options[flagName] = properties
+				self.options[flagName] = properties
 
 				return Section
 			end
