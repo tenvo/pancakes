@@ -248,7 +248,7 @@ do -- // Load
 		return connection
 	end
 
-	function library:Set(f, bool)
+	function library:Set(f, bool, ...)
 		if typeof(bool) ~= "boolean" or (typeof(f) ~= "string" and typeof(f) ~= "table") then
 			return
 		end
@@ -260,7 +260,7 @@ do -- // Load
 				and self.flags[o.flag] ~= bool
 				and ((typeof(f) == "string" and o.flag == f) or (typeof(f) == "table" and table.find(f, o.flag)))
 			then
-				pcall(o.SetState, o, bool)
+				pcall(o.SetState, o, bool, ...)
 				table.insert(flagsChanged, o.flag)
 			end
 		end
