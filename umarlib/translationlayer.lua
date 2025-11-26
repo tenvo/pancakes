@@ -481,7 +481,6 @@ function interpeter:Init(silentLaunch)
 			})
 		end
 
-		print("RUNNING SETTING INIT")
 		self.init()
 		return
 	end
