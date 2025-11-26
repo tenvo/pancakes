@@ -255,7 +255,11 @@ do -- // Load
 		local flagsChanged = {}
 
 		for _, o in pairs(self.options) do
-			if o.type == "toggle" and self.flags[o.flag] ~= bool and ((o.flag == f) or (table.find(f, o.flag))) then
+			if
+				o.type == "toggle"
+				and self.flags[o.flag] ~= bool
+				and ((typeof(f) == "string" and o.flag == f) or (typeof(f) == "table" and table.find(f, o.flag)))
+			then
 				pcall(o.SetState, o, bool)
 				table.insert(flagsChanged, o.flag)
 			end
