@@ -190,7 +190,7 @@ local jobId, placeId = game.JobId, game.PlaceId
 local userId = LocalPlayer.UserId
 local isUserTrolled = false
 local isMobile = false
-local accountData
+shared.aztuppy.accountData = {}
 local scriptVersion
 
 do -- //Hook print debug
@@ -289,6 +289,16 @@ do -- // Aztuppy Core Init
 
 	if pushUpdate then
 		aztuppySave(aztuppyFile)
+	end
+
+	--// Game Instance
+	shared.aztuppy.accountData.UserId = userId
+	shared.aztuppy.accountData.JobId = jobId
+	shared.aztuppy.accountData.PlaceId = placeId
+
+	if shared.aztuppy["UniverseId"] then
+		shared.aztuppy.accountData.UniverseId = shared.aztuppy.UniverseId
+		shared.aztuppy.UniverseId = nil
 	end
 
 	--// Globals

@@ -675,6 +675,7 @@ xpcall(function()
 
 	metadataRequest = HttpService:JSONDecode(metadataRequest.Body)
 	getgenv().ah_metadata = metadataRequest
+	shared.aztuppy.UniverseId = universeId
 	local fileName = metadataRequest[tostring(universeId)]
 
 	if not fileName then
