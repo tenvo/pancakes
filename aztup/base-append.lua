@@ -66,7 +66,7 @@ xpcall(function()
 		setscriptable = setscriptable,
 		getthreadidentity = getthreadidentity or getidentity or getthreadcontext,
 		loadstring = loadstring,
-		WebSocket_connect = WebSocket.connect,
+		WebSocket_connect = (typeof(WebSocket) ~= "nil" and WebSocket and WebSocket.connect) or nil,
 		cleardrawcache = cleardrawcache,
 		debug_getconstants = debug.getconstants,
 		isexecutorclosure = isexecutorclosure,
