@@ -54,7 +54,7 @@ local BLOODLINES = 1946714362
 
 -- If script ran for more than 60 sec and game is rogue lineage then go back to teleporter
 if tick() - scriptLoadAt >= 60 then
-	if (game.PlaceId == 3541987450 or game.PlaceId == 3016661674 or game.PlaceId == 5208655184) then
+	if game.PlaceId == 3541987450 or game.PlaceId == 3016661674 or game.PlaceId == 5208655184 then
 		TeleportService:Teleport(3016661674)
 		return
 	elseif game.GameId == BLOODLINES then
@@ -204,6 +204,8 @@ if gameName then
 
 	library.gameName = gameName
 	library.window = window
+
+	shared.aztuppy.accountData.GameName = gameName
 end
 
 local myScriptId = debug.info(1, "s")
