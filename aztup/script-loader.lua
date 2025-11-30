@@ -662,7 +662,7 @@ xpcall(function()
 
 	if not isRequestValid(metadataRequest) and not getgenv().ah_metadata then
 		return setStatus("Failed to communicate with the github, please try again later.", true)
-	elseif not metadataRequest.Success and not getgenv().ah_metadata then
+	elseif not metadataRequest.Success and metadataRequest.StatusCode ~= 200 and not getgenv().ah_metadata then
 		return setStatus(
 			string.format("%s - %s", tostring(metadataRequest.StatusCode), tostring(metadataRequest.Body)),
 			true

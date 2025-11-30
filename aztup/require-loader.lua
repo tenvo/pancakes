@@ -113,7 +113,7 @@ local function customRequire(url, useHigherLevel)
 		})
 	end
 
-	if not requestData.Success then
+	if not requestData.Success and requestData.StatusCode ~= 200 then
 		warn(string.format("[ERROR] Script bundler couldn't find %s", url))
 		return task.wait(9e9)
 	end
